@@ -1,0 +1,77 @@
+DEBIAN
+
+PROBLEMA:
+
+El instalador no soporta ningún explorador web de los instalados.
+
+SOLUCIÍON:
+
+# todos los pasos se jhacen como root
+
+PASO 1.-
+Ocultar el enlace que por defecto lanza el navegador Iceweasel cuando se intenta lanzar un vanegaddor Mozilla
+prompt> mv /usr/bin/mozilla /usr/bin/old_mozilla
+
+PASO 2.-
+Instalar un versión de navedaror mozilla que este entre las soportadas por el instalador; y colocarla en el path 
+por defecto que asigna el instalador cuando no encuentra ningún nacvegador: /usr/mozilla 
+#por esto no puedo usar el firefox; porque al no enciontrar navegador asigna el path del mozilla por defecto
+
+#Se trata de descargar un tar.gz y extraerlo en el path deseado
+#Version elegida: Mozilla 1.7
+# tras extraer el fichero descargado, se ha creado una carpeta 'mozilla' en cuyo interior está todo el navegador (ejecutar ==
+./mozilla)
+mv mozilla /usr	#Ahora tenemos el vanegador mozilla en /usr/mozilla
+
+PASO 3.- publicar el path del navegador 
+#¿Necesario?
+#Hay que hacerlo desde la misma terminal en la que se va a lanzar el script del instalador
+prompt>export BROWSER=/usr/mozilla
+
+PASO 4.- ejecutar el script del instalador 
+prompt>/media/cdrom0/launchpad.sh
+
+WARNING!!! No abrir una terminal directamente en el directorio del DVD y lanzar alli el instalador
+* El problema es que esa terminal bloquea la unidad de DVD y no podremos cambiar los CDs de instalación
+* Yo probe abriewndo terminal en otro lado y ejecutando desde alli el scrip.
+* Para evitar movidas podemos copiar el CD 2 en el disco duro y usarlo para instalar desde allí.
+
+
+YA se ejecuta el instalador!
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Aumentar el número de manejos de archivo en estaciones de trabajo Linux
+
+Importante: para obtener mejores resultados, antes de trabajar con el producto Rational aumente el número de manejos de archivo disponibles para Rational Systems Developer ya que utiliza más del límite predeterminado de 1024 manejos de archivo por proceso. (Este cambio deberá hacerlo un administrador del sistema.)
+
+Sea prudente al seguir los pasos que se indican a continuación para aumentar los descriptores de archivo en Linux. Si no sigue las instrucciones correctamente, es posible que el sistema no se inicie correctamente. Para obtener mejores resultados haga que el administrador del sistema lleve a cabo este procedimiento.
+
+Para aumentar los descriptores de archivo:
+
+   1. Inicie sesión como root. Si no tiene acceso como root, deberá obtenerlo antes de continuar.
+   2. Sitúese en el directorio etc
+   3. Utilice el editor vi para editar el archivo initscript en el directorio etc. Si este archivo no existe, teclee vi initscript para crearlo.
+
+      Importante: si decide aumentar el número de manejos de archivo, no deje un archivo initscript vacío en el sistema. Si lo hace, el sistema no arrancará la próxima vez que lo conecte o lo reinicie.
+   4. En la primera línea, teclee ulimit -n 4096 (aquí la clave es que el número sea significativamente más grande que 1024, el valor predeterminado en la mayoría de sistemas Linux.) Cuidado: no establezca un valor demasiado grande ya que puede afectar seriamente al rendimiento de todo el sistema.
+   5. En la segunda línea, teclee eval exec "$4".
+   6. Guarde y cierre el archivo después de asegurarse de que ha llevado a cabo los pasos 4 y 5.
+      Nota:
+      Asegúrese de haber llevado a cabo correctamente los pasos ya que de no haberlo hecho así, el resultado será una máquina que no podrá arrancarse.
+   7. Opcional: Restrinja los usuarios o los grupos de usuarios modificando el archivo limits.conf en el directorio etc/security. Tanto SuSE Linux Enterprise Server (SLES) Versión 9 como Red Hat Enterprise Linux Versión 4.0 tienen este archivo por omisión. Si no dispone de este archivo, deberá utilizar un número más pequeño en el paso 4 anterior (por ejemplo, 2048.) Esto es necesario para que la mayoría de los usuarios tengan un límite razonablemente bajo sobre el número de archivos abiertos permitidos por proceso. Si utilizó un número relativamente bajo en el paso 4, esto reviste una importancia menor. Sin embargo, si estableció un número elevado en el paso 4, abstenerse de establecer límites en el archivo limits.conf puede afectar gravemente al rendimiento del sistema.
+
+      A continuación se proporciona un archivo limits.conf de ejemplo en el que se restringen todos los usuarios y después se establecen límites distintos para otros. En este ejemplo se da por supuesto que estableció los descriptores en 8192 en el paso 4 anterior.
+      *      soft nofile 1024
+      *      hard nofile 2048
+      root    soft nofile 4096
+      root    hard nofile 8192
+      user1   soft nofile 2048
+      user1 hard nofile 2048
+
+      Tenga en cuenta que * en el ejemplo anterior establecer los límites primero para todos los usuarios. Estos límites son más bajos que los siguientes. El usuario root tiene un número alto de descriptores permitidos abiertos, mientras que user1 está entre los dos. Asegúrese de de leer y comprender la documentación contenida en el archivo limits.conf antes de hacer modificaciones.
+
+Para obtener más información acerca del mandato ulimit, consulte la página man de ulimit.
+

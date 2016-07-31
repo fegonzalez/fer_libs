@@ -1,0 +1,29 @@
+A ver, los ficheros para grace estan en indra/testing, de todos just in
+case no tengas el repositorio, te mando una version reducida de indra
+para que puedas utilizarlos.
+
+Te he puesto dos maneras de generas graficos de grace.
+
+Una leyendo un fichero de entrada con el programa quickplot. Te he
+puesto un ejemplo de fichero de datos.
+
+Para lanzarlo compila todo, make , make lib y luego make quickplot en
+indra/testing
+
+./quickplot example_quickplot.dat vars
+
+en example estan los datos
+
+Luego tambien te he includo un programa para pintar en grace en tiempo
+real utilizando los functions estos de Miguel, se llama grace_model_Test
+
+Pues nada macho enjoy your holidays, carga pilas que te espero para la
+QTG en cuanto pase semana santa. No te imagino haciendo la pretemporada,
+de todos modos ya sabes la cantidad de abdominales que hace Cristinano
+Ronaldo, asi que ya tienes un cota a la que llegar.
+
+cuentame que tal te va con lo que te mando, ok?
+
+Pasalo bien, Un abrazo,
+
+Juli

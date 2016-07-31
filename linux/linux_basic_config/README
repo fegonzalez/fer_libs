@@ -1,0 +1,22 @@
+
+#debian sources
+/apt/sources.list
+
+#proxy connection
+/apt/apt.conf.d/proxy
+
+#mounting  partitions
+/etc/fstab
+
+#external hosts IPS
+/etc/hosts
+
+/etc/sudoers.d/fer
+
+
+#INTERFACE (NET)  CONFIGURATION
+/etc/network/interfaces
+/etc/wpa_supplicant/wpa_supplicant.conf
+
+#al final activar la red
+sudo ifup eth0

@@ -1,0 +1,209 @@
+;; .emacs
+
+
+(setq WIDE_SCREEN_HEIGHT_VALUE 62)
+(setq NARROW_SCREEN_HEIGHT_VALUE 46)  ;;44 ;;53
+(setq SCREEN_WIDTH 163) ;;163  ;; 166
+(setq SCREEN_HEIGHT NARROW_SCREEN_HEIGHT_VALUE) ;;44 ;;53
+(setq SINGLE_SCREEN_WIDTH 80) ;; 80
+
+
+;;; uncomment this line to disable loading of "default.el" at startup...........;
+(setq inhibit-default-init t)
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to better frame titles
+(setq frame-title-format
+      (concat  "%b - emacs@" (system-name)))
+
+;; default to unified diffs
+(setq diff-switches "-u")
+
+;; always end a file with a newline
+(setq require-final-newline 'query)
+
+
+;;ispell
+;; español por defecto
+;; FIXME cambio online español/inglé
+(setq ispell-dictionary "english")
+
+;;; uncomment for CJK utf-8 support for non-Asian users
+;; (require 'un-define)
+ 
+;;  Set colors (as in ~/.Xdefaults).
+(set-border-color "lightblue")
+(set-border-color "blue")
+(set-cursor-color "red")
+(set-mouse-color "red")
+(set-foreground-color "DarkOliveGreen3")
+(set-background-color "black")
+ 
+;; Display the time in the status line 
+(load "time" t t)
+(display-time)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(case-fold-search t)
+ '(column-number-mode t)
+ '(current-language-environment "English")
+ '(display-time-mode t)
+ ;; '(fill-column 79)
+ '(inhibit-startup-screen t)
+ ;; '(iswitchb-mode t)
+ '(scroll-bar-mode nil)
+ '(show-paren-mode t)
+ )
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "yellow3" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(region ((((class color) (min-colors 88) (background dark)) (:background "grey20"))))
+ '(show-paren-match ((((class color) (background dark)) (:background "blue4"))))
+ '(show-paren-mismatch ((((class color)) (:background "red4" :foreground "white"))))
+ '(trailing-whitespace ((((class color) (background dark)) (:background "gray17")))))
+
+;; windmove
+(windmove-default-keybindings)
+
+;; turn on paren match highlighting
+(show-paren-mode 1)
+
+; show line number the cursor is on, in status bar (the mode line)
+(line-number-mode 1)
+
+;;show column number position
+(column-number-mode 1)
+
+;;truncate long lines
+(global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+
+(put 'upcase-region 'disabled nil)
+
+
+
+;;  window height (to divide the screen in two 80 columns fixed size buffers)
+;; the width and height bellow depens on the kind of font (see custom-set-face above)
+
+;; (setq default-frame-alist (append (list
+;;   '(width  . SCREEN_WIDTH)
+;;   '(height . SCREEN_HEIGHT))
+;;   default-frame-alist))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; defun section BEGIN
+;;
+;; (defun function-name (arguments…)
+;;   "optional-documentation…"
+;;   (interactive argument-passing-info)     ; optional
+;;   body…)
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Double-single screen toggle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar double-screen 'nil
+  "non-nil if current frame is in double size (allowing two full buffers in the screen) screen mode. See double-screen-on, double-screen-off, double-screen-toggle")
+
+;; (defun double-screen-init ()
+;;   (set-double-screen)
+;; )
+
+(defun set-double-screen ()
+  (set-frame-width (selected-frame) SCREEN_WIDTH) ; adapt size
+  (set-frame-height (selected-frame) SCREEN_HEIGHT) ; adapt size
+  (setq double-screen t)
+)
+
+(defun double-screen-on ()
+  "Sets fullscreen on (based on ???display??? with font ???)"
+  (interactive)
+  (set-double-screen)
+  )
+
+(defun double-screen-off () 
+  "Sets fullscreen off (based on ???display??? with font ???)"  
+  (interactive)
+  (set-frame-width (selected-frame) SINGLE_SCREEN_WIDTH) ; adapt size
+  (set-frame-height (selected-frame) SCREEN_HEIGHT) ; adapt size
+  (setq double-screen nil)
+  )
+
+(defun double-screen-toggle ()
+  "Toggles fullscreen on/off (based on ???Display??? with font ???)"    
+  (interactive)
+  (if (eq double-screen 'nil)
+      (double-screen-on)
+					 ;else
+    (double-screen-off)
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; wide / narrow screen size
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defvar wide-screen 'nil
+  "non-nil if current frame is in double size (allowing two full buffers in the screen) screen mode. See wide-screen-on, wide-screen-off, wide-screen-toggle")
+
+(defun reset-double-screen-mode()
+  (if (eq double-screen 'nil)
+      (double-screen-off)
+					;else
+    (double-screen-on)
+    )
+  )
+
+(defun wide-screen-off ()
+  "Sets emacs screen size to a laptop (13'') dimensions. "
+  (interactive)
+  (setq SCREEN_HEIGHT NARROW_SCREEN_HEIGHT_VALUE) ;;44 ;;53
+  (setq wide-screen nil)
+  (reset-double-screen-mode)
+  )
+
+
+(defun wide-screen-on () 
+  "Sets emacs screen size to a widescreen dimensions. "
+  (interactive)
+  (setq SCREEN_HEIGHT WIDE_SCREEN_HEIGHT_VALUE) ;;44 ;;53
+  (setq wide-screen t)
+  (reset-double-screen-mode)
+  )
+
+(defun wide-screen-toggle ()
+  "Toggles fullscreen on/off (based on ???Display??? with font ???)"    
+  (interactive)
+  (if (eq wide-screen 'nil)
+      (wide-screen-on)
+					 ;else
+    (wide-screen-off)
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; defun section END
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; initialization actions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(double-screen-off)
+(wide-screen-off)

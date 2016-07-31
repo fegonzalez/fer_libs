@@ -1,0 +1,27 @@
+127.0.0.1	localhost
+127.0.1.1	fegonzalez.indra.es	fegonzalez
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+#mias
+172.31.99.1     el412
+172.31.99.26	famet
+172.31.99.26	fametZ800
+172.31.99.25	fametSUN
+172.31.191.211	atr1
+192.168.15.29	dmz
+172.31.99.4	gris
+#172.31.99.1  225compilar
+172.31.99.2  225dev
+#172.31.191.206  225qtg
+#172.31.101.29	cvshost
+192.168.15.29	cvshost
+172.31.191.201  350host
+172.31.99.24	wildcat
+172.31.99.24	gatu

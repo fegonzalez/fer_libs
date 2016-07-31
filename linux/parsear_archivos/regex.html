@@ -1,0 +1,212 @@
+<HTML>
+<head><title>Regular Expressions</title></head><body>
+
+<H3>Regular Expression Overview</H3></A>
+
+Regular expression matching allows you to test whether a string fits
+into a specific syntactic shape. You can also search a string for a
+substring that fits a pattern.<P>
+A regular expression describes a set of strings. The simplest case
+is one that describes a particular string; for example, the string
+'foo' when regarded as a regular expression matches 'foo' and nothing
+else. Nontrivial regular expressions use certain special constructs
+so that they can match more than one string. For example, the
+regular expression 'foo\|bar' matches either the string 'foo' or the
+string 'bar'; the regular expression 'c[ad]*r' matches any of the
+strings 'cr', 'car', 'cdr', 'caar', 'cadddar' and all other such
+strings with any number of 'a''s and 'd''s.<P>
+The first step in matching a regular expression is to compile it. 
+You must supply the pattern string and also a pattern buffer to hold
+the compiled result. That result contains the pattern in an internal
+format that is easier to use in matching.<P>
+Having compiled a pattern, you can match it against strings. You can
+match the compiled pattern any number of times against different
+strings.<P>
+
+<H3>Syntax of Regular Expressions</H3></A>
+
+Regular expressions have a syntax in which a few characters are
+special constructs and the rest are "ordinary". An ordinary
+character is a simple regular expression which matches that character
+and nothing else. The special characters are '\$', '^', '.', '*',
+'+', '?', '[', ']' and '\'. Any other character appearing in a
+regular expression is ordinary, unless a '\' precedes it.<P>
+For example, 'f' is not a special character, so it is ordinary, and
+therefore 'f' is a regular expression that matches the string 'f' and
+no other string. (It does *not* match the string 'ff'.) Likewise,
+'o' is a regular expression that matches only 'o'.<P>
+Any two regular expressions A and B can be concatenated. The result
+is a regular expression which matches a string if A matches some
+amount of the beginning of that string and B matches the rest of the
+string.<P>
+As a simple example, we can concatenate the regular expressions 'f'
+and 'o' to get the regular expression 'fo', which matches only the
+string 'fo'. Still trivial.<P>
+Note: for Unix compatibility, special characters are treated as
+ordinary ones if they are in contexts where their special meanings
+make no sense. For example, '*foo' treats '*' as ordinary since
+there is no preceding expression on which the '*' can act. It is
+poor practice to depend on this behavior; better to quote the special
+character anyway, regardless of where is appears.<P>
+The following are the characters and character sequences which have
+special meaning within regular expressions. Any character not
+mentioned here is not special; it stands for exactly itself for the
+purposes of searching and matching.<P>
+<UL>
+
+<LI> 
+<TT>.</TT> is a special character that matches anything except a newline. 
+Using concatenation, we can make regular expressions like <TT>a.b</TT>
+which matches any three-character string which begins with <TT>a</TT>
+and ends with <TT>b</TT>.<P>
+<LI> 
+<TT>*</TT> is not a construct by itself; it is a suffix, which means the
+preceding regular expression is to be repeated as many times as
+possible. In <TT>fo*</TT>, the <TT>*</TT> applies to the <TT>o</TT>, so <TT>fo*</TT>
+matches <TT>f</TT> followed by any number of <TT>o</TT>'s.<P>
+The case of zero <TT>o</TT>'s is allowed: <TT>fo*</TT> does match <TT>f</TT>.<P>
+<TT>*</TT> always applies to the *smallest* possible preceding
+expression. Thus, <TT>fo*</TT> has a repeating <TT>o</TT>, not a repeating
+<TT>fo</TT>.<P>
+The matcher processes a <TT>*</TT> construct by matching, immediately,
+as many repetitions as can be found. Then it continues with the
+rest of the pattern. If that fails, backtracking occurs,
+discarding some of the matches of the <TT>*</TT>'d construct in case
+that makes it possible to match the rest of the pattern. For
+example, matching <TT>c[ad]*ar</TT> against the string <TT>caddaar</TT>, the
+<TT>[ad]*</TT> first matches <TT>addaa</TT>, but this does not allow the next
+<TT>a</TT> in the pattern to match. So the last of the matches of
+<TT>[ad]</TT> is undone and the following <TT>a</TT> is tried again. Now it
+succeeds.<P>
+<LI> 
+<TT>+</TT> is like <TT>*</TT> except that at least one match for the preceding
+pattern is required for <TT>+</TT>. Thus, <TT>c[ad]+r</TT> does not match
+<TT>cr</TT> but does match anything else that <TT>c[ad]*r</TT> would match.<P>
+<LI> 
+<TT>?</TT> is like <TT>*</TT> except that it allows either zero or one match
+for the preceding pattern. Thus, <TT>c[ad]?r</TT> matches <TT>cr</TT> or
+<TT>car</TT> or <TT>cdr</TT>, and nothing else.<P>
+<LI> 
+<TT>[</TT> begins a "character set", which is terminated by a <TT>]</TT>. In
+the simplest case, the characters between the two form the set. 
+Thus, <TT>[ad]</TT> matches either <TT>a</TT> or <TT>d</TT>, and <TT>[ad]*</TT> matches any
+string of <TT>a</TT>'s and <TT>d</TT>'s (including the empty string), from
+which it follows that <TT>c[ad]*r</TT> matches <TT>car</TT>, etc.<P>
+Character ranges can also be included in a character set, by
+writing two characters with a <TT>-</TT> between them. Thus, <TT>[a-z]</TT>
+matches any lower-case letter. Ranges may be intermixed freely
+with individual characters, as in <TT>[a-z$%.]</TT>, which matches any
+lower case letter or <TT>$</TT>, <TT>%</TT> or period.<P>
+Note that the usual special characters are not special any more
+inside a character set. A completely different set of special
+characters exists inside character sets: <TT>]</TT>, <TT>-</TT> and ^.<P>
+To include a <TT>]</TT> in a character set, you must make it the first
+character. For example, <TT>[<CENTER></CENTER>]a]</TT> matches <TT>]</TT> or <TT>a</TT>. To include
+a <TT>-</TT>, you must use it in a context where it cannot possibly
+indicate a range: that is, as the first character, or
+immediately after a range.<P>
+<LI> 
+[^ begins a "complement character set", which matches any
+character except the ones specified. Thus, [^a-z0-9A-Z]
+matches all characters <I>except</I> letters and digits.<P>
+<LI> 
+^ is not special in a character set unless it is the first
+character. The character following the ^ is treated as if it
+were first (it may be a <TT>-</TT> or a <TT>]</TT>).<P>
+^ is a special character that matches the empty string -- but only
+if at the beginning of a line in the text being matched. 
+Otherwise it fails to match anything. Thus, ^foo matches a
+<TT>foo</TT> which occurs at the beginning of a line.<P>
+<LI> 
+<TT>$</TT> 
+is similar to ^ but matches only at the end of a line. Thus,
+<TT>xx*$</TT> matches a string of one or more <TT>x</TT>'s at the end of a line.<P>
+<LI> 
+<TT>\</TT> 
+has two functions: it quotes the above special characters
+(including <TT>\</TT>), and it introduces additional special constructs.<P>
+Because <TT>\</TT> quotes special characters, <TT>\$</TT> is a regular
+expression which matches only <TT>$</TT>, and <TT>\<CENTER></CENTER>[</TT> is a regular
+expression which matches only <TT>[</TT>, and so on.<P>
+For the most part, <TT>\</TT> followed by any character matches only
+that character. However, there are several exceptions:
+characters which, when preceded by <TT>\</TT>, are special constructs. 
+Such characters are always ordinary when encountered on their own.<P>
+No new special characters will ever be defined. All extensions
+to the regular expression syntax are made by defining new
+two-character constructs that begin with <TT>\</TT>.<P>
+<LI> 
+<TT>\|</TT> 
+specifies an alternative. Two regular expressions A and B with
+<TT>\|</TT> in between form an expression that matches anything that
+either A or B will match.<P>
+Thus, <TT>foo\|bar</TT> matches either <TT>foo</TT> or <TT>bar</TT> but no other
+string.<P>
+<TT>\|</TT> applies to the largest possible surrounding expressions. 
+Only a surrounding <TT>\( ... \)</TT> grouping can limit the grouping
+power of <TT>\|</TT>.<P>
+Full backtracking capability exists when multiple <TT>\|</TT>'s are used.<P>
+<LI> 
+<TT>\( ... \)</TT> 
+is a grouping construct that serves three purposes:
+<OL>
+
+<LI> To enclose a set of <TT>\|</TT> alternatives for other operations.
+Thus, <TT>\(foo\|bar\)x</TT> matches either <TT>foox</TT> or <TT>barx</TT>.
+<LI> To enclose a complicated expression for the postfix <TT>*</TT> to
+operate on. Thus, <TT>ba\(na\)*</TT> matches <TT>bananana</TT>, etc.,
+with any (zero or more) number of <TT>na</TT>'s.
+<LI> To mark a matched substring for future reference.
+</OL>
+<P>
+This last application is not a consequence of the idea of a
+parenthetical grouping; it is a separate feature which happens
+to be assigned as a second meaning to the same <TT>\( ... \)</TT> 
+construct because there is no conflict in practice between the
+two meanings. Here is an explanation of this feature:<P>
+<LI> 
+<TT>\DIGIT</TT> 
+After the end of a <TT>\( ... \)</TT> construct, the matcher remembers
+the beginning and end of the text matched by that construct. 
+Then, later on in the regular expression, you can use <TT>\</TT>
+followed by DIGIT to mean "match the same text matched the
+DIGIT'th time by the <TT>\( ... \)</TT> construct."  The <TT>\( ... \)</TT>
+constructs are numbered in order of commencement in the regexp.<P>
+The strings matching the first nine <TT>\( ... \)</TT> constructs
+appearing in a regular expression are assigned numbers 1 through
+9 in order of their beginnings. <TT>\1</TT> through <TT>\9</TT> may be used
+to refer to the text matched by the corresponding <TT>\( ... \)</TT> 
+construct.<P>
+For example, <TT>\(.*\)\1</TT> matches any string that is composed of
+two identical halves. The <TT>\(.*\)</TT> matches the first half,
+which may be anything, but the <TT>\1</TT> that follows must match the
+same exact text.<P>
+<LI> 
+<TT>\b</TT> 
+matches the empty string, but only if it is at the beginning or
+end of a word. Thus, <TT>\bfoo\b</TT> matches any occurrence of <TT>foo</TT>
+as a separate word. <TT>\bball\(s\|\)\b</TT> matches <TT>ball</TT> or <TT>balls</TT>
+as a separate word.<P>
+<LI> 
+<TT>\B</TT> 
+matches the empty string, provided it is *not* at the beginning
+or end of a word.<P>
+<LI> 
+<TT>\&lt;</TT> 
+matches the empty string, but only if it is at the beginning of
+a word.<P>
+<LI> 
+<TT>\&gt;</TT> 
+matches the empty string, but only if it is at the end of a word.<P>
+<LI> 
+<TT>\w</TT> 
+matches any word-constituent character.<P>
+<LI> 
+<TT>\W</TT> 
+matches any character that is not a word-constituent.<P>
+</UL>
+<P>
+<P>
+
+</body>
+</HTML>

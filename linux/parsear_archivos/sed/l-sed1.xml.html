@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link title="new" rel="stylesheet" href="../../../css/main.css" type="text/css">
+<link REL="shortcut icon" HREF="../../../favicon.ico" TYPE="image/x-icon">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/www-gentoo-org.xml" title="Gentoo Website">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/forums-gentoo-org.xml" title="Gentoo Forums">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/bugs-gentoo-org.xml" title="Gentoo Bugzilla">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/packages-gentoo-org.xml" title="Gentoo Packages">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/archives-gentoo-org.xml" title="Gentoo List Archives">
+<title>Documentación Gentoo Linux
+--
+  Sed mediante ejemplos, Parte 1</title>
+</head>
+<body style="margin:0px;" bgcolor="#ffffff"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td valign="top" height="125" bgcolor="#45347b"><a href="/"><img border="0" src="../../../images/gtop-www.jpg" alt="Gentoo Logo"></a></td></tr>
+<tr><td valign="top" align="right" colspan="1" bgcolor="#ffffff"><table border="0" cellspacing="0" cellpadding="0" width="100%"><tr>
+<td width="99%" class="content" valign="top" align="left">
+<table class="ncontent" align="center" width="90%" border="2px" cellspacing="0" cellpadding="4px"><tr><td bgcolor="#ddddff"><p class="note"><b>Renuncia de responsabilidad: </b>
+    La versión original de este artículo fue publicada por IBM 
+    developerWorks y es propiedad de Westtech Information Services. Este
+    documento es una versión actualizada del artículo original y contiene
+    mejoras introducidas por el Equipo de Documentación de Gentoo.<br>
+    Este documento carece de soporte activo.
+  </p></td></tr></table>
+<br><h1>Sed mediante ejemplos, Parte 1</h1>
+<form name="contents" action="http://www.gentoo.org">
+<b>Contenido</b>:
+        <select name="url" size="1" OnChange="location.href=form.url.options[form.url.selectedIndex].value" style="font-family:sans-serif,Arial,Helvetica"><option value="#doc_chap1">1. Dar a conocer el poderoso editor UNIX</option>
+<option value="#doc_chap2">2. Recursos</option></select>
+</form>
+<p class="chaphead"><a name="doc_chap1"></a><span class="chapnum">1. 
+            </span>Dar a conocer el poderoso editor UNIX</p>
+<p class="secthead"><a name="doc_chap1_sect1">Elegir un editor</a></p>
+<p>
+En el mundo UNIX, disponemos de muchas opciones cuando necesitamos editar
+archivos. Pensando en ello -- vienen a la mente vi, emacs y jed, así como
+muchos otros. Todos nosotros tenemos nuestro editor favorito (así como nuestras
+combinaciones de teclas favoritas) que hemos llegado a conocer y ahora amamos.
+Con nuestro editor de confianza, estamos listos para manejar cualquier tarea de
+administración relacionada con UNIX o de programación con facilidad.
+</p>
+<p>
+Mientras que los editores interactivos son buenos, tienen algunas limitaciones.
+A pesar de que su naturaleza interactiva puede ser un punto fuerte, también
+puede ser una debilidad. Consideremos una situación en la que necesitemos hacer
+un tipo muy similar de cambios en un grupo de archivos. Podemos lanzar nuestro
+editor de textos favorito y realizar una labor mundana, tediosa y repetitiva,
+malgastando nuestro tiempo en muchas ediciones a mano. Pero hay una forma mejor
+de hacerlo
+</p>
+<p class="secthead"><a name="doc_chap1_sect2">Introducción a sed</a></p>
+<p>
+Sería bueno poder automatizar el proceso de editar archivos, de forma que
+podamos "procesar por lotes" la edición de archivos, e incluso crear macros con
+la habilidad de realizar cambios sofisticados a archivos existentes.
+Afortunadamente para nosotros y para este tipo de situaciones, hay un método
+mucho mejor -- y este método se denomina sed.
+</p>
+<p>
+sed es un ligero editor de flujo que está incluido en casi todos los
+sabores UNIX, Linux incluido. sed tiene muchas buenas características. La
+primera de ellas es que es de peso muy ligero, normalmente muy inferior al de
+nuestro lenguaje favorito de macros. En segundo lugar, dado que sed es un
+editor de flijo, puede editar los datos que recibe de stdin, como aquellos
+redireccionados. Por lo que no se necesita tener los datos a editar almacenados
+en un archivo del disco. Dado que los datos pueden redirigirse a sed, es muy
+fácil usar sed como parte de un largo y complejo redireccionamiento en un
+archivo por lotes de nuestro intérprete de comandos. Intentemos hacerlo con
+nuestro editor favorito.
+</p>
+<p class="secthead"><a name="doc_chap1_sect3">sed GNU</a></p>
+<p>
+Afortunadamente para nosotros, usuarios de Linux, una de las mejores versiones
+disponibles de sed es la versión de GNU, actualmente en su versión 3.02. Cada
+distribución de Linux posee el editor sed de GNU o, al menos, debería. El sed
+de GNU es muy conocido, no únicamente porque su código fuente sea de libre
+distribución, sino porque tiene muchas extensiones del estándar POSIX de sed
+que nos evitarán desperdiciar el tiempo. El sed de GNU tampoco sufre muchas de
+las limitaciones del sed anterior y propietario, como una longitud de línea
+limitada -- El sed de GNU puede manejar líneas de cualquier tamaño con
+facilidad.
+</p>
+<p class="secthead"><a name="doc_chap1_sect4">El último sed de GNU</a></p>
+<p>
+Mientras elaboraba este artículo, noté que varios aficionados de sed hacían
+referencia al sed de GNU 3.02a. A pesar de que no pude encontrarlo en
+<a href="ftp://ftp.gnu.org">ftp://ftp.gnu.org</a> (ver los <a href="#recursos">Recursos</a>
+para encontrar estos enlaces), por lo que tuve que buscarlo en otra parte. Lo
+encontré en <a href="ftp://alpha.gnu.org">ftp://alpha.gnu.org</a>, bajo <span class="path" dir="ltr">/pub/sed</span>. Lo
+descargué, compilé e instalé para observar, pasados unos minutos, que la última
+versión de sed es la 3.02.80 -- y puede encontrarse su código fuente justo al
+lado de las de 3.02a, en <a href="ftp://alpha.gnu.org">ftp://alpha.gnu.org</a>. Después de tener el
+sed de GNU 3.02.80 instalado, ya estaba listo para continuar.
+</p>
+<p class="secthead"><a name="doc_chap1_sect5">El sed correcto</a></p>
+<p>
+En esta serie, utilizaré el sed de GNU versión 3.02.80. Algunos (aunque pocos)
+de los ejemplos más avanzados en mi serie de artículos acerca de sed no
+funcionarán con el sed de GNU 3.02 ó 3.02a. Si se está usando un sed que no sea
+el de GNU los resultados pueden variar. ¿Por qué no nos tomamos el tiempo
+necesario para instalar el sed 3.02.80 de GNU ahora? Después, no sólo estaremos
+preparados para el resto de los artículos acerca de sed, sino que estaremos
+usando, indiscutiblemente, el mejor sed que existe.
+</p>
+<p class="secthead"><a name="doc_chap1_sect6">Ejemplos con sed</a></p>
+<p>
+Sed trabaja realizando cualquier número de operaciones de edición especificadas
+por el usuario ("comandos") en los datos de entrada. Sed se basa en líneas, por
+lo que los comandos se realizan en cada línea, siguiendo un orden. Sed, escribe
+sus resultados en la salida estándar (stdout); por lo que no modifica ninguno
+de los archivos de entrada.
+</p>
+<p>
+Veamos algunos ejemplos. Los primeros van a ser un poco inútiles, debido a que
+pretendo mostrar con ellos cómo trabaja sed, en lugar de realizar cualquier
+tarea útil. De cualquier modo, si somos principiantes con sed, es muy
+importante entenderlos. He aquí nuestro primer ejemplo:
+</p>
+<a name="doc_chap1_pre1"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.1: Ejemplo de uso de sed</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 'd' /etc/services</span>
+</pre></td></tr>
+</table>
+<p>
+Si tecleamos este comando, no obtendremos absolutamente ningún mensaje. ¿Qué ha
+ocurrido? En este ejemplo, hemos llamado a sed con un comando de edición,
+<span class="code" dir="ltr">d</span>. Sed abrió el archivo <span class="path" dir="ltr">/etc/services</span>, leyó una línea en su
+memoria intermedia, realizó nuestro comando de edición ("borrar una línea") y
+después mostró su memoria intermedia de patrones (la cual estaba vacía).
+Después repitió estos pasos para cada línea sucesivamente. Con lo cual no se
+produjo ningún mensaje, dado que el comando <span class="code" dir="ltr">d</span> erradicó todas y cada una
+de las líneas en la memoria intermedia de patrones.
+</p>
+<p>
+Hay un par de cosas a considerar en este ejemplo. La primera,
+<span class="path" dir="ltr">/etc/services</span> no fue modificado en absoluto. Esto se debe a que
+sed únicamente lee del archivo que se le indica en la línea de comandos,
+usándolo como entrada -- ni siquiera intenta modificarlo. La segunda es que sed
+está orientado hacia líneas. El comando <span class="code" dir="ltr">d</span> no le dijo a sed que borrara
+todos los datos sin la más mínima precaución. En su lugar, sed leyó línea por
+línea /etc/services en su memoria intermedia interna, denominada memoria
+intermedia de patrones (pattern buffer). Cada vez que se leía una línea en la
+memoria intermedia de patrones, realizaba el comando <span class="code" dir="ltr">d</span> e imprimía los
+contenidos de la memoria intermedia de patrones (ninguno en este ejemplo).
+Después mostraré cómo usar rangos de direcciones para controlar las líneas a
+las que se aplica un comando -- aunque en ausencia de los mismos, un comando se
+aplica a todas las líneas.
+</p>
+<p>
+La tercera cosa a notar es el uso de comillas simples para introducir el
+comando <span class="code" dir="ltr">d</span>. Es una buena idea adquirir el hábito de usar comillas simples
+para introducir los comandos sed, para deshabilitar la expansión del intérprete
+de comandos.
+</p>
+<p class="secthead"><a name="doc_chap1_sect7">Otro ejemplo de uso de sed</a></p>
+<p>
+He aquí un ejemplo de cómo usar sed para eliminar la primera línea del archivo
+<span class="path" dir="ltr">/etc/services</span> de nuestro flujo de salida:
+</p>
+<a name="doc_chap1_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.2: Otro ejemplo de uso de sed</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e '1d' /etc/services | more</span>
+</pre></td></tr>
+</table>
+<p>
+Como puede verse, este comando es muy similar a nuestro primer comando <span class="code" dir="ltr">d</span>
+exceptuando que se encuentra precedido por un <span class="code" dir="ltr">1</span>. Si al verlo hemos
+pensado que el <span class="code" dir="ltr">1</span> hacía alusión a la línea 1, estábamos en lo cierto.
+Mientras que en nuestro primer ejemplo usamos <span class="code" dir="ltr">d</span> por sí mismo, en este
+caso usamos el comando <span class="code" dir="ltr">d</span> precedido por una dirección lineal opcional.
+Usando direcciones, podemos decirle a sed que edite únicamente una línea o sólo
+unas líneas.
+</p>
+<p class="secthead"><a name="doc_chap1_sect8">Rangos de direcciones</a></p>
+<p>
+Ahora, veamos cómo especificar rangos de direcciones. En este ejemplo, sed
+borrará de la línea 1 a la 10 de la salida:
+</p>
+<a name="doc_chap1_pre3"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.3: Especificar un rango de direcciones</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e '1,10d' /etc/services | more</span>
+</pre></td></tr>
+</table>
+<p>
+Cuando separamos dos direcciones por una coma, sed aplicará el siguiente
+comando al rango que empieza con la primera dirección y terminará con la
+segunda dirección. En este ejemplo, el comando <span class="code" dir="ltr">d</span> se ha aplicado desde la
+línea 1 hasta la línea 10, inclusive. El resto de líneas son ignoradas.
+</p>
+<p class="secthead"><a name="doc_chap1_sect9">Direcciones con expresiones regulares</a></p>
+<p>
+Ha llegado el momento de un ejemplo mucho más útil. Digamos que queríamos ver
+los contenidos del archivo <span class="path" dir="ltr">/etc/services</span>, pero no estamos
+interesados en ver ninguno de los comentarios incluidos. Como todos sabemos, se
+pueden añadir comentarios en nuestro archivo <span class="path" dir="ltr">/etc/services</span>
+comenzando la línea con un carácter '#'. Para evitar los comentarios, le
+indicamos a sed que elimine todas las líneas que comienzan con '#'. He aquí
+cómo hacerlo:
+</p>
+<a name="doc_chap1_pre4"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.4: Eliminar las líneas que comienzan con #</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e '/^#/d' /etc/services | more</span>
+</pre></td></tr>
+</table>
+<p>
+Intentemos realizar este ejemplo y veamos lo que ocurre. Notaremos que sed
+realiza la labor solicitada con gran rapidez. Vamos a figurarnos qué es lo que
+ha ocurrido.
+</p>
+<p>
+Para comprender el comando '/^#/d', antes necesitamos diseccionarlo. Primero,
+eliminemos la 'd' -- estamos usando el mismo comando de borrado de líneas que
+hemos usado previamente. La nueva parte añadida es la '/^#/', que es un nuevo
+tipo de dirección mediante una expresión regular. Las direcciones con
+expresiones regulares se indican siempre entre barras. Especifican un patrón y
+el comando que está a continuación de una dirección con expresión regular
+únicamente se aplicará a una línea si encuentra dicho patrón en ella.
+</p>
+<p>
+Por lo que '/^#/' es una expresión regular. Pero, ¿qué es lo que hace?
+Obviamente, este sería un buen momento para repasar las expresiones regulares.
+</p>
+<p class="secthead"><a name="doc_chap1_sect10">Repaso a las expresiones regulares</a></p>
+<p>
+Podemos usar expresiones regulares para expresar patrones que podemos encontrar
+en el texto. Si hemos usado alguna vez el carácter '*' en un comando del
+intérprete de comandos, hemos usado algo muy similar, aunque no idéntico, a las
+expresiones regulares. Aquí tenemos los caracteres especiales que pueden usarse
+en las expresiones regulares:
+</p>
+<table class="ntable">
+  <tr>
+    <td class="infohead"><b>Carácter</b></td>
+    <td class="infohead"><b>Descripción</b></td>
+  </tr>
+  <tr>
+    <td class="tableinfo">^</td>
+    <td class="tableinfo">Apunta al comienzo de la línea</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">$</td>
+    <td class="tableinfo">Apunta al final de la línea</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">.</td>
+    <td class="tableinfo">Apunta a un único carácter</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">*</td>
+    <td class="tableinfo">Apunta a cero o más ocurrencias del carácter previo</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[ ]</td>
+    <td class="tableinfo">Apunta a todos los caracteres entre los corchetes</td>
+  </tr>
+</table>
+<p>
+Veamos algunos ejemplos con expresiones regulares para fascilitar las cosas.
+Todos estos ejemplos serán aceptados por sed como direcciones válidas que
+pueden aparecer a la izquierda de cualquier comando:
+</p>
+<table class="ntable">
+  <tr>
+    <td class="infohead"><b>Expresión regular</b></td>
+    <td class="infohead"><b>Descripción</b></td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/./</td>
+    <td class="tableinfo">Apuntará a cualquier línea que contenga al menos un carácter</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/../</td>
+    <td class="tableinfo">Apuntará a cualquier línea que contenga al menos dos caracteres</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/^#/</td>
+    <td class="tableinfo">Apuntará a cualquier línea que comience con un '#'</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/^$/</td>
+    <td class="tableinfo">Apuntará a cualquier línea en blanco</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/}^/</td>
+    <td class="tableinfo">Apuntará a toda línea que termine con un '}' (sin espacios)</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/} *^/</td>
+    <td class="tableinfo">Apuntará a toda línea que termine con un '}' con cero o más
+        espacios</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/[abc]/</td>
+    <td class="tableinfo">Apuntará a toda línea que contenga una 'a', 'b', o 'c' minúscula</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">/^[abc]/</td>
+    <td class="tableinfo">Apuntará a cualquier línea que empiece con 'a', 'b', o 'c'</td>
+  </tr>
+</table>
+<p>
+Recomiendo encarecidamente intentarlo con varios de estos ejemplos. Tomarse el
+tiempo necesario para familiarizarse con las expresiones regulares, e intentar
+usar algunas expresiones regulares de nuestra propia invención. Puede usarse
+una expreg de este modo:
+</p>
+<a name="doc_chap1_pre5"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.5: Forma adecuada de usar expreg</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e '/expreg/d' /ruta/a/mi/archivo/de/pruebas | more</span>
+</pre></td></tr>
+</table>
+<p>
+Esto dará lugar a que sed borre cualquier línea coincidente. De todos modos,
+puede ser más sencillo familiarizarse con las expresiones regulares pidiéndole
+a sed que muestre las coincidencias con expreg y que borre las que no
+coincidan, en lugar de seguir el camino opuesto. Lo cual puede lograrse con el
+siguiente comando:
+</p>
+<a name="doc_chap1_pre6"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.6: Imprimir las coincidencias expreg</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -n -e '/expreg/p' /ruta/a/mi/archivo/de/pruebas | more</span>
+</pre></td></tr>
+</table>
+<p>
+Hay que tomar nota de la opción '-n', que indica a sed que no imprima el
+espacio en el patrón a menos que se le indique. También observamos que hemos
+sustituido el comando <span class="code" dir="ltr">d</span> con el comando <span class="code" dir="ltr">p</span>, que como se podrá
+pensar solicita a sed que muestre el espacio entre patrones. Por lo tanto, sólo
+se mostrarán las expresiones que coincidan.
+</p>
+<p class="secthead"><a name="doc_chap1_sect11">Más direcciones</a></p>
+<p>
+Hasta ahora, hemos echado un vistazo a direcciones lineales, direcciones en
+rangos lineales y direcciones expreg. Pero aún hay más posibilidades. Podemos
+especificar dos expresiones regulares separadas por una coma, y sed marcará
+todas las líneas que comiencen con la primera expresión regular seleccionada
+hasta la línea (incluida) que contenga la segunda expresión regular. Por
+ejemplo, el siguiente comando mostrará un bloque de texto que comience con una
+línea que contenga "PRINCIPIO", y termine con una línea que contenga "FIN":
+</p>
+<a name="doc_chap1_pre7"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.7: Imprimir el bloque deseado de texto</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -n -e '/PRINCIPIO/,/FIN/p' /mi/archivo/de/pruebas | more</span>
+</pre></td></tr>
+</table>
+<p>
+Si "PRINCIPIO" no se encuentra, no se imprimirá ningún dato. Y si se encuentra
+"PRINCIPIO" pero no se encuentra ninguna línea que contenga "FIN" a
+continuación, todas las líneas siguientes se imprimirán. Esto ocurre debido a
+la naturaleza basada en flujo de sed -- desconoce si "FIN" aparecerá o no.
+</p>
+<p class="secthead"><a name="doc_chap1_sect12">Ejemplo con código fuente en C</a></p>
+<p>
+Si únicamente se quiere imprimir la función main() en un archivo de código
+fuente en C, se podría teclear:
+</p>
+<a name="doc_chap1_pre8"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.8: Imprimir la función main() en un archivo de código fuente en C</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -n -e '/main[[:space:]]*(/,/^}/p' sourcefile.c | more</span>
+</pre></td></tr>
+</table>
+<p>
+Este comando tiene dos expresiones regulares, '/main[[:space:]]*(/' y '/^}/', y
+un comando , <span class="code" dir="ltr">p</span>. La primera expresión regular apuntará a la cadena "main"
+seguida de cualquier número de espacios o tabuladores, seguida además por un
+paréntesis abierto. Lo cual debería coincidir con el comienzo de nuestra
+declaración main() en ANSI C.
+</p>
+<p>
+En este caso de expresión regular, encontramos la clase de caracteres
+'[[:space:]]'. La cual es únicamente una palabra clave especial para sed que le
+indica a sed que apunte a cualquier espacio o TAB. De haberlo querido, en lugar
+de teclear '[[:space:]]', podríamos haber tecleado '[', después un espacio
+literalmente, a continuación Control-V, después un TAB literal y un ']' --
+Control-V indica a bash que queremos introducir un TAB "real" en lugar de una
+expansión del comando. Es mucho más claro, especialmente en archivos de
+comandos usar la clase de comandos '[[:space:]]'.
+</p>
+<p>
+Bien, ahora la segunda expreg. '/^}/' apuntará a algún carácter '}' que
+aparezca al comienzo de una nueva línea. Si nuestro código se ha formateado
+correctamente, toparemos con ello con el final de nuestra función main(). Si no
+lo está, no lo hará -- cuestión de trabajar con la coincidencia de patrones.
+</p>
+<p>
+El comando <span class="code" dir="ltr">p</span> hace lo mismo que siempre, le dice a sed que imprima
+explícitamente la línea, dado que estamos en el modo silencioso '-n'. Si se
+intenta ejecutar el comando en una línea de código fuente en C, tratará de
+mostrar el bloque completo main() { }, incluyendo el "main ()" inicial y el '}'
+final.
+</p>
+<p class="secthead"><a name="doc_chap1_sect13">La próxima vez</a></p>
+<p>
+Ahora que hemos tratado los principios básicos, estamos listos para los
+siguientes dos artículos. Si necesitamos más material acerca de sed, hay que
+ser paciente -- se está elaborando. Mientras tanto, pueden consultarse los
+siguientes recursos acerca de sed y de las expresiones regulares.
+</p>
+<p class="chaphead"><a name="recursos"></a><a name="doc_chap2"></a><span class="chapnum">2. 
+            </span>Recursos</p>
+<p class="secthead"><a name="doc_chap2_sect1">Enlaces útiles</a></p>
+<ul>
+  <li>
+    Leer los otros artículos acerca de sed de Daniel en developerWorks: "Sed
+    mediante ejemplos, <a href="/doc/es/articles/l-sed2.xml">Parte 2</a> y
+    <a href="/doc/es/articles/l-sed3.xml">Parte 3</a>.
+  </li>
+  <li>
+     Comprobar la excelente <a href="http://www.student.northpark.edu/pemente/sed/sedfaq.html">sed FAQ</a>
+     de Eric Pement.
+  </li>
+  <li>
+     Se puede encontrar el código fuente de sed 3.02 en
+     <a href="ftp://ftp.gnu.org/pub/gnu/sed">ftp://ftp.gnu.org/pub/gnu/sed</a>.
+  </li>
+  <li>
+     Se puede encontrar el nuevo sed 3.02.80 en <a href="ftp://alpha.gnu.org">ftp://alpha.gnu.org</a>.
+  </li>
+  <li>
+    Eric Pement tiene también una lista muy práctica de <a href="http://www.student.northpark.edu/pemente/sed/sed1line.txt">sed one-liners</a>
+    que cualquier aspirante a gurú sed debería consultar.
+  </li>
+  <li>
+    Si nos gustan los libros tradicionales, <a href="http://www.oreilly.com/catalog/sed2/">O'Reilly's sed &amp; awk, 2nd
+    Edition</a> sería una gran elección.
+  </li>
+
+  <li>
+    Leer el artículo de David Mertz acerca del <a href="http://www-106.ibm.com/developerworks/linux/library/l-python5.html">
+    Procesamiento de texto bajo Python</a> (en inglés) en developerWorks.
+  </li>
+
+  <li>
+    Ver el <a href="http://www.python.org/doc/howto/regex/regex.html">Regular Expression
+    HOWTO</a> (en inglés) de <a href="http://python.org">Python.org</a>.
+  </li>
+  <li>
+     Tener en cuenta el <a href="http://www.uky.edu/ArtsSciences/Classics/regex.html">Regular
+     Expression Overview</a> (en inglés) de la Universidad de Kentucky.
+  </li>
+</ul>
+<br><br>
+</td>
+<td width="1%" bgcolor="#dddaec" valign="top"><table border="0" cellspacing="4px" cellpadding="4px">
+<tr><td class="topsep" align="center"><p class="altmenu"><a title="Ver la versión para imprimir" class="altlink" href="/doc/es/articles/l-sed1.xml?style=printable">Imprimir</a></p></td></tr>
+<tr><td class="topsep" align="center"><p class="alttext">Actualizado 9 de octubre, 2005</p></td></tr>
+<tr><td class="topsep" align="left"><p class="alttext"><b>Sumario: </b>
+En esta serie de artículos, Daniel Robbins mostrará cómo usar el poderoso
+(aunque muy a menudo olvidado) editor de flujo UNIX, sed. Sed es una
+herramienta ideal para editar archivos por lotes o para crear macros en el
+intérprete de comandos que modifiquen archivos existentes de forma muy
+poderosa.
+</p></td></tr>
+<tr><td align="left" class="topsep"><p class="alttext">
+  <a href="mailto:drobbins.daniel@gmail.com" class="altlink"><b>Daniel Robbins</b></a>
+<br><i>Autor</i><br><br>
+  <a href="mailto:LinuxBlues@gentoo-es.org" class="altlink"><b>LinuxBlues</b></a>
+<br><i>Traductor</i><br></p></td></tr>
+<tr lang="en"><td align="center" class="topsep">
+<p class="alttext"><b>Donate</b> to support our development efforts.
+        </p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick"><input type="hidden" name="business" value="paypal@gentoo.org"><input type="hidden" name="item_name" value="Gentoo Linux Support"><input type="hidden" name="item_number" value="1000"><input type="hidden" name="image_url" value="/images/paypal.png"><input type="hidden" name="no_shipping" value="1"><input type="hidden" name="return" value="http://www.gentoo.org"><input type="hidden" name="cancel_return" value="http://www.gentoo.org"><input type="image" src="http://images.paypal.com/images/x-click-but21.gif" name="submit" alt="Donate to Gentoo">
+</form>
+</td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://osuosl.org/contribute"><img src="../../../images/osuosl.png" width="125" height="50" alt="Support OSL" title="Support OSL" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.vr.org"><img src="../../../images/vr-ad.png" width="125" height="144" alt="Gentoo Centric Hosting: vr.org" title="Gentoo Centric Hosting: vr.org" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.tek.net" target="_top"><img src="../../../images/tek-gentoo.gif" width="125" height="125" alt="Tek Alchemy" title="Tek Alchemy" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.sevenl.net" target="_top"><img src="../../../images/sponsors/sevenl_ad.png" width="125" height="144" alt="SevenL.net" title="SevenL.net" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.gni.com" target="_top"><img src="../../../images/gni_logo.png" width="125" alt="Global Netoptex Inc." title="Global Netoptex Inc." border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.bytemark.co.uk/r/gentoo-home" target="_top"><img src="../../../images/sponsors/bytemark_ad.png" width="125" alt="Bytemark" title="Bytemark" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.online-kredit-index.de/" target="_top"><img src="../../../images/sponsors/kredit-ad.jpg" width="125" alt="Online Kredit Index" title="Online Kredit Index" border="0"></a></td></tr>
+<tr><td align="center" class="topsep"></td></tr>
+</table></td>
+</tr></table></td></tr>
+<tr><td colspan="2" align="right" class="infohead">
+Copyright 2001-2009 Gentoo Foundation, Inc. Questions, Comments? <a class="highlight" href="/main/es/contact.xml">Contact us</a>.
+</td></tr>
+</table></body>
+</html>

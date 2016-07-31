@@ -1,0 +1,3 @@
+
+
+emacs: ver fichero como C++:     ALT-x    c++-mode

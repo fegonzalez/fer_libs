@@ -1,0 +1,128 @@
+1) Instalar paquetes .deb 
+2) CONFIGURAR ACCESO REMOTO / EXPORT DISPLAY
+3) Seleccionar el Java instalado
+4) Comprimir ficheros
+5) Enlaces simbólicos (ln)
+6) find
+7) Depurar programación
+	7.1) c++filt
+	7.2) ldd : gestión memoria (detección delibrerías utilizadas por un programa)
+	7.3) nm: gestión memoria (detección de objetos no definidos)
+
+#############################################################################################
+1) Instalar paquetes .deb 
+
+ dpkg -i nombre_paquete.deb
+
+#############################################################################################
+2) CONFIGURAR ACCESO REMOTO / EXPORT DISPLAY
+
+// Entorno gráfico
+root>> gdmsetup
+		seguridad / aloow tcp conexions
+		
+// Entorno texto
+
+root>> emacs /etc/gdm/gdm.conf
+
+		DisallowTCP = false
+
+#############################################################################################
+3) Seleccionar el Java instalado
+
+#en el fichero .bashrc:
+
+## JAVA #path del java
+export JAVA_HOME=/usr/lib/jvm/jre1.6.0		
+##PATH #agreagar el path del java al path del usuario
+export PATH=$JAVA_HOME/bin:$PATH
+
+#############################################################################################
+4) Comprimir ficheros
+
+Comprimir:
+
+Fichero TAR
+
+tar -cvf 19_12_2004__api.tar api	# tar 
+
+Fichero TAR.GZ
+
+tar -czvf 19_12_2004__api.tar.gz api	# tar y comprime
+
+	// -c crea nuevo archivo
+	// -v verbose
+	// -z filtra el archivo a trav� de gzip 
+	// -f fichero
+
+
+-----------------------------------------------------------------
+
+Descomprimir
+
+Fichero .GZ:
+
+gunzip -dfr --verbose nombre_fichero.gz	
+
+	// -d desconprime
+	// -f fuerza la decompresi�
+	// -r recursivamente
+	
+Fichero .TAR:
+
+tar -vfx 19_12_2004__api.tar  # tar 
+
+	// -x extrae ficheros de un archivo
+
+
+Fichero .tar.gz
+
+tar -xzvf  fichero.tar.gz   directorio_destino
+
+#############################################################################################
+5) enlaces simbólicos
+
+ln -s path_origen_enlace nombre_enlace
+
+
+ejemplo:	ln -s /home/fer/proyecto/implementacion/api lapi
+
+#############################################################################################
+6) find
+
+find path fichero que_hacer_con_el
+i.e.
+find /mnt/windows_datos -name 'Real*' -type f -print0
+
+#############################################################################################
+7) Depurar programación
+
+7.1) c++filt
+
+	c++filt CODIGO_ERROR
+
+	:	muestra la instrucción / variable C que produce el error
+
+------------------------------------------------------------------
+
+7.2) ldd
+
+	ldd <ejecutable>
+
+	:	muestra las bibliotecas compartidas requeridas por cada programa o
+       biblioteca compartida especificada en la li­nea de ordenes.
+       NOTA.- No hace falta que el programa esté en ejecución.
+       
+       Ejemplo.-	ldd xexec0
+
+------------------------------------------------------------------
+
+7.3) nm
+
+	 nm - list symbols from object files
+
+	: detección de objetos no definidos: busca la función en la librería (similar a jar en JAVA)
+nm -C  /home/fer/job/workspace/tigre/library/eTactico/sistemas/libmod.so | grep write__t_formacionGrupoSoldados
+
+#############################################################################################
+

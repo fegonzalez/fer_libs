@@ -1,0 +1,8 @@
+De máquina remota a local
+
+scp  hostname:/dir/subdir/subsubdir/file_name.txt   .
+
+
+De local a remota:
+
+scp file_name.file_extension  hostname:/complete_path/

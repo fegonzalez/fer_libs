@@ -1,0 +1,57 @@
+Sí. Guardas y abres aptitude. Después:
+
+aptitude update
+
+aptitude safe-upgrade (hasta que ya no actualice nada)
+
+y por ultimo:
+
+aptitude full-upgrade
+
+Y si tienes suerte ya tendras un sistema más o menos funcional.
+
+//-----------------------------------
+
+deb http://ftp.mx.debian.org/debian/ squeeze main
+deb-src http://ftp.mx.debian.org/debian/ squeeze main
+
+deb http://security.debian.org/ squeeze/updates main contrib
+deb-src http://security.debian.org/ squeeze/update main contrib
+
+deb http://volatile.debian.org/debian-volatile squeeze/volatile main contrib
+deb-src http://volatine.debian.org/debian-volatine squeeze/volatine main contrib
+
+precedi a poner
+
+#aptitude update
+
+#aptitude safe-upgrade
+
+y despues:
+#aptitude full-upgrade
+
+ya estando todo actualizado investigue un poco y vi una forma de instalar gnome que es la siguiente:
+
+sudo apt-get install gnome gdm
+
+despues reinicie y listo!!! todo funciona bien...
+
+nuevamente muchas gracias a todos .. todos me fueron de mucha ayuda.. a cada uno quien comento le debo una botella de tequila jajaja
+
+
+------------------
+
+
+Estable
+## Debian - stable
+deb http://ftp.us.debian.org/debian/ stable main contrib non-free
+deb-src http://ftp.us.debian.org/debian/ stable main contrib non-free
+## Actualizaciones de seguridad
+deb http://security.debian.org/ stable/updates main contrib non-free
+deb-src http://security.debian.org/ stable/updates main contrib non-free
+
+
+
+//--------------------------------------------
+
+http://www.esdebian.org/wiki/drivers-nvidia-usando-module-assistant#2

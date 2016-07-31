@@ -1,0 +1,29 @@
+
+EMACS>>
+
+ALT-X gdb
+ALT-X   path (relativo o absoluto) hasta el binario a depurar
+M-x gdb-many-windows
+
+GDB>>
+#cambiar path a otra maquina is es necesario
+#set substitute-path /home/aw159/pruebas/USERNAME /home/aw159pru
+start
+
+#crear (borrar) break points
+pinchar en el margen sonbreado (pinchar)
+add CTRL-X ESPACIO
+remove  (CTRL-X CTRL-A CTRL-D)
+
+
+########################
+turret test
+
+#Run gdb (like this): gdb --annotate=3
+ ../../.object/simdebug/systems/eods/turret_test
+
+break eods_test_common.cpp:95
+break eodsParameters.cpp:23
+break paramfile.cpp:26
+break paramfile.cpp:38
+break paramfile.cpp:43

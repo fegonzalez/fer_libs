@@ -1,0 +1,37 @@
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+proc	/proc	proc	defaults	0	0
+#Entry for /dev/sda1 :
+UUID=cfc73ec3-576a-4221-a5b5-7cf41ed08049	/	ext3	errors=remount-ro	0	1
+#Entry for /dev/sda7 :
+UUID=df8a2859-15fe-45a3-925e-a9693d93b913	/media/datos	ext3	defaults	0	2
+#Entry for /dev/sda6 :
+UUID=40fbe8cb-9402-4716-9f01-63a96ab3de07	/home	ext3	defaults	0	2
+UUID=5e35b7f7-922f-4c88-be2e-92815ea457c1	none	swap	sw	0	0
+UUID=987D-DE0B	/media/cdrom0	udf,iso9660	user,noauto	0	0
+/dev/scd0	/media/cdrom1	udf,iso9660	user,noauto	0	0
+
+
+### simsam
+# read only
+#//MadSfeNAS02/SimSam$       /media/simsam              cifs    ro,noauto,user,username=fegonzalez,workgroup=INDRA   0   0
+#rw
+//MadSfeNAS02/SimSam$       /media/simsam              cifs    noauto,user,username=fegonzalez,workgroup=INDRA   0   0
+
+
+# rw
+#//MadSfeNAS02/SimSam$       /mnt/simsam_rw              cifs    noauto,user,username=fegonzalez,workgroup=INDRA   0   0
+
+### simsamdocu
+# read only
+#//gishdoc/simdoc/wildcat    /media/simsamdocu          cifs    ro,noauto,user,username=fegonzalez    0     0
+//madsfelynxdoc/DATA    /media/simsamdocu          cifs    ro,noauto,user,username=fegonzalez    0     0
+# rw
+#//gishdoc/simdoc/wildcat    /mnt/simsamdocu_rw          cifs    noauto,user,username=fegonzalez    0     0
+
+
+#usb
+/dev/sda1 /media/usb vfat rw,user,noauto 0 0 
+/dev/sda2 /media/usb2 vfat rw,user,noauto 0 0 

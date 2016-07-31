@@ -1,0 +1,25 @@
+
+
+[hostname username new_name]rename "s/oldname/new_name/g" *.h
+[hostname username new_name]rename "s/oldname/new_name/g" *.cpp
+
+
+EJEMPLO.- 
+
+[hostname username new_name]z
+total 64K
+-rw-r--r-- 1 username soft 1.8K Jul 25 17:04 HmoldnameStruct.h
+-rw-r--r-- 1 username soft  215 Jul 25 17:04 HmoldnameStruct.cpp
+-rw-r--r-- 1 username soft 1.2K Jul 25 17:04 Hmoldname_interfaces.h
+-rw-r--r-- 1 username soft 1.5K Jul 25 17:04 Hmoldname_interfaces.cpp
+
+
+[hostname username new_name]rename "s/oldname/new_name/g" *.h
+[hostname username new_name]rename "s/oldname/new_name/g" *.cpp
+
+[hostname username new_name]z
+total 64K
+-rw-r--r-- 1 username soft 1.8K Jul 25 17:04 Hmsys_dest_Struct.h
+-rw-r--r-- 1 username soft  215 Jul 25 17:04 Hmsys_dest_Struct.cpp
+-rw-r--r-- 1 username soft 1.2K Jul 25 17:04 Hmsys_dest_interfaces.h
+-rw-r--r-- 1 username soft 1.5K Jul 25 17:04 Hmsys_dest_interfaces.cpp

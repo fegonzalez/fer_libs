@@ -1,0 +1,5 @@
+
+Modificar /etcf/stab. Una línea por cada disco remoto:
+
+//madsfefile1.indra.es/SimSam$   /mnt/simsam    cifs    username=fegonzalez,workgroup=INDRA
+

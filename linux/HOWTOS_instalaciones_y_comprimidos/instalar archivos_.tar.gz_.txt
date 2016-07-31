@@ -1,0 +1,25 @@
+Re: instalar archivos .tar.gz
+Un archivo .tar.gz no es exactamente un archivo para instalar, es un archivo comprimido, como el .zip solo que tiene otra compresion.
+
+Casi siempre esos archivos, igual que los .bz2 traen dentro el source del programa osea el codigo de fuentes, para que ?? 
+para poder compilarlo en tu maquina y luego instalarlo.
+
+Solo tenes que descomprimirlo y luego ingresar al directorio donde lo descompimiste, y despues entras alguna consola.
+
+./configure
+make
+su 
+<< Password
+make install
+
+./configure <<< "Lo que hace es buscar librerias que necesita si las tenes instaladas, configuracion de la PC, 
+donde se va a instalar, directorios con modulos, librerias, programas instalados necesarios para su compilacion, etc"
+
+make <<< "Compila el programa en un archivo ejecutable (binario)"
+
+su <<<< "Entras como root para poder instalar el programa, te va a pedir el password asi que ingresalo"
+
+make install <<<< "Copia el ejecutable que creaste con make al sistema por asi decirlo asi vos lo podes ejecutar normalmente"
+
+Espero que te ayude.
+Saludos

@@ -1,0 +1,39 @@
+
+###############################################
+#search replace en los publica:
+###############################################
+
+
+
+(.*\) indica un TOKEN que quiero CONSERVAR.
+      Se pone está expresión por cada token a CONSERVAR.
+
+\1 \2 ... \n   marca cada lugar en el que se quiere dejar cada TOKEN a CONSERVAR.
+
+
+Ejemplo.-
+
+tengo:  case    Alert: logAlert(message, showDate); break;
+quiero: case    Alert: return std::string("Alert");
+->
+QUIERO CONSERVAR los tokens: 'case' y 'Alert'.
+->
+CAMBIO:
+^[    ]*\(.*\) \(.*\): .* -> \1 \2: return std::string("\2");
+
+Otro ejemplo:
+
+Tengo:
+load_var1 true
+save_data true
+Quiero:
+expected_config.load_var1=true;
+expected_config.save_data=true;
+->
+QUIERO CONSERVAR los tokens: 'load_var1' OR 'save_data', y 'true'
+->
+Uso:
+Query replace regexp in region (default \(.*\) \(.*\) -> expected_config.\1=\2;):
+
+###############################################
+

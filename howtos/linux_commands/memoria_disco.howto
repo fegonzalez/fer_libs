@@ -1,0 +1,1 @@
+clear;du --max-depth=1 -kh |grep M

@@ -1,0 +1,43 @@
+test_en_tia.howto
+
+Fichero a probar :
+
+howto.h
+howto.cpp
+
+class Howto{}
+
+
+
+Crear el fichero de test:
+
+howto_test.cpp 
+
+#includes
+USING_NAMESPACE_TIA
+int main(int argc, char **argv) 
+{
+  Howto objeto;
+
+  objeto.loquesea 
+
+    ...
+
+    
+}
+
+
+///////////////////////////////////////////777
+
+compilar el test:
+
+make test #compila todos los tests
+make memory_file_test #compila este test
+
+make difftest # ejecuta y compara con file.OK para todos los tests
+make diffmemory_file_test # ejecuta y compara con file.OK solo este test
+
+make successmemory_file_test # para crear el fichero.OK
+make success  #todos
+
+

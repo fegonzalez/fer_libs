@@ -1,0 +1,596 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link title="new" rel="stylesheet" href="../../../css/main.css" type="text/css">
+<link REL="shortcut icon" HREF="../../../favicon.ico" TYPE="image/x-icon">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/www-gentoo-org.xml" title="Gentoo Website">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/forums-gentoo-org.xml" title="Gentoo Forums">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/bugs-gentoo-org.xml" title="Gentoo Bugzilla">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/packages-gentoo-org.xml" title="Gentoo Packages">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.gentoo.org/search/archives-gentoo-org.xml" title="Gentoo List Archives">
+<title>Documentación Gentoo Linux
+--
+  Sed mediante ejemplos, Parte 2</title>
+</head>
+<body style="margin:0px;" bgcolor="#ffffff"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td valign="top" height="125" bgcolor="#45347b"><a href="/"><img border="0" src="../../../images/gtop-www.jpg" alt="Gentoo Logo"></a></td></tr>
+<tr><td valign="top" align="right" colspan="1" bgcolor="#ffffff"><table border="0" cellspacing="0" cellpadding="0" width="100%"><tr>
+<td width="99%" class="content" valign="top" align="left">
+<table class="ncontent" align="center" width="90%" border="2px" cellspacing="0" cellpadding="4px"><tr><td bgcolor="#ddddff"><p class="note"><b>Renuncia de responsabilidad: </b>
+    La versión original de este artículo fue publicada por IBM 
+    developerWorks y es propiedad de Westtech Information Services. Este
+    documento es una versión actualizada del artículo original y contiene
+    mejoras introducidas por el Equipo de Documentación de Gentoo.<br>
+    Este documento carece de soporte activo.
+  </p></td></tr></table>
+<br><h1>Sed mediante ejemplos, Parte 2</h1>
+<form name="contents" action="http://www.gentoo.org">
+<b>Contenido</b>:
+        <select name="url" size="1" OnChange="location.href=form.url.options[form.url.selectedIndex].value" style="font-family:sans-serif,Arial,Helvetica"><option value="#doc_chap1">1. Cómo aprovechar más el editor UNIX</option>
+<option value="#doc_chap2">2. Recursos</option></select>
+</form>
+<p class="chaphead"><a name="doc_chap1"></a><span class="chapnum">1. 
+            </span>Cómo aprovechar más el editor UNIX</p>
+<p class="secthead"><a name="doc_chap1_sect1">¡Sustitución!</a></p>
+<p>
+Veamos uno de los comandos más útiles de sed, el de sustitución. Usándolo,
+podemos reemplazar una cadena en concreto o la expresión regular coincidente
+con otra cadena. He aquí un ejemplo del uso más básico de este comando:
+</p>
+<a name="doc_chap1_pre1"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.1: El uso más básico del comando de sustitución</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's/foo/bar/' miarchivo.txt</span>
+</pre></td></tr>
+</table>
+<p>
+El comando anterior sacará los contenidos de miarchivo.txt a stdout, con la
+primera aparición de 'foo' (si es que hay alguna) reemplazada en cada línea por
+la cadena 'bar'. Por favor, hay que tener en cuenta que he dicho la primera
+aparición en cada línea, a pesar de que esto no es lo que se desea normalmente.
+Cuando quiero realizar la sustitución de una cadena, normalmente la quiero
+realizar globalmente. Dicho con otras palabras, quiero reemplazar la expresión
+todas las veces que se muestra, como sigue:
+</p>
+<a name="doc_chap1_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.2: Reemplazar todas las coincidencias en cada línea</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's/foo/bar/g' miarchivo.txt</span>
+</pre></td></tr>
+</table>
+<p>
+La opción adicional 'g' después de la última barra le indica a sed que debe
+realizar el reemplazo de forma global.
+</p>
+<p>
+He aquí algunas otras cosas que se deben saber acerca del comando de
+sustitución <span class="code" dir="ltr">s///</span>. La primera es que se trata de un comando y de un
+comando únicamente; no hay ninguna dirección mostrada en los ejemplos
+anteriores. Lo cual significa que el comando <span class="code" dir="ltr">s///</span> puede usarse con
+directivas acerca de las direcciones a las cuales se aplicará, como se muestra:
+</p>
+<a name="doc_chap1_pre3"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.3: Especificar las líneas a las que se aplicará el comando</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e '1,10s/enchantment/entrapment/g' miarchivo2.txt</span>
+</pre></td></tr>
+</table>
+<p>
+El ejemplo anterior causará que todas las veces que aparezca 'enchantment' se
+reemplace por 'entrapment', pero sólo hasta la línea 10, inclusive.
+</p>
+<a name="doc_chap1_pre4"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.4: Especificar más opciones</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e '/^$/,/^FIN/s/colinas/montañas/g' miarchivo3.txt</span>
+</pre></td></tr>
+</table>
+<p>
+Este ejemplo cambiará 'colinas' por 'montañas', pero únicamente en los bloques
+de texto que comiencen con una línea en blanco, y que terminen con una línea
+que comience con los tres caracteres 'FIN', inclusive.
+</p>
+<p>
+Otra de las buenas cosas acerca del comando <span class="code" dir="ltr">s///</span> es que tenemos muchas
+opciones cuando usamos estos <span class="code" dir="ltr">/</span> separadores. Si estamos realizando la
+sustitución de una cadena y la expresión regular o el reemplazo tiene muchas
+barras, podemos cambiar el separador especificando un carácter distinto después
+de la 's'. Por ejemplo, lo siguiente cambiará el contenido cambiando
+<span class="path" dir="ltr">/usr/local</span> por <span class="path" dir="ltr">/usr</span>:
+</p>
+<a name="doc_chap1_pre5"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.5: Reemplazar todas las apariciones de una cadena con otra</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's:/usr/local:/usr:g' milista.txt</span>
+</pre></td></tr>
+</table>
+<table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#bbffbb"><p class="note"><b>Nota: </b>
+En este ejemplo, estamos usando los dos puntos como separador. Si alguna vez
+necesitamos especificar el carácter separador en nuestra expresión regular hay
+que ponerle antes una barra invertida.
+</p></td></tr></table>
+<p class="secthead"><a name="doc_chap1_sect2">La caótica confusión con las expreg</a></p>
+<p>
+Hasta ahora, únicamente hemos realizado una simple sustitución de cadenas.
+Aunque esto puede ser muy útil, podemos también buscar expresiones regulares.
+Por ejemplo, el siguiente comando sed encontrará una frase que comience con
+'&lt;' y termine con '&gt;', y que contenga cualquier número de caracteres
+entremedias. Esta frase se borrará (será reemplazada por una cadena sin
+contenido):
+</p>
+<a name="doc_chap1_pre6"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.6: Borrar la frase especificada</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's/&lt;.*&gt;//g' miarchivo.html</span>
+</pre></td></tr>
+</table>
+<p>
+Un buen comienzo con un archivo de comandos sed sería eliminar todas las
+etiquetas HTML de un archivo, pero no funcionará de forma correcta, debido a
+algo que hace especiales a las expresiones regulares. ¿Cuál es la razón? Cuando
+sed intenta encontrar la expresión regular en una línea, encuentra la
+coincidencia más larga en la línea. Esto no era ningún problema en mi anterior
+artículo acerca de sed, dado que estaba usando los comandos <span class="code" dir="ltr">d</span> y
+<span class="code" dir="ltr">p</span>, que borrarían la línea completa de todas formas. Pero cuando usamos
+el comando <span class="code" dir="ltr">s///</span>, es muy diferente, dado que todo aquello con lo que
+coincida la expresión regular será reemplazado con la cadena de sustitución, o
+en este caso, eliminado. Lo cual significa que, en el ejemplo anterior,
+convertirá la siguiente línea:
+</p>
+<a name="doc_chap1_pre7"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.7: ejemplo de código HTML</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+&lt;b&gt;Esto&lt;/b&gt; es lo que &lt;b&gt;I&lt;/b&gt; quería decir.
+</pre></td></tr>
+</table>
+<p>
+en esta otra:
+</p>
+<a name="doc_chap1_pre8"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.8: Efecto indeseado</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+quería decir.
+</pre></td></tr>
+</table>
+<p>
+en lugar de hacer esto otro, que era lo que pretendíamos:
+</p>
+<a name="doc_chap1_pre9"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.9: Efecto deseado</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+Esto es lo que quería decir.
+</pre></td></tr>
+</table>
+<p>
+Afortunadamente, hay una forma sencilla de resolverlo. En lugar de teclear una
+expresión regular que indique "un carácter '&lt;' seguido de cualquier número
+de caracteres y que termine con un carácter '&gt;'". Lo cual tendrá el efecto
+de apuntar a la menor coincidencia posible, en lugar de a la mayor de ellas. El
+nuevo comando sería similar a este:
+</p>
+<a name="doc_chap1_pre10"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.10: </p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's/&lt;[^&gt;]*&gt;//g' miarchivo.html</span>
+</pre></td></tr>
+</table>
+<p>
+En el ejemplo anterior, el '[^&gt;]' especifica un "carácter que no sea '&gt;'"
+y el '*' después del mismo completa la expresión para significar "cero o más
+caracteres que no sean '&gt;'". Recomiendo probar este comando con algunos
+archivos HTML de ejemplo, encauzarlos con more y comprobar los resultados.
+</p>
+<p class="secthead"><a name="doc_chap1_sect3">Coincidencia con más caracteres</a></p>
+<p>
+La sintaxis de expresiones regulares '[ ]' tiene más opciones adicionales. Para
+especificar un rango de caracteres se puede usar '-', siempre y cuando no esté
+ni en la primera ni en la última posición, como se muestra a continuación:
+</p>
+<a name="doc_chap1_pre11"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.11: Especificar un rango de caracteres</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+'[a-x]*'
+</pre></td></tr>
+</table>
+<p>
+Apuntará a cero o más caracteres, siempre que cada uno de ellos sea una 'a',
+'b','c'...'v','w','x'. Además, la clase de caracteres '[:space:]' está
+disponible para coincidir con espacios en blanco. He aquí una lista bastante
+completa de clases de caracteres:
+</p>
+<table class="ntable">
+  <tr>
+    <td class="infohead"><b>Clase de carácter</b></td>
+    <td class="infohead"><b>Descripción</b></td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:alnum:]</td>
+    <td class="tableinfo">Alfanumérico [a-z A-Z 0-9]</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:alpha:]</td>
+    <td class="tableinfo">Alfabético [a-z A-Z]</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:blank:]</td>
+    <td class="tableinfo">Espacios o tabuladores</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:cntrl:]</td>
+    <td class="tableinfo">Cualquier carácter de control</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:digit:]</td>
+    <td class="tableinfo">Dígitos numéricos [0-9]</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:graph:]</td>
+    <td class="tableinfo">Cualquier carácter visible (no espacios en blanco)</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:lower:]</td>
+    <td class="tableinfo">Minúsculas [a-z]</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:print:]</td>
+    <td class="tableinfo">Caracteres que no sean de control</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:punct:]</td>
+    <td class="tableinfo">Caracteres de puntuación</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:space:]</td>
+    <td class="tableinfo">Espacio en blanco</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:upper:]</td>
+    <td class="tableinfo">Mayúsculas [A-Z]</td>
+  </tr>
+  <tr>
+    <td class="tableinfo">[:xdigit:]</td>
+    <td class="tableinfo">Dígitos hexadecimales [0-9 a-f A-F]</td>
+  </tr>
+</table>
+<p>
+Es una gran ventaja usar clases de caracteres siempre que sea posible, dado que
+se adaptan mejor a las locales no inglesas (incluyendo caracteres con acentos
+siempre que sea necesario, etc.).
+</p>
+<p class="secthead"><a name="doc_chap1_sect4">Asuntos de sustitución avanzada</a></p>
+<p>
+Nos hemos detenido con la realización de simples e incluso complejas
+sustituciones directas, pero sed puede hacer mucho más. Podemos referirnos a
+partes o a cadenas enteras con las que coincida la expresión regular y usar
+estas partes para construir la cadena de reemplazo. Como ejemplo, digamos que
+estamos respondiendo a un mensaje. El siguiente ejemplo pondrá el prefijo "Rafa
+dijo: " a cada frase:
+</p>
+<a name="doc_chap1_pre12"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.12: Añadir un prefijo a cada frase con cierta cadena</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's/.*/Rafa dijo: &amp;/' msjorig.txt</span>
+</pre></td></tr>
+</table>
+<p>
+La salida será similar a esta:
+</p>
+<a name="doc_chap1_pre13"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.13: Salida del anterior comando</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+Rafa dijo: Hola Jaime,
+Rafa dijo:
+Rafa dijo: ¡Seguro que me gusta este material acerca de sed!
+Rafa dijo:
+</pre></td></tr>
+</table>
+<p>
+En este ejemplo, usamos el carácter '&amp;' en la cadena de reemplazo, que le
+indica a sed que inserte la expresión regular completa con la que coincida. Por
+lo que todo lo que coincidió con '.*' (el mayor grupo de cero o más caracteres
+en la línea, o la línea completa) puede ser introducido en la cadena de
+reemplazo, incluso en múltiples ocasiones. Esto está muy bien, pero sed es
+mucho más poderoso aún.
+</p>
+<p class="secthead"><a name="doc_chap1_sect5">Aquellos maravillosos paréntesis con barras invertidas</a></p>
+<p>
+Aún mejor que con '&amp;', el comando <span class="code" dir="ltr">s///</span> nos permite definir regiones
+en nuestra expresión regular, y podemos referirnos a estas regiones específicas
+en nuestra cadena de reemplazo. Como ejemplo, digamos que tenemos un archivo
+que contiene el siguiente texto:
+</p>
+<a name="doc_chap1_pre14"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.14: Cita del texto</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+foo bar oni
+eeny meeny miny
+larry curly moe
+jimmy the weasel
+</pre></td></tr>
+</table>
+<p>
+Ahora, digamos que queremos escribir un archivo de comandos sed que reemplace
+"eeny meeny miny" con "Victor eeny-meeny Von miny", etc. Para hacerlo, primero
+deberíamos escribir una expresión regular con la que coincidan las tres
+cadenas, separadas por espacios:
+</p>
+<a name="doc_chap1_pre15"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.15: Coincidir con la expresión regular</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+'.* .* .*'
+</pre></td></tr>
+</table>
+<p>
+Aquí está. Ahora, definiremos regiones insertando paréntesis con barras
+invertidas alrededor de cada región de nuestro interés:
+</p>
+<a name="doc_chap1_pre16"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.16: Definición de regiones</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+'\(.*\) \(.*\) \(.*\)'
+</pre></td></tr>
+</table>
+<p>
+Esta expresión regular funcionará exactamente igual que la anterior, excepto
+porque definirá tres regiones lógicas a las que podremos referirnos en nuestra
+cadena de reemplazo. He aquí el archivo de comandos final:
+</p>
+<a name="doc_chap1_pre17"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.17: Archivo de comandos final</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -e 's/\(.*\) \(.*\) \(.*\)/Victor \1-\2 Von \3/' miarchivo.txt</span>
+</pre></td></tr>
+</table>
+<p>
+Como puede verse, nos referimos a cada región delimitada por un paréntesis
+tecleando '\x', donde x es el número de región, comenzando por uno. El
+resultado será el siguiente:
+</p>
+<a name="doc_chap1_pre18"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.18: Resultado del anterior comando</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+Victor foo-bar Von oni
+Victor eeny-meeny Von miny
+Victor larry-curly Von moe
+Victor jimmy-the Von weasel
+</pre></td></tr>
+</table>
+<p>
+A medida que uno se familiariza con sed, puede realizarse un procesamiento de
+textos realmente poderoso con un mínimo de esfuerzo. Pensemos ahora en cómo
+habríamos afrontado este mismo problema con nuestro lenguaje para crear
+archivos de comandos favorito -- ¿habríamos sido capaces de encontrar la
+solución con una sola línea?
+</p>
+<p class="secthead"><a name="doc_chap1_sect6">Combinarlo todo</a></p>
+<p>
+A medida que creamos archivos de comandos con sed más complejos, necesitaremos
+la capacidad para introducir más de un comando. Hay varias formas de lograrlo.
+Primero podemos usar puntos y comas entre los comandos. Por ejemplo, en esta
+serie de comandos se emplea el comando '=', que le indica a sed que muestre el
+número de línea, así como el comando <span class="code" dir="ltr">p</span>, que le indica a sed que muestre
+la línea (dado que estamos en el modo '-n'):
+</p>
+<a name="doc_chap1_pre19"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.19: Primer método, puntos y comas</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -n -e '=;p' myfile.txt</span>
+</pre></td></tr>
+</table>
+<p>
+Cada vez que se indiquen dos o más comandos, se ejecutará cada comando (en
+orden) para cada línea del archivo. En el ejemplo anterior, primero se aplica
+el comando '=' a la línea 1, y después se le aplica el comando <span class="code" dir="ltr">p</span>.
+Entonces sed procede con la línea 2 y repite el proceso. Mientras que los
+puntos y comas son muy útiles, hay ciertas situaciones en las que no
+funcionará. Otra alternativa sería usar dos opciones -e para especificar dos
+comandos separados:
+</p>
+<a name="doc_chap1_pre20"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.20: Segundo método, múltiples -e</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -n -e '=' -e 'p' miarchivo.txt</span>
+</pre></td></tr>
+</table>
+<p>
+De todas formas, cuando nos adentremos en comandos más complejos para añadir e
+insertar texto, no será suficiente con múltiples opciones '-e'. Para archivos
+de comandos complejos con varias líneas, el método más adecuado es poner todos
+esos comandos en un archivo diferente. Después haremos referencia a este
+archivo de comandos con la opción -f:
+</p>
+<a name="doc_chap1_pre21"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.21: Tercer método, archivo externo con comandos</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+$ <span class="code-input">sed -n -f miscomandos.sed miarchivo.txt</span>
+</pre></td></tr>
+</table>
+<p>
+Este método, aunque parezca menos conveniente, siempre funcionará.
+
+</p>
+<p class="secthead"><a name="doc_chap1_sect7">Múltiples comandos en una sola dirección</a></p>
+<p>
+A veces, podemos querer especificar múltiples comandos que se apliquen en una
+sola dirección. Lo cual es realmente útil cuando se realizan montones de
+<span class="code" dir="ltr">s///</span> para modificar palabras o la sintaxis de un archivo. Para realizar
+múltiples comandos en una sola dirección, introducimos nuestros comandos sed en
+un archivo y usamos los caracteres de llaves '{ }' para agruparlos, como sigue:
+</p>
+<a name="doc_chap1_pre22"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.22: Introducción de múltiples comandos por dirección</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+1,20{
+        s/[Ll]inux/GNU\/Linux/g
+        s/samba/Samba/g
+        s/posix/POSIX/g
+}
+</pre></td></tr>
+</table>
+<p>
+El ejemplo anterior aplicará tres comandos de sustitución desde la línea 1 a la
+20, inclusive. Se pueden expresar también direcciones con expresiones regulares
+o una combinación de ambas:
+</p>
+<a name="doc_chap1_pre23"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.23: Combinación de ambos métodos</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+1,/^END/{
+        s/[Ll]inux/GNU\/Linux/g
+        s/samba/Samba/g
+        s/posix/POSIX/g
+       p
+}
+</pre></td></tr>
+</table>
+<p>
+Este ejemplo aplicará todos los comandos entre '{ }' a las líneas que se
+encuentren entre la primera y aquella que comience con las letras "END", o
+hasta el final del archivo, si no se encuentra "END" antes.
+</p>
+<p class="secthead"><a name="doc_chap1_sect8">Añadir, insertar y cambiar de línea</a></p>
+<p>
+Ahora que estamos escribiendo archivos de comandos sed en archivos separados,
+podemos aprovechar los comandos para añadir, insertar y cambiar de línea. Estos
+comandos insertarán una línea después de la línea actual, insertarán una línea
+antes de la línea actual o reemplazarán a la línea actual en el espacio de
+patrones. Pueden usarse para insertar múltiples líneas en su salida. El comando
+para insertar líneas se usa como sigue:
+</p>
+<a name="doc_chap1_pre24"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.24: Usar el comando para insertar líneas</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+i\
+Esta línea se insertará antes de cada línea
+</pre></td></tr>
+</table>
+<p>
+Si no se especifica ninguna dirección en la que aplicar este comando, se
+aplicará a cada línea y producirá un resultado como el siguiente:
+</p>
+<a name="doc_chap1_pre25"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.25: Resultados del anterior comando</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+Esta línea se insertará antes de cada línea
+línea 1 aquí
+Esta línea se insertará antes de cada línea
+línea 2 aquí
+Esta línea se insertará antes de cada línea
+línea 3 aquí
+Esta línea se insertará antes de cada línea
+línea 4 aquí
+</pre></td></tr>
+</table>
+<p>
+Si se quieren insertar varias líneas antes de la actual, se pueden añadir
+agregando una barra invertida a la línea anterior, como se muestra:
+</p>
+<a name="doc_chap1_pre26"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.26: Insertar varias líneas antes de la actual</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+i\
+inserta esta línea\
+y esta otra\
+y esta otra\
+y, ¡ah!, esta también.
+</pre></td></tr>
+</table>
+<p>
+El comando para añadir funciona de forma similar, pero insertará una línea o
+líneas después de la actual en el espacio de patrones. Se usa como sigue:
+</p>
+<a name="doc_chap1_pre27"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Listado de Código 1.27: Añadir líneas después de la actual</p></td></tr>
+<tr><td bgcolor="#eeeeff" align="left" dir="ltr"><pre>
+a\
+Añade esta línea después de cada línea. ¡Gracias! :)
+</pre></td></tr>
+</table>
+<p>
+Por otra parte, el comando para cambiar de línea reemplazará la línea actual
+en el espacio de patrones, y se usa como se indica:
+</p>
+<p>
+Dado que el comando para añadir, insertar y cambiar de línea necesitan ser
+indicados en varias líneas, es necesario teclearlos en archivos de comandos de
+texto e indicar a sed que los ejecute con la opción '-f'. Usar los otros
+métodos de sed para introducir comandos resultará problemático.
+</p>
+<p class="secthead"><a name="doc_chap1_sect9">La próxima vez</a></p>
+<p>
+La próxima vez, en el último artículo acerca de sed en esta serie, mostraré
+muchos ejemplos excelentes de uso en el mundo real para muchos tipos diferentes
+de tareas. No solamente mostraré lo que los archivos de comandos hacen sino
+porqué lo hacen. Después de consultarlo, dispondremos de muchas ideas
+adicionales excelentes acerca de cómo usar sed en nuestros proyectos. ¡Nos
+vemos !
+</p>
+<p class="chaphead"><a name="doc_chap2"></a><span class="chapnum">2. 
+            </span>Recursos</p>
+<p class="secthead"><a name="doc_chap2_sect1">Enlaces útiles</a></p>
+<ul>
+  <li>
+    Leer los otros artículos acerca de sed de Daniel en developerWorks: "Sed
+    mediante ejemplos, <a href="/doc/es/articles/l-sed1.xml">Parte 1</a> y
+    <a href="/doc/es/articles/l-sed3.xml">Parte 3</a>.
+  </li>
+  <li>
+     Comprobar la excelente <a href="http://www.student.northpark.edu/pemente/sed/sedfaq.html">se FAQ</a>
+     de Eric Pement.
+  </li>
+  <li>
+     Se puede encontrar el código fuente de sed 3.02 en
+     <a href="ftp://ftp.gnu.org/pub/gnu/sed">ftp://ftp.gnu.org/pub/gnu/sed</a>.
+  </li>
+  <li>
+     Se puede encontrar el nuevo sed 3.02.80 en <a href="ftp://alpha.gnu.org">ftp://alpha.gnu.org</a>.
+  </li>
+  <li>
+    Eric Pement tiene también una lista muy práctica de <a href="http://www.student.northpark.edu/pemente/sed/sed1line.txt">sed one-liners</a>
+    que cualquier aspirante a gurú sed debería consultar.
+  </li>
+  <li>
+    Si nos gustan los libros tradicionales, <a href="http://www.oreilly.com/catalog/sed2/">O'Reilly's sed &amp; awk, 2nd
+    Edition</a> sería una gran elección.
+  </li>
+
+</ul>
+<br><br>
+</td>
+<td width="1%" bgcolor="#dddaec" valign="top"><table border="0" cellspacing="4px" cellpadding="4px">
+<tr><td class="topsep" align="center"><p class="altmenu"><a title="Ver la versión para imprimir" class="altlink" href="/doc/es/articles/l-sed2.xml?style=printable">Imprimir</a></p></td></tr>
+<tr><td class="topsep" align="center"><p class="alttext">Actualizado 9 de octubre, 2005</p></td></tr>
+<tr><td class="topsep" align="left"><p class="alttext"><b>Sumario: </b>
+Sed es un poderoso y compacto editor de flujos de texto. En este artículo, el
+segundo de la serie, Daniel muestra cómo realizar sustituciones de cadenas;
+crear archivos de comandos más amplios y usar los comandos de sed para añadir,
+insertar y modificar una línea.
+</p></td></tr>
+<tr><td align="left" class="topsep"><p class="alttext">
+  <a href="mailto:drobbins.daniel@gmail.com" class="altlink"><b>Daniel Robbins</b></a>
+<br><i>Autor</i><br><br>
+  <a href="mailto:LinuxBlues@gentoo-es.org" class="altlink"><b>LinuxBlues</b></a>
+<br><i>Traductor</i><br></p></td></tr>
+<tr lang="en"><td align="center" class="topsep">
+<p class="alttext"><b>Donate</b> to support our development efforts.
+        </p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick"><input type="hidden" name="business" value="paypal@gentoo.org"><input type="hidden" name="item_name" value="Gentoo Linux Support"><input type="hidden" name="item_number" value="1000"><input type="hidden" name="image_url" value="/images/paypal.png"><input type="hidden" name="no_shipping" value="1"><input type="hidden" name="return" value="http://www.gentoo.org"><input type="hidden" name="cancel_return" value="http://www.gentoo.org"><input type="image" src="http://images.paypal.com/images/x-click-but21.gif" name="submit" alt="Donate to Gentoo">
+</form>
+</td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://osuosl.org/contribute"><img src="../../../images/osuosl.png" width="125" height="50" alt="Support OSL" title="Support OSL" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.vr.org"><img src="../../../images/vr-ad.png" width="125" height="144" alt="Gentoo Centric Hosting: vr.org" title="Gentoo Centric Hosting: vr.org" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.tek.net" target="_top"><img src="../../../images/tek-gentoo.gif" width="125" height="125" alt="Tek Alchemy" title="Tek Alchemy" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.sevenl.net" target="_top"><img src="../../../images/sponsors/sevenl_ad.png" width="125" height="144" alt="SevenL.net" title="SevenL.net" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.gni.com" target="_top"><img src="../../../images/gni_logo.png" width="125" alt="Global Netoptex Inc." title="Global Netoptex Inc." border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.bytemark.co.uk/r/gentoo-home" target="_top"><img src="../../../images/sponsors/bytemark_ad.png" width="125" alt="Bytemark" title="Bytemark" border="0"></a></td></tr>
+<tr lang="en"><td align="center" class="topsep"><a href="http://www.online-kredit-index.de/" target="_top"><img src="../../../images/sponsors/kredit-ad.jpg" width="125" alt="Online Kredit Index" title="Online Kredit Index" border="0"></a></td></tr>
+<tr><td align="center" class="topsep"></td></tr>
+</table></td>
+</tr></table></td></tr>
+<tr><td colspan="2" align="right" class="infohead">
+Copyright 2001-2009 Gentoo Foundation, Inc. Questions, Comments? <a class="highlight" href="/main/es/contact.xml">Contact us</a>.
+</td></tr>
+</table></body>
+</html>

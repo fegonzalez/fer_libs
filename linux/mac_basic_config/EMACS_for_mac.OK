@@ -1,0 +1,154 @@
+
+
+
+;;2014-10-03: adding a key to print "~"
+(defun tilde () (interactive) (insert "~"))
+(defun close-corchete () (interactive) (insert "]"))
+(defun ++ () (interactive) (insert "]"))
+(defun almu () (interactive) (insert "#"))
+(defun ç () (interactive) (insert "}"))
+(defun back-slash() (interactive) (insert "\\"))
+
+;;Full screen
+(defun toggle-fullscreen (&optional f)
+(interactive)
+(let ((current-value (frame-parameter nil 'fullscreen)))
+(set-frame-parameter nil 'fullscreen
+(if (equal 'fullboth current-value)
+(if (boundp 'old-fullscreen)
+old-fullscreen nil)
+(progn (setq old-fullscreen
+current-value)
+'fullboth)))))
+
+
+
+
+;;2014-10-04: ORIGINAL VALUES
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.sssssssssss79
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(column-number-mode t)
+;;  '(display-battery-mode t)
+;;  '(scroll-bar-mode nil)
+;;  '(show-paren-mode t))
+
+;;2014-10-04: ORIGINAL VALUES
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
+
+
+
+;; .emacs
+
+;;; uncomment this line to disable loading of "default.el" at startup
+(setq inhibit-default-init t)
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to better frame titles
+(setq frame-title-format
+      (concat  "%b - emacs@" (system-name)))
+
+;; default to unified diffs
+(setq diff-switches "-u")
+
+;; always end a file with a newline
+(setq require-final-newline 'query)
+
+;;; uncomment for CJK utf-8 support for non-Asian users
+;; (require 'un-define)
+ 
+;;  Set colors (as in ~/.Xdefaults).
+(set-border-color "lightblue")
+(set-border-color "blue")
+(set-cursor-color "red")
+(set-mouse-color "red")
+(set-foreground-color "DarkOliveGreen3")
+(set-background-color "black")
+ 
+;; Display the time in the status line 
+(load "time" t t)
+(display-time)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(case-fold-search t)
+ '(column-number-mode t)
+ '(current-language-environment "English")
+ '(display-time-mode t)
+ '(fill-column 79)
+ '(inhibit-startup-screen t)
+ '(iswitchb-mode t)
+ ;; '(scroll-bar-mode nil)
+ '(show-paren-mode t)
+)
+
+;; (custom-set-faces
+;;   ;; custom-set-faces was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "yellow3" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+;;  '(region ((((class color) (min-colors 88) (background dark)) (:background "grey20"))))
+;;  '(show-paren-match ((((class color) (background dark)) (:background "blue4"))))
+;;  '(show-paren-mismatch ((((class color)) (:background "red4" :foreground "white"))))
+;;  '(trailing-whitespace ((((class color) (background dark)) (:background "gray17")))))
+
+;; windmove
+(windmove-default-keybindings)
+
+;; turn on paren match highlighting
+(show-paren-mode 1)
+
+; show line number the cursor is on, in status bar (the mode line)
+(line-number-mode 1)
+
+;;show column number position
+(column-number-mode 1)
+
+;;truncate long lines
+(global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+
+
+(put 'upcase-region 'disabled nil)
+
+
+; display line numbers in margin (fringe). Emacs 23 only.
+;(global-linum-mode 1) ; always show line numbers
+
+
+    ; Make new frames fullscreen by default. Note: this hook doesn't do
+    ; anything to the initial frame if it's in your .emacs, since that
+    ;file is read _after_ the initial frame is created.
+    (add-hook 'after-make-frame-functions 'toggle-fullscreen)
+
+ ;; window height (to divide the screen in two 80 columns fixed size buffers)
+ ;; the width and height bellow depens on the kind of font (see custom-set-face above)
+ (setq default-frame-alist (append (list
+  '(width  . 166)
+  '(height . 53))
+  default-frame-alist))
+
+
+
+;;2014-10-03: adding a key to print "~"
+;; (global-set-key "\M-\C-!" 'tilde)   ;; press M-x tilde
+;; (global-set-key "\M-\C-!" 'close-corchete)   ;; press M-x close_corchete
+;; (global-set-key "\M-\C-!" '++)   ;; press M-x close_corchete
+;; (global-set-key "\M-\C-!" 'ç)   ;; press M-x ç
+;; (global-set-key "\M-\C-!" 'almu)   ;; press M-x almu
+;; (global-set-key "\M-\C-!" 'back-slash)
+;;truncate long lines
+;; (global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+;; (global-set-key [f11] 'toggle-fullscreen)

@@ -1,0 +1,48 @@
+
+PROBLEMA.- 	SI BORRO A PELO LA PARTICION linux DESDE WINDOWS, EL GRUB NO TOPA
+		WINDOWS AL REINICIAR:
+
+
+	Paso previo a borra el linux:
+	
+	BACK-UP de los puntos de arranque de las particiones (volcar a usb por ej.)
+	
+	comando linux "dd"
+	 
+	Ejemplo.-
+	
+	dd  if=/dev/hda of=miMBR bs=512 count=1 ; commando para backups
+
+
+
+
+SOLUCI�N TEMPORAL:  (hay que repetirla cada vez que se arranca el sistema)	
+
+		grub> rootnoverify (hd0,0)
+		grub> chainloader +1 		# pasa a cargar el siguiente al inicial (se supone q windows)
+		grub> boot
+		
+		
+		
+RESULTADO: al reiniciar entra en el cargador de windows directamente.
+
+SOLUCIÓN DEFINITIVA 1
+
+Hacer los cambios anteriores definitivos (debe dejarte salvar el grub)
+En realidad esto está en el fichero /boot/grub/menu.lst
+
+
+SOLUCIÓN DEFINITIVA 2
+
+
+Quitar GRUB:
+http://foro.noticias3d.com/vbulletin/showthread.php?t=190898
+
+Restaura el MBR
+
+windows XP:consola de recuperacion con 'fixmbr'
+
+
+Windows Vista: 	el equivalente a fixmbr es: bootrec.exe/fixmbr
+				el de fixboot: bootrec.exe/fixboot 
+

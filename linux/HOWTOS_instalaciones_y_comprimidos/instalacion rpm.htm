@@ -1,0 +1,437 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0046)http://www.linuxparatodos.com/linux/00015.html -->
+<HTML lang=es><HEAD><TITLE>Breve lección de actualización, instalación y desinstalación de software en Linux®..</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<META content="Joel Barrios" name=author><LINK title=Contenido. 
+href="contenido.php" rel=contents><LINK rev=made href="/linux/formulario.php">
+<META content="© 2000 www.LinuxParaTodos.net." name=copyright>
+<META http-equiv=Content-Style-Type content=text/css><LINK 
+href="instalacion rpm_archivos/linux.css" type=text/css rel=stylesheet>
+<META 
+content="Lección básica de los procedimientos para la actualización, instalación y desinstalación de software en Linux®." 
+name=decription><LINK href="00013.html" rel=previous>
+<META content="MSHTML 6.00.2800.1400" name=GENERATOR></HEAD>
+<BODY>
+<DIV align=center>
+<CENTER>
+<TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" borderColor=#000000 
+cellSpacing=0 cellPadding=2 width="100%" bgColor=rgb(240,240,240) border=1>
+  <TBODY>
+  <TR>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/00001.php">Principal</A></TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/contenido.php">Contenido</A></TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/00014.html">Anterior</A></TD>
+    <TD align=middle>Siguiente</TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/copyright.html">Copyright</A></TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/00000.html">Búsqueda</A></TD< 
+  tr></TR></TBODY></TABLE>
+<TABLE cellSpacing=4 cellPadding=0 width="94%" border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <H1>Breve lección de actualización, instalación y desinstalación de 
+      software en Linux®.</H1></TD></TR>
+  <TR>
+    <TD vAlign=top><SMALL>
+      <DL>
+        <DT><STRONG>Copyright.</STRONG> 
+        <DD>© 2000 Joel Barrios Dueñas, <A href="http://www.linuxparatodos.net/" 
+        target=_blank>Linux Para Todos</A>. Se permite la libre distribución de 
+        este documento por cualquier medio mientras se haga de de acuerdo con 
+        los términos de la licencia pública general <A 
+        href="http://www.gnu.org/">GNU</A>. Linux® es una marca registrada de 
+        Linus Torvalds, LinuxPPP® es una marca registrada de José Neif Jury 
+        Fabre, RedHat® Linux, RPM y Glint son marcas registradas de RedHat 
+        Software, Unix® es marca registrada de X/Open. MS-DOS® y Windows® son 
+        marcas registradas de Microsoft Corporation. La información contenida en 
+        este documento se proporciona tal cual es y el autor no asumirá 
+        responsabilidad alguna si el usuario o lector hace mal uso de 
+        esta.</SMALL> </DD></DL></SMALL>
+      <H2><A name=intro>Introducción</A>.</H2>
+      <P>Una vez que ya ha experimentado con algunos de los comandos básicos, se 
+      encontrará ahora con una pregunta: ¿Cómo actualizo, instalo o desinstalo 
+      software? Existen varios metódos que dependerán del formato utilizado para 
+      enmpaquetar los programas. Este documento le porporcionará la descriopción 
+      de los posibles métodos y algunos ejemplos. Por favor <STRONG>siga el 
+      procedimiento al pie de la letra</STRONG>.</P>
+      <P style="TEXT-ALIGN: right" align=right><SMALL>Ultima revisión: 21 de 
+      Mayo de 2001, 18:35 PM (GMT -06:00).</SMALL></P>
+      <H2><A name=teoria>La parte teórica</A>.</H2>
+      <P>Antes de continuar, es indispensable se conozca primero el uso y el 
+      porque de cada método existente para el manejo del software. De esto se 
+      dependerá en adelante para mantener un saludable estado de cualquier 
+      sistema Linux®. Indistintamente del método, todos se deberá de realizar 
+      desde la cuenta de <EM>root</EM>, así que proceda con cuidado.</P>
+      <H3>Manejo de paquetes a partir de archivos RPM®</H3>
+      <P>El formato RPM® es el más utilizado en la actualidad. Tiene como 
+      ventaja principal el encargarse de verificar las posibles dependencias o 
+      requisitos para la instalación o actualización de un paquete en 
+      particular, así como también el verificar si el paquete que se procederá a 
+      desinstalar es requerido por otros paquetes presentes en el sistema.</P>
+      <P>Analizaremos entonces el uso del comando <EM>rpm</EM>. Existen dos 
+      aplicaciones en el entorno gráfico que utilizan <EM>rpm</EM> en el 
+      trasfondo y que son de muy fácil utilización, son <EM>gnorpm</EM> y 
+      <EM>kpackage</EM>. Sin embargo es importante que el usuario novicio se 
+      familiarice con este comando para poder entender el funcionamiento de las 
+      mencionadas aplicaciones en el entorno gráfico. 
+      <DL>
+        <DT>Sintáxis
+        <DD><PRE>rpm -[opciones] paquete.rpm</PRE>
+        <DD>Nos limitaremos a abordar solo las opciones más comúnes que un nuevo 
+        usuario de Linux® podría necesitar. Si desea ver una descripción 
+        completa de las posibles opciones del comando <EM>rpm</EM>, consulte el 
+        manual escribiendo <EM>man rpm</EM> en cualquier terminal o 
+      consola.</DD></DL>
+      <H4>Instalación binarios contenidos en paquetes con formato RPM®.</H4>
+      <P>Los paquetes de este tipo son programas previamente compilados, 
+      almacenados y listos para ser instalados en el sistema. Estos paquetes 
+      pueden tener las extensiones <EM>.i386.rpm</EM> para PC compatible con al 
+      menos un microprocesador 80386, es decir, cualquier PC de arquitectura 
+      <EM>Intel®</EM> o compatible, <EM>.i486.rpm</EM> para PC compatible un 
+      microprocesador 80486, <EM>.i586.rpm</EM> para PC compatible con 
+      microprocesador 80586, <EM>.i686.rpm</EM> para PC compatible con 
+      microprocesador 80686, <EM>.ppc.rpm</EM> para Machintosh® PowerPC o 
+      <EM>.noarch.rpm</EM> que puede utilizarse en cualquier arquitectura.</P>
+      <P>En la práctica, no se preocupe por encontrar paquetes <EM>i686</EM> 
+      para su PC con microprocesador <EM>Intel Pentium III</EM>, puede instalar 
+      con total seguridad los paquetes para <EM>i386</EM>. Los paquetes 
+      <EM>noarch</EM> generalmente contiene archivos de texto <EM>-guiones para 
+      diversas funciones, archivos de configuración o documentación-</EM>, 
+      imagenes, sonidos, etc., es decir, archivos que trabajan indistintamente 
+      en uno u otro sistema.</P>
+      <P>La sintáxis que se sugiere utilizar en la mayoría de los casos para 
+      instalar o actualizar paquetería es la siguiente:</P><PRE>rpm -Uvh paquete.i386.rpm</PRE>
+      <P>El utilizar la opción <EM>U</EM>, que significa <EM>Update</EM>, a fin 
+      de conseguir un proceso limpio, hace que primero se consulte la base de 
+      datos de la paquetería instalada, procediendo a desinstalar a continuación 
+      la versión anterior e instalando la nueva. Aunque también puede utilizarse 
+      la opción <EM>i</EM>, que significa <EM>install</EM>, esta no continuará 
+      el proceso si existiese en el sistema una versión anterior de dicho 
+      paquete.</P>
+      <H4>Desinstalación binarios contenidos en paquetes con formato RPM®.</H4><PRE>rpm -e paquete</PRE>
+      <P>No requiere específicar el número de versión ni la extensión ya que 
+      consulta directamente la base de datos de la paquetería instalada en le 
+      sistema y procederá a desinstalar el paquete que lleve dicho nombre.</P>
+      <H4>Instalación a partir de código fuente contenido en paquetes con 
+      formato RPM®.</H4>
+      <P>Este procedimiento se aplica a los paquetes denominados <EM>SRPM</EM>, 
+      sobre los cuales seguramente ha leído en los foros y grupos d discusión, y 
+      requiere que se encuentren instalados en el sistema los paquetes de 
+      desarrollo <EM>-los paquetes contenidos en el CDROM de instalación que 
+      llevan "-devel-" en el nombre-</EM>, ya que el procedimiento implica que 
+      se realizará la compilación de programas.</P>
+      <P>La ventaja que tiene la construcción e instalación paquetería a partir 
+      de archivos <EM>SRPM</EM> es que los paquetes resultantes quedan 
+      compilados de forma especial para el sistema Linux® que tengamos 
+      instalado. Es de particular ayuda cuando se actualiza, por citar un 
+      ejemplo, de LinuxPPP® 5.x a LinuxPPP® 6.x y el usuario se topa con que 
+      alguna de sus aplicaciones favoritas simplemente ya no funcionan. Esto se 
+      debe a que la diferencia entre las versiones de las bibliotecas 
+      compartidas entre una y otra versión de LinuxPPP puede ser demasiada. Las 
+      distribuciones basadas sobre RedHat® Linux 5.x utilizan, entre otras 
+      cosas, <EM>libc5</EM>, en tanto que las versiones basadas cobre 6.x hacen 
+      uso de <EM>Glibc</EM>, también conocido como <EM>libc6</EM>.</P>
+      <P>Un típico ejemplo de cuando es de utilidad este método de manejo de la 
+      paquetería es con <A href="http://www.abisource.com/">Abiword-0.7.x</A>, 
+      que funciona correctamente en LinuxPPP® 6.1, pero no así en LinuxPPP® 6.2. 
+      La razón, en este caso, es debido a que LinuxPPP® 6.1, entre otros 
+      componentes, utiliza <EM>Glibc 2.0</EM>, biblioteca con al que fue 
+      compilado el paquete RPM® que se ofrecía en el sitio de Abiword, y 
+      LinuxPPP® 6.2 utiliza <EM>Glibc 2.1</EM>.</P>
+      <P>Estos paquetes <EM>SRPM</EM> tienen la extensión <EM>.src.rpm</EM> y se 
+      procede sobre estos del siguiente modo:</P><PRE>rpmbuild --rebuild --clean paquete.src.rpm</PRE>
+      <P>Esta última línea de comando coloca un paquete comprimido, normalmeente 
+      un archivo con extención .tar.gz o tar.bz2, en 
+      <EM>/usr/src/redhat/SOURCES</EM> y un archivo, conocido como 
+      <EM>spec</EM>, con las especificaciones del paquete en 
+      <EM>/usr/src/redhat/SPECS</EM>. A continuación se descomprime el archivo 
+      .tar.gz o tar.bz2 y se inicia la compilación y construcción del paquete 
+      RPM® con las especificaciones del <EM>spec</EM>.</P>
+      <P>Si al terminar el proceso en la última línea se obtiene <EM>+ exit 
+      0</EM>, solo restará instalar o actualizar con el paquete RPM® que ahora 
+      encontraremos, dependiendo de la arquitectura para la que se compiló, en 
+      alguno de los subdirectorios de /usr/src/redhat/RPMS.</P><PRE>rpm -Uvh /usr/src/redhat/RPMS/i386/paquete.i386.rpm</PRE>
+      <H4>Confirmación de la existencia de paquetería en particular en el 
+      sistema.</H4>
+      <P>En ocasiones es posible que se encuentre en uns situación como esta: 
+      usted encuentra en algún sitio de Internet un paquete RPM® del cual se 
+      hablan maravillas en la descripción, pero deconoce si ya lo tendrá 
+      instalado, o si ya tiene una versión más reciente; podría averiguarlo 
+      descargando dicho paquete, que quizá tenga varios Megabytes en tamaño, 
+      utilizando una lenta conexión de modem y provando con la línea de comando 
+      <EM>rpm -Uvh</EM>. Si resultó un paquete más reciete que el que usted 
+      tenía, habrán valido la pena los 10-15 minutos invertidos en descargar 
+      dicho paquete, pero si ya lo tenía instalado o bien se trataba de una 
+      versión anterior, usted desearía haber sabido que podía utilizar la 
+      siguiente línea de comando:</P><PRE>rpm -q nombre_del_paquete_sin_número_de_versión</PRE>
+      <P>La correspondiente salida de esto nos dirá si el paquete se encuentra o 
+      no instalado y el número de versión.</P>
+      <P>Si nos interesa examinar la información sobre algún paquete instalado 
+      en el sistema, utilizamos la siguiente línea de comando:</P><PRE>rpm -qi nombre_del_paquete_sin_número_de_versión</PRE>
+      <P>Lo anterior devuelve los detalles informativos respecto al paquete 
+      instalado.</P>
+      <P>Si queremos examinar dicha información pero en un paqeute <STRONG>no 
+      instalado</STRONG> en el sistema, solo hace flata añadir <EM>p</EM>, que 
+      implica que nos referiremos a un <EM>paquete</EM>, en las opciones del 
+      comando del modo siguiente:</P><PRE>rpm -qpi --clean cualquier_paquete_que_haya_descargado.i386.rpm</PRE>
+      <H4>Verificación de firmas de paquetes RPM®.</H4>
+      <P>Por cuestiones de seguridad, si usted descarga un paquete RPM® desde un 
+      sitio web o servidor FTP distinto al oficial de la distribución o conjunto 
+      de paquetes que utilice, lo más saludable será verificar dicho paquete. 
+      JAMÁS descargue e instale paquetes de binarios desde sitios web dedicados 
+      a <EM>actividades ilegales</EM> o de dudosa reputación.</P>
+      <P>Por si acaso, utilice la siguiente línea de comando para verificar las 
+      firmas incluídas en paquetes antes de proceder a instalarlos:</P><PRE>rpm -Kv paquete.i386.rpm</PRE>
+      <P>Esto debe darle la siguiente salida, donde las <EM>x</EM> corresponden 
+      a la firma <EM>PGP</EM> de la persona que construyó el paquete:</P><PRE>paquete.i386.rpm:
+MD5 sum OK: xxxxxxxxxxxxxxxxxxxxx</PRE>
+      <P>Compare la firma <EM>PGP</EM> con la del empaquetador, misma que debe 
+      corresponder con la que este proporcione en el sitio web desde donde 
+      descargue dicho paquete.</P>
+      <H3>Instalación de paquetes a partir de paquetes .tar.gz o .tar.bz2.</H3>
+      <P>Este el el método universal para todas las distribuciones de Linux® ya 
+      que funciona tando en distribuciones basadas sobre RedHat, como Debian, 
+      Stampede o Slackware. Debido a que no se guarda un registro sobre lo que 
+      se tiene instalado y lo que no, conviene, en le caso de distribuciones 
+      basadas sobre RedHat® Linux, dejar las carpetas resultantes con el código 
+      fuente en <EM>/usr/src/redhat/BUILD</EM> para tener una referencia y 
+      evitar romper las posibles dependencias entre los disitntos paquetes.</P>
+      <P>La mayoría de estos paquetes, denominados <EM>tarballs</EM>, vienen con 
+      extensión .tar.gz o tar.bz2. Lo primero será copìarlos en la carpeta 
+      <EM>/usr/src/redhat/SOURCES</EM> y lo siguiente consiste en decomprimir 
+      estos con la siguiente línea de comando: <PRE>tar -zxvf /usr/src/redhat/SOURCES/paquete.tar.gz /usr/src/redhat/BUILD/</PRE>
+      <P>Después acceda al interior de la carpeta resultante: <PRE>cd /usr/src/redhat/BUILD/paquete</PRE>
+      <P>Es necesario que lea la documentación que acompaña a dicho paquete y 
+      seguir las instrucciones proporcionadas por el autor. Por lo general son 
+      necesarios al menos tres pasos:</P><PRE>./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+make install
+make clean</PRE>
+      <P>Algunos paquetes de binarios propietarios, como StarOffice®, incluyen 
+      documentación y un instructivo que detalla la instalación. StarOffice 
+      requiere se ejecute el binario <EM>setup</EM>, con la opción <EM>/net</EM> 
+      si va ser utilizado por varios usuarios, contenido en la subcarpeta 
+      <EM>bin</EM>.</P><PRE>cd /usr/src/redhat/BUILD/so51inst/office51
+./setup /net</PRE>
+      <P>En la mayoría de los casos, como ocurre con los programas con licencia 
+      GPL que se distribuyen como códigos fuentes, necesitará ejecutar algunos 
+      comandos como se muestra a continuación:</P>
+      <CENTER>
+      <TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" cellPadding=4 
+      width="80%" cellsopacing="2">
+        <TBODY>
+        <TR>
+          <TH colSpan=2>Compilación desde código fuente.</TH></TR>
+        <TBODY>
+        <TR>
+          <TD>
+            <DL>
+              <DT><STRONG>./configure</STRONG> 
+              <DD>Este prepara el <EM>Makefile</EM> y configura las opciones de 
+              compilación, mismas que en algunos casos pueden resultar demasiado 
+              complejas para un usuario novicio. Además de verifica si el 
+              sistema posee las bibliotecas de desarrollo necesarias para la 
+              compilación. </DD></DL>
+            <DL>
+              <DT><STRONG>make</STRONG>
+              <DD>Este es el que realiza la compilación del código fuente. El 
+              procesos puede durar varios minutos.
+              <DD></DD></DL>
+            <DL>
+              <DT><STRONG>make install</STRONG>
+              <DD>Este se encarga de realizar la instalación del los binarios y 
+              módulos compilados en los lugares correctos.</DD></DL>
+            <DL>
+              <DT><STRONG>make clean</STRONG>
+              <DD>Opcionalmente podemos utilizar este comando para limpiar los 
+              remanentes que se originaron por la compilación a fin de recuperar 
+              espacio en el disco duro.</DD></DL>
+            <P style="TEXT-ALIGN: left">Si por alguna razón necesita desinstalar 
+            el programa resultante, puede utilizar <STRONG>make 
+            unistall</STRONG>.</P></TD></TR></TBODY></TABLE></CENTER>
+      <P>En el mejor de los casos, si el <EM>tarball</EM> contiene un archivo 
+      <EM>spec</EM>, puede contruirse un paquete RPM® de modo muy similar a la 
+      compilación e instalación desde paquetes <EM>SRPMS</EM>.</P>
+      <P>Solo requiere ejecutar la siguiente línea de comando:</P><PRE>rpmbuild -ta --clean paquete.tar.gz</PRE>
+      <P>Y, si obtuvimos en la última línea del proceso un <EM>+ exit 0</EM>, 
+      finalmente podremos disponer de el paquete resultante:</P><PRE>rpm -Uvh /usr/src/redhat/RPMS/i386/paquete.i386.rpm</PRE>
+      <H2><A name=ejercicios>Ejercicios</A>.</H2>
+      <P>Antes de empezar, es necesario, si no lo ha hecho, instalar los 
+      paquetes de bibliotecas de desarrollo incluídas en el CDROM de instalación 
+      de la distribución que posea. Puede utilizar <EM>rpm -Uvh *-devel-*</EM>. 
+      Para efecto de los ejercicios que realizaremos, descargue el <A 
+      href="http://www.linuxparatodos.com/linux/RPMS">paquete RPM de binarios de 
+      Spruce</A> y el <A 
+      href="http://www.linuxparatodos.com/linux/RPMS/SRPMS">paquete RPM de 
+      código fuente de spruce</A>, ya que trabajaremos con estos.</P>
+      <H3>Instalación y desintalación de un paquete RPM®</H3>
+      <CENTER>
+      <TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" cellPadding=4 
+      width="80%" cellsopacing="2">
+        <TBODY>
+        <TR>
+          <TD>
+            <OL>
+              <LI>
+              <P style="TEXT-ALIGN: left">Instale spruce-x.x.x-x.i586.rpm con la 
+              siguiente línea comando:</P><PRE>rpm -Uvh spruce-*.i586.rpm</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el programa que acaba de 
+              instalar ejecutando <EM>spruce</EM></P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Cierre el programa ejecutemos el 
+              comando para verificar que versión tenemos instalada: y observe la 
+              salida</P><PRE>rpm -q spruce</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Proceda ahora a desinstalar el 
+              programa con la siguiente línea de comando:</P><PRE>rpm -e spruce</PRE></LI></OL></TD></TR></TBODY></TABLE></CENTER>
+      <H3>Compilación e instalación desde un <EM>SRPM</EM>.</H3>
+      <CENTER>
+      <TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" cellPadding=4 
+      width="80%" cellsopacing="2">
+        <TBODY>
+        <TR>
+          <TD>
+            <OL>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el siguiente comando:</P><PRE>rpmbuild --rebuild --clean spruce-*.src.rpm</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Espere unos minutos, y si recibe en la 
+              última línea una salida <EM>+exit 0</EM>, cambie al directorio 
+              conde quedó el paquete RPM® de binarios:</P><PRE>cd /usr/src/redhat/RPMS/i386 ; ls</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Instale el RPM® resultante con la 
+              siguiente línea de comando:</P><PRE>rpm -Uvh spruce-*.i386.rpm</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el programa que acaba de 
+              instalar ejecutando <EM>spruce</EM></P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Cierre el programa ejecutemos el 
+              comando para verificar que versión tenemos instalada: y observe la 
+              salida</P><PRE>rpm -q spruce</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Proceda ahora a desinstalar el 
+              programa con la siguiente línea de comando:</P><PRE>rpm -e spruce</PRE></LI></OL></TD></TR></TBODY></TABLE></CENTER>
+      <H3>Compilación e instalación desde código fuente <EM>-tarball-</EM>.</H3>
+      <CENTER>
+      <TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" cellPadding=4 
+      width="80%" cellsopacing="2">
+        <TBODY>
+        <TR>
+          <TD>
+            <OL>
+              <LI>
+              <P style="TEXT-ALIGN: left">Abra una terminal o consola.</P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Instale este paquete, que contiene un 
+              código fuente, con la siguiente línea de comando.</P><PRE>rpm -Uvh spruce-*.src.rpm</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Revise el contenido de los siguientes 
+              directorios, ya que en estos encontrará un par de archivos 
+              nuevos:</P>
+              <UL>
+                <LI><PRE>cd /usr/src/redhat/SPECS ; ls</PRE>
+                <P>En este encontrará un archivo llamado 
+<EM>spruce.spec</EM></P>
+                <LI><PRE>cd /usr/src/redhat/SOURCES ; ls</PRE>
+                <P style="TEXT-ALIGN: left">En este otro encontrará 
+                <EM>spruce-0.6.2.tar.gz</EM></P></LI></UL>
+              <LI>
+              <P style="TEXT-ALIGN: left">Descomprima 
+              <EM>spruce-0.6.2.tar.gz</EM> utilizando la siguiente línea de 
+              comando:</P><PRE>tar -zxvf /usr/src/redhat/SOURCES/spruce-0.6.2.tar.gz /usr/src/redhat/BUILD</PRE>
+              <P>Como resultado, ahora tendremos una carpeta 
+              <EM>spruce-0.6.2</EM>.</P>
+              <LI>Cambie al directorio 
+              <EM>/usr/src/redhat/BUILD/spruce-0.6.2</EM>:
+              <P></P><PRE>cd /usr/src/redhat/BUILD/spruce-0.6.2</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el siguiente comando y observe 
+              los mensajes que aparecerán en pantalla:</P><PRE>./configure</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el siguiente comando para 
+              iniciar la compilación, relajese y espere algunos minutos y 
+              observe los mensajes que aparecerán en pantalla, sobretodo 
+              asegurandose que la última línea se lea <EM>+ exit 0</EM>:</P><PRE>make</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el siguiente comando a fin de 
+              instalar el programa que acaba de compilar:</P><PRE>make install</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute el siguiente comando para 
+              comprobar que ha concluído exitosamente la primera parte del 
+              ejercicio,, invocando a <EM>spruce</EM>, un programa de correo 
+              electrónico:</P><PRE>spruce</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Proceda a desinstalar 
+              <EM>spruce</EM>:</P><PRE>make uninstall</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Finalmente, a fín de recuperar algo de 
+              espacio en duisco duro, procederemos a limpiar los modulos y 
+              binarios creados dentro de 
+              <EM>/usr/src/redhat/BUILD/spruce-0.6.2</EM></P><PRE>make clean</PRE></LI></OL></TD></TR></TBODY></TABLE></CENTER>
+      <H3>Instalación de StarOffice 5.1.</H3>
+      <CENTER>
+      <TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" cellPadding=4 
+      width="80%" cellsopacing="2">
+        <TBODY>
+        <TR>
+          <TD>
+            <OL>
+              <LI>
+              <P style="TEXT-ALIGN: left">Cambie a <EM>root</EM> y abra una 
+              consola o terminal.</P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Descomprima el paquete <EM>.tar</EM> 
+              en <EM>/usr/src/redhat/BUILD</EM></P><PRE>tar -xvf so51a_lnx_34.tar /usr/src/redhat/BUILD/</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Cambie al directorio en donde se 
+              encuentra el archivo <EM>setup</EM>:</P><PRE>cd usr/src/redhat/BUILD/so51inst/office51</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Ejecute <EM>setup</EM> con la opción 
+              <EM>/net</EM>.</P><PRE>./setup /net</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Cuando se le pregunte, indique que 
+              desea instalar StarOffice en <EM>/Office51</EM>.</P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Termine la instalación, salga de la 
+              cuenta de <EM>root</EM> y jamás se le ocurra ejecutar StarOffice 
+              como <EM>root</EM> o arruinará la instalación.</P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Acceda a alguna cuenta de usuario y 
+              ejecute el siguiente comando:</P><PRE>/Office51/bin/setup</PRE>
+              <LI>
+              <P style="TEXT-ALIGN: left">Realice una instalación de 
+              <EM>Estación de trabajo</EM>.</P>
+              <LI>
+              <P style="TEXT-ALIGN: left">Si utiliza <EM>Gnome</EM> como entorno 
+              gráfico, NO encontrará entrada en el menú para iniciar StarOffice. 
+              Utilice el <EM>Editor de Menues de Gnome</EM>, del modo que se 
+              describe en el artículo "<A 
+              href="http://www.linuxparatodos.com/linux/como-gnomenu.html">Cómo 
+              - crear un nuevo elemento en el menú de Gnome</A>", y que 
+              encontrará en Programas/Configuración. Solo añada la entrada 
+              correspondiente, indicándole que se ejecutará 
+              <EM>/home/su_cuenta/Office51/bin/soffice</EM>.</P></LI></OL></TD></TR></TBODY></TABLE></CENTER>
+      <HR>
+    </TD></TR></TBODY></TABLE>
+<TABLE style="BACKGROUND-COLOR: rgb(240,240,240)" borderColor=#000000 
+cellSpacing=0 cellPadding=2 width="100%" bgColor=rgb(240,240,240) border=1>
+  <TBODY>
+  <TR>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/00001.php">Principal</A></TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/contenido.php">Contenido</A></TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/00014.html">Anterior</A></TD>
+    <TD align=middle>Siguiente</TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/copyright.html">Copyright</A></TD>
+    <TD align=middle><A 
+      href="http://www.linuxparatodos.com/linux/00000.html">Búsqueda</A></TD< 
+  tr></TR></TBODY></TABLE></CENTER></DIV></BODY></HTML>

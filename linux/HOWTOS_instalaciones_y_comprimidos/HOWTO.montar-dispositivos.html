@@ -1,0 +1,534 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- ACTUALIDAD --><title>Cómo montar tu disco duro en Linux/Unix | Taller Linux | Hardware | Espacio Linux - Portal y comunidad Linux en español</title>
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><meta http-equiv="EXPIRES" content="0"><meta name="RESOURCE-TYPE" content="DOCUMENT"><meta name="DISTRIBUTION" content="GLOBAL"><meta name="AUTHOR" content="Espacio Linux"><meta name="COPYRIGHT" content="Copyright (c) by Espacio Linux"><meta name="KEYWORDS" content="Portal, GNU, Linux, español, comunidad, Software Libre, noticias, actualidad, foros, ayuda linux, manuales, documentacion, comos, howtos, blogs, encuestas, distribuciones, descargas, analisis"><meta name="DESCRIPTION" content="Portal y comunidad GNU/Linux en español"><meta name="ROBOTS" content="INDEX, FOLLOW"><meta name="REVISIT-AFTER" content="1 DAYS"><meta name="RATING" content="GENERAL"><meta name="verify-v1" content="KD6RSU80hpnuy0QHutxGp6oMpqcF7q5FykPtG4khPjE="><meta name="GENERATOR" content="PHP-Nuke - Copyright by http://phpnuke.org"><script type="text/javascript">
+<!--
+function openwindow(){
+	window.open ("modules/Content/copyright.php","Copyright","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=400,height=200");
+}
+//-->
+</script><link rel="shortcut icon" href="http://www.espaciolinux.com/themes/espaciolinux-darkblue/images/favicon.ico" type="image/x-icon"><link rel="StyleSheet" href="HOWTO.montar-dispositivos_files/style.css" type="text/css"></head><body>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table align="center" bgcolor="#3c5f84" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td align="left" valign="middle" width="200">
+<a href="http://www.espaciolinux.com/index.html"><img src="HOWTO.montar-dispositivos_files/logo-espaciolinux.gif" title="Bienvenid@ a Espacio Linux" alt="Logo Espacio Linux" border="0" height="65" width="200"></a></td>
+<td align="center" valign="bottom"><span><script language="JavaScript" type="text/javascript"><!--
+/* openads=http://publiel.espaciolinux.com bannerid=87 zoneid=1 source= */
+if (typeof phpAds_adg == 'undefined') {
+	document.write('<scr'+'ipt language="JavaScript" type="text/javascript" src="http://publiel.espaciolinux.com/adg.js"></scr'+'ipt>');
+}
+//--></script><script language="JavaScript" type="text/javascript" src="HOWTO.montar-dispositivos_files/adg.js"></script><script type="text/javascript"><!--
+google_ad_client = "pub-7315494300829393";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as_rimg";
+google_cpa_choice = "CAAQyKGJlAIaCGBIgXPwjaB_KMSPs4MB";
+google_ad_channel = "3221728794";
+//--></script>
+<script type="text/javascript" src="HOWTO.montar-dispositivos_files/show_ads.js">
+</script></span><div id="beacon_87" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="HOWTO.montar-dispositivos_files/adlog.php" alt="" style="width: 0px; height: 0px;" height="0" width="0"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></tbody></table><table align="center" bgcolor="#5c84a7" border="0" cellpadding="2" cellspacing="1" width="100%">
+<tbody><tr>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='index.html'" align="center" bgcolor="#2f4e6f" width="13%"><a class="menu" href="http://www.espaciolinux.com/index.html">Portada</a></td>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='tallerlinux.html'" align="center" bgcolor="#2f4e6f" width="12%"><a class="menu" href="http://www.espaciolinux.com/tallerlinux.html">Taller Linux</a></td>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='descargas.html'" align="center" bgcolor="#2f4e6f" width="12%"><a class="menu" href="http://www.espaciolinux.com/descargas.html">Descargas</a></td>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='foros.html'" align="center" bgcolor="#2f4e6f" width="12%"><a class="menu" href="http://www.espaciolinux.com/foros.html">Foros</a></td>
+<td style="background: rgb(47, 78, 111) none repeat scroll 0%; cursor: pointer; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='modules.php?name=Search'" align="center" bgcolor="#2f4e6f" width="12%"><a class="menu" href="http://www.espaciolinux.com/modules.php?name=Search">Buscar</a></td>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='mapa.html'" align="center" bgcolor="#2f4e6f" width="12%"><a class="menu" href="http://www.espaciolinux.com/mapa.html">Mapa del sitio</a></td>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='ayuda.html'" align="center" bgcolor="#2f4e6f" width="12%"><a class="menu" href="http://www.espaciolinux.com/ayuda.html">Ayuda</a></td>
+<td style="cursor: pointer;" onmouseover="this.style.background='#3C5F84'" onmouseout="this.style.background='#2F4E6F'" onclick="window.location.href='http://blogel.espaciolinux.info/'" align="center" bgcolor="#2f4e6f" width="13%"><a class="menu" href="http://blogel.espaciolinux.info/"><b>BlogEL</b></a></td>
+</tr>
+</tbody></table>
+<table align="center" bgcolor="#f5f5f5" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td colspan="4" bgcolor="#b0c4de"><img src="HOWTO.montar-dispositivos_files/pixel.gif" alt="" border="0" height="1" hspace="0" width="1"></td>
+</tr>
+<tr bgcolor="#f5f5f5" valign="middle">
+<td nowrap="nowrap" width="40%"><span class="content">
+&nbsp;&nbsp;<script type="text/javascript">
+
+<!--   // Array ofmonth Names
+var monthNames = new Array( "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+var now = new Date();
+thisYear = now.getYear();
+if(thisYear < 1900) {thisYear += 1900}; // corrections if Y2K display problem
+document.write(monthNames[now.getMonth()] + " " + now.getDate() + ", " + thisYear);
+// -->
+
+</script>Febrero 8, 2007</span>            
+				
+           
+				</td><td align="center" height="20" width="20%">
+
+                    
+                                       
+                    </td>
+<td align="right" width="40%"><a href="http://www.espaciolinux.com/modules.php?name=Your_Account">Iniciar sesión</a> | <a href="http://www.espaciolinux.com/modules.php?name=Your_Account&amp;op=new_user&amp;op=new_user">Registrarse</a>&nbsp;&nbsp;
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td colspan="4" bgcolor="#eeeeee"><img src="HOWTO.montar-dispositivos_files/pixel.gif" alt="" border="0" height="2" hspace="0" width="1"></td>
+</tr>
+</tbody></table>
+
+&nbsp;
+
+
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top">
+<td><img src="HOWTO.montar-dispositivos_files/pixel.gif" alt="" border="0" height="3" width="5"></td></tr></tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top">
+<td><img src="HOWTO.montar-dispositivos_files/pixel.gif" alt="" border="0" height="1" width="2"></td>
+<td valign="top" width="160">
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Principal</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"></font><div id="blockel"><span class="menus">
+
+<ul>
+<font size="1">	<li><a href="http://www.espaciolinux.com/index.html">Portada</a></li>
+	<li><a href="http://blogel.espaciolinux.info/">BlogEL</a></li>
+	<li><a href="http://www.espaciolinux.com/actualidad.html">Actualidad</a></li>
+	<li><a href="http://www.espaciolinux.com/tallerlinux.html">Taller Linux</a></li>
+	<li><a href="http://www.espaciolinux.com/descargas.html">Descargas</a></li>
+	<li><a href="http://www.espaciolinux.com/foros.html">Foros</a></li>
+	<li><a href="http://www.espaciolinux.com/encuestas.html">Encuestas</a></li>
+	<li><a href="http://www.espaciolinux.com/directorioweb.html">Directorio Web</a></li>
+	<li><a href="http://www.espaciolinux.com/modules.php?name=Your_Account">Tu Espacio</a></li>
+	<li><a href="http://www.espaciolinux.com/blogs.html">Blogs de miembros</a></li>
+	<li><a href="http://www.espaciolinux.com/top.html">Los Mejores 10...</a></li>
+</font></ul>
+</span></div>
+</td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Patrocinadores</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"></font><div class="menusblocks">
+<ul>
+<font size="1">	<li><a href="http://www.espaciolinux.com/modules.php?name=Publicidad&amp;el=Opciones#patrocinio" title="Estamos buscando patrocinador. Solicite informes"><b>Su enlace aquí...</b></a></li>
+	<li><a href="http://www.positivoynegativo.com/2005/11/28/34/" title="Genere ingresos con su sitio Web">Adsense de Google</a></li>
+	
+	<li><a href="http://www.digitalfutura.es/" title="Digital Futura">Alojamiento Web</a></li>
+	<li><a href="http://www.positivoynegativo.com/" title="Observando sitios, servicios y productos en la Web">Positivo y Negativo</a></li>
+	<li><a href="http://hospedaje.grito.net/" title="Grito.net">Alojamiento Web</a></li>
+	<li><a href="http://www.positivoynegativo.com/2006/03/08/39/" title="Descargue y use Firefox">Mozilla Firefox</a></li>
+	<li><a href="http://www.tuwev.com/" title="Tu Wev - Alojamiento Web profesional y Registro de Dominios">Alojamiento Web</a></li>
+</font></ul>
+</div></td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Donaciones</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"><table align="center" cellpadding="0" cellspacing="5">
+<tbody><tr>
+<td><div align="center"><a href="http://www.espaciolinux.com/modules.php?name=Donations"><img src="HOWTO.montar-dispositivos_files/donar.gif" alt="Donar" title="Donativos a Espacio Linux" border="0"></a></div></td>
+</tr>
+<tr>
+<td>Espacio Linux te necesita. Considera hacer una donación.<br><div align="center"><i><a class="newsenlacesmall" href="http://www.espaciolinux.com/modules.php?name=Donations">Más información..</a></i></div></td></tr>
+</tbody></table></font></td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Anuncios</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"></font><div align="center"><font size="1"><br><span><script language="JavaScript" type="text/javascript"><!--
+/* openads=http://publiel.espaciolinux.com bannerid=70 zoneid=9 source= */
+if (typeof phpAds_adg == 'undefined') {
+	document.write('<scr'+'ipt language="JavaScript" type="text/javascript" src="http://publiel.espaciolinux.com/adg.js"></scr'+'ipt>');
+}
+//--></script><script type="text/javascript"><!--
+google_ad_client = "pub-7315494300829393";
+google_ad_width = 125;
+google_ad_height = 125;
+google_ad_format = "125x125_as_rimg";
+google_cpa_choice = "CAAQmImJlAIaCN5uB6wtFhbmKNyMs4MB";
+google_ad_channel = "6848813771";
+//--></script>
+<script type="text/javascript" src="HOWTO.montar-dispositivos_files/show_ads.js">
+</script></span></font><div id="beacon_70" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><font size="1"><img src="HOWTO.montar-dispositivos_files/adlog_002.php" alt="" style="width: 0px; height: 0px;" height="0" width="0"></font></div></div><font size="1"><br></font></td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Boletín Espacio Linux</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"><table align="center" cellpadding="4" cellspacing="2">
+<tbody><tr>
+<td>Las novedades del sitio y el mundo Linux en tu email. <br></td></tr>
+<tr><td>
+<div align="center"><form action="http://www.espaciolinux.com/cgi-bin/listas/mail.cgi" method="post">
+ <input name="flavor" value="subscribe" type="hidden">
+<input name="email" value="Tu email aquí" size="14" onfocus="this.value='';return false;" type="text">
+<input name="list" value="yYZNNsPL" type="hidden"><br>
+<input value="Suscribirme" type="submit">
+</form></div></td></tr>
+</tbody></table></font></td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Taller Linux</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"><table cellpadding="1" cellspacing="1"><tbody><tr><td valign="top"><img src="HOWTO.montar-dispositivos_files/vineta-4.gif" title="Square" align="middle" border="0" height="4" width="4">&nbsp;</td><td valign="top"><a href="http://www.espaciolinux.com/tallerlinux-articulo-79.html">Navegación anónima con Tor + Privoxy + Firefox</a></td></tr></tbody></table><table cellpadding="1" cellspacing="1"><tbody><tr><td valign="top"><img src="HOWTO.montar-dispositivos_files/vineta-4.gif" title="Square" align="middle" border="0" height="4" width="4">&nbsp;</td><td valign="top"><a href="http://www.espaciolinux.com/tallerlinux-articulo-78.html">Cómo instalar Google Earth en Linux</a></td></tr></tbody></table><table cellpadding="1" cellspacing="1"><tbody><tr><td valign="top"><img src="HOWTO.montar-dispositivos_files/vineta-4.gif" title="Square" align="middle" border="0" height="4" width="4">&nbsp;</td><td valign="top"><a href="http://www.espaciolinux.com/tallerlinux-articulo-77.html">Copiar música de iPod a Linux</a></td></tr></tbody></table><table cellpadding="1" cellspacing="1"><tbody><tr><td valign="top"><img src="HOWTO.montar-dispositivos_files/vineta-4.gif" title="Square" align="middle" border="0" height="4" width="4">&nbsp;</td><td valign="top"><a href="http://www.espaciolinux.com/tallerlinux-articulo-76.html">Informador de actualizaciones en el Kernel</a></td></tr></tbody></table><table cellpadding="1" cellspacing="1"><tbody><tr><td valign="top"><img src="HOWTO.montar-dispositivos_files/vineta-4.gif" title="Square" align="middle" border="0" height="4" width="4">&nbsp;</td><td valign="top"><a href="http://www.espaciolinux.com/tallerlinux-articulo-75.html">Cómo conectar tabletas gráficas en GNU/Linux</a></td></tr></tbody></table><br></font><div align="center"><font size="1"><a class="newsenlacesmall" href="http://www.espaciolinux.com/artitec.html"><em>Más en el Taller Linux...</em></a></font></div></td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+<table class="contorno" border="0" cellpadding="0" cellspacing="1" width="160"><tbody><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="160">
+</table>
+<table bgcolor="#b0c4de" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td class="space" align="center">
+<font class="blocktitle" size="1"><b>Sitios amigos</b></font>
+</td></tr>
+<tr>
+<td bgcolor="#f5f5f5"><font size="1"><table cellpadding="1" cellspacing="1">
+  
+  
+    <tbody><tr>
+      <td colspan="2"><div align="center"></div></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td valign="middle"><img src="HOWTO.montar-dispositivos_files/yellow-square.gif" align="middle" border="0" height="5" width="5"> </td>
+      <td valign="middle"><a href="http://www.linux-cd.com.ar/" target="_blank">linux-cd.com.ar</a></td>
+    </tr>
+    <tr>
+      <td valign="middle"><img src="HOWTO.montar-dispositivos_files/yellow-square.gif" align="middle" border="0" height="5" width="5"> </td>
+      <td valign="top"><a href="http://www.unixmexico.org/" target="_blank">Unix México</a></td>
+    </tr>
+    
+    <tr>
+      <td valign="middle"><img src="HOWTO.montar-dispositivos_files/yellow-square.gif" align="middle" border="0" height="5" width="5"> </td>
+      <td valign="top"><a href="http://www.brokenbox.com.ar/" target="_blank">Software Linux</a></td>
+    </tr>
+    
+    <tr>
+      <td valign="middle"><img src="HOWTO.montar-dispositivos_files/yellow-square.gif" align="middle" border="0" height="5" width="5"> </td>
+      <td valign="top"><a href="http://www.shilmar.com/" target="_blank">Modding</a></td>
+    </tr>
+    <tr>
+      <td valign="middle"><img src="HOWTO.montar-dispositivos_files/yellow-square.gif" align="middle" border="0" height="5" width="5"> </td>
+      <td valign="top"><a href="http://www.pinguinox.com.ar/" target="_blank">PinguinoX</a></td>
+    </tr>
+    <tr>
+    <td valign="middle"><img src="HOWTO.montar-dispositivos_files/yellow-square.gif" align="middle" border="0" height="5" width="5"> </td>
+    <td valign="top"><a href="http://www.linuxhispano.net/" target="_blank">Linux Hispano</a></td>
+    </tr>
+   
+    
+    
+ 
+</tbody></table></font></td>
+</tr>
+</tbody></table></td></tr></tbody></table>
+<br>
+
+
+</td><td><img src="HOWTO.montar-dispositivos_files/pixel.gif" alt="" border="0" height="1" width="10"></td><td width="100%">
+<table class="contorno" bgcolor="#eeeeee" border="0" cellpadding="0" cellspacing="1" width="100%"><tbody><tr><td>
+<table bgcolor="#f5f5f5" border="0" cellpadding="8" cellspacing="1" width="100%"><tbody><tr><td>
+<table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><font class="artitulo">Cómo montar tu disco duro en Linux/Unix</font><br><font class="arsubtitulo"></font><br><div style="text-align: center;"><script type="text/javascript"><!--
+google_ad_client = "pub-7315494300829393";
+google_alternate_ad_url = "http://www.espaciolinux.com/google_adsense_script.html";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text";
+//2007-01-04: Taller Linux EL
+google_ad_channel = "6711027668";
+google_color_border = "F5F5F5";
+google_color_bg = "F5F5F5";
+google_color_link = "003399";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript" src="HOWTO.montar-dispositivos_files/show_ads.js">
+</script></div><p></p><h3>¿Cómo reconoce nuestros discos duros o dispositivos Unix/Linux?</h3>Primeramente debemos tener en cuenta que Unix/Linux distribuye los dispositivos por letras y por números.... Veamos un ejemplo:<br>
+<br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff">-
+Tenemos un Disco Duro 1 con el S.O Unix/Linux conectado al Bus IDE 1
+como Primary (primario), y ocupando una partición todo el Disco.<br>
+</td></tr></tbody></table><br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff">-
+Tenemos un Disco Duro 2 con 2 particiones, una partición FAT y una NTFS
+(no importa si tiene o NO Windows, o solamente esta particionado y ya).
+Y lo tenemos colocado en el Bus IDE 1 como Slave (secundario).</td></tr></tbody></table><br>
+<b>NOTA:</b> Obviamente un Bus IDE tiene para 2 Dispositivos de Hardware.<p></p><p>Por lo tanto nuestro Disco Duro 1 sera reconocido en Unix/Linux como: <b>/dev/hda</b> y la partición sera <b>/dev/hda1</b>.
+<br><br>
+Del mismo modo, nuestro Disco Duro 2 será reconocido en Unix/Linux como: <b>/dev/hdb</b> y las particiones como: <b>/dev/hdb1</b> (fat) y <b>/dev/hdb2</b> (ntfs).
+<br><br>
+Con esto espero y quede claro, que dependiendo del numero de partición,
+es el numero que le corresponde al ser reconocido por Unix/Linux.
+<br><br>
+Sigamos...
+<br><br>
+Ahora nuestros Discos Duros fueron reconocidos así:
+
+<br><br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff">- <b>Disco Duro 1</b> (recuerda que obviamente este Disco Duro ya esta montado, ya que contiene el S.O Unix/Linux)<br>
+--&gt; Bus IDE 1 Primary.<br>
+-------&gt; En posición: <b>/dev/hda</b><br>
+-------&gt; Partición 1 (es la partición SWAP), como: <b>/dev/hda1</b><br>
+-------&gt; Partición 2 (ocupa todo el Disco Duro), como: <b>/dev/hda2</b><br><br>
+
+<b>NOTA:</b> debemos saber de antemano que un Disco Duro con el S.O
+Unix/Linux siempre posee una partición SWAP y la partición donde esta
+el S.O ;). No lo mencione más arriba, ya que se supone que deben de
+saber (Obvio... antes de meterte al Mundo Unix/Linux, debemos leer
+mínimo el <b>FAQ Linux</b>.
+<br><br>
+- <b>Disco Duro 2</b> (recuerda que este Disco Duro es el que montaremos)<br>
+--&gt; Bus IDE 1 Slave.<br>
+-------&gt; En posición: [b]/dev/hdb[/b]<br>
+-------&gt; Partición 1 (FAT), como: <b>/dev/hdb1</b><br>
+-------&gt; Partición 2 (NTFS), como: <b>/dev/hdb2</b></td></tr></tbody></table><br>
+
+</p><h3>Obteniendo información sobre las particiones.</h3>
+
+Ahora, veremos como debemos escribir la partición en el fichero /etc/fstab. Para es hacemos en la consola:
+
+<br><br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff">$ man mount</td></tr></tbody></table><br>
+
+En el manual de mount encontraremos descritos los nombres para los diferentes tipos de Particiones existentes...
+<br><br>
+En este caso, las particiones FAT se utiliza como: <b>vfat</b>.<br>
+En este caso, las particiones NTFS se utiliza como: <b>ntfs</b>.
+<br><br>
+<h3>El fichero /etc/fstab.</h3>
+El fichero /etc/fstab contiene los dispositivos de almacenamiento
+montados en el sistema como son: cdrom, memorias flash, floppy, discos
+duros, etc... Del mismo modo, los dispositivos descritos en este
+fichero, se especifican aquí mismo para que el Ordenador siempre tenga
+presente este Dispositivo, así que NO es necesario tenerlo puesto. Un
+Ejemplo Claro son:
+<br><br>Las Memorias USB Flash, puedes especificar en /etc/fstab la
+dirección de tu puerto USB, y NO tener puesto la Flash... cuando sea
+necesario, la colocas en el puerto USB previamente establecido en
+/etc/fstab, realizas su montaje y listo, funcionando.
+<br><br>Si en ves de especificar el montaje dentro del fichero
+/etc/fstab, lo realizamos por medio de la llamada a mount con sus
+respectivas OPCIONES, pues el dispositivo funcionara CORRECTAMENTE,
+pero solo funcionara en ese momento que se MONTO, ya que cuando se
+reinicie el sistema se tiene que volver a realizar su montaje manual
+como se había echo anteriormente.
+<br><br>Así que, mejor escribelo en /etc/fstab, así no escribes TODO
+el comando, del mismo modo ya sabes que si el Dispositivo NO está
+puesto, pues NO corrompes nada de Sistema.
+<br><br>
+El fichero /etc/fstab tiene este orden:
+<br><br>
+- <b>Fichero especial que representa el dispositivo.</b><br>
+Un Fichero Especial es el que utiliza el S.O para poder comunicarse con el Dispositivo o algún Puerto.
+<br><br>
+- <b>Carpeta de montaje.</b><br>
+Pues la carpeta que nos enlazara al Dispositivo de Almacenamiento
+<br><br>
+- <b>Sistema de Ficheros (osea tipo de partición... para los extremos novatos).</b><br>
+Es el sistema de ficheros que contiene el Disco Duro a montar, puede ser: ext3, ntfs, vfat, etc.
+<br><br>
+- <b>Privilegios.</b><br>Es el tipo de usuario que puede
+observar/interactuar con el Dispositivo de Almacenamiento, sus valores
+posibles son: owner, user, defaults
+<br><br>
+- <b>Permiso escritura o lectura (no recuerdo, pero es 1 u otro).</b><br>
+Representa el Bit de Permiso de Lectura/Escritura para el Dispositivo de Almacenamiento.
+<br><br>
+- <b>Permiso escritura o lectura (no recuerdo, pero es 1 u otro).</b><br>
+Representa el Bit de Permiso de Lectura/Escritura para el Dispositivo de Almacenamiento.
+<br><br>
+En el siguiente punto, veremos un ejemplo del fichero, y podremos observar el orden según mencionado aquí.
+<br><br>
+
+<h3>Editando /etc/fstab.</h3>
+
+Bueno, ahora agregaremos nuestro Disco Duro de esta manera:<br><br>
+<b>NOTA:</b> recuerda estar logueado como root. (chequen el orden)<br><br>
+
+
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff">$ su<br>
+Password:
+<br>
+# vi /etc/fstab    /*y se abrirá el fichero con el editor VI*/</td></tr></tbody></table>
+
+<br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff"><pre>------------- Nuestro Fichero /etc/fstab -------------
+/dev/hda1        swap             swap        defaults         0   0
+/dev/hda2        /                ext3        defaults         1   1
+/dev/cdrom       /mnt/cdrom       iso9660     noauto,owner,ro  0   0
+/dev/fd0         /mnt/floppy      auto        noauto,owner     0   0
+devpts           /dev/pts         devpts      gid=5,mode=620   0   0
+proc             /proc            proc        defaults         0   0
+</pre>
+
+Ahora Según nuestro Disco Duro 2, el fichero quedaría así:
+<pre>------------- Nuestro Fichero /etc/fstab -------------
+/dev/hda1        swap             swap        defaults         0   0
+/dev/hda2        /                ext3        defaults         1   1
+/dev/hdb1        /mnt/hdd_fat     vfat        defaults         1   1
+/dev/hdb2        /mnt/hdd_ntfs    ntfs        defaults         1   1
+/dev/cdrom       /mnt/cdrom       iso9660     noauto,owner,ro  0   0
+/dev/fd0         /mnt/floppy      auto        noauto,owner     0   0
+devpts           /dev/pts         devpts      gid=5,mode=620   0   0
+proc             /proc            proc        defaults         0   0
+</pre></td></tr></tbody></table><br>
+
+Creamos ahora 2 carpetas dentro del directorio: /mnt, y serian así:
+
+<br><br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff"># cd /mnt<br>
+# mkdir hdd_ntfs<br>
+# mkdir hdd_fat</td></tr></tbody></table><br>
+
+
+Bueno, ahora sólo queda montarlos (activarlos)... y sería así:
+
+<br><br>
+<table bgcolor="#cccccc" width="100%"><tbody><tr><td bgcolor="#ffffff"># mount /dev/hdb1<br>
+# mount /dev/hdb2</td></tr></tbody></table><br>
+
+
+Y listo... ya veremos que las carpetas /mnt/hdd_ntfs y /mnt/hdd_fat contendrán la info del Disco Duro respectivo.
+<br><br>
+<b>Otro dato importante.</b><br>Como vemos... los 2 Bit de Permiso los
+pusimos en: 1 1, esto quiere decir que podremos Escribir/Leer en el
+Dispositivo, pero del mismo modo esta implícito que siempre estará
+MONTADO, y NO necesitaremos hacer el comando mount (como lo hicimos
+ahorita).
+<br><br>
+En caso que los dejemos en 0 0, cada ves que queramos acceder a alguno de ellos, ahí que montarlo como lo hicimos ahorita.
+<br><br>
+<h3>Comentarios</h3>
+Para cualquier duda, observación o sugerencia sobre este documento puedes hacerlo a través del siguiente enlace:<br><br>
+<a href="http://www.espaciolinux.com/postt12972.html">Foro: Cómo Montar tu HDD en Linux/Unix</a><p></p><br><p><b>Comentario del autor sobre el documento</b><br>
+Cualquier publicacion, por favor, se pide que se conserve el nombre del Autor y se Respete la informacion.</p><br><br><br><center> </center><br><div align="left"><script type="text/javascript"><!--
+google_ad_client = "pub-7315494300829393";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+google_ad_channel ="6711027668";
+google_color_border = "F5F5F5";
+google_color_bg = "F5F5F5";
+google_color_link = "003366";
+google_color_url = "000000";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript" src="HOWTO.montar-dispositivos_files/show_ads.js">
+</script></div><br><div style="border: 1px solid rgb(59, 84, 133); margin: 0pt; padding: 0.5em; float: left; background-color: rgb(255, 255, 255);">Autor: <a href="http://www.espaciolinux.com/modules.php?name=Forums&amp;file=profile&amp;mode=viewprofile&amp;u=2342">Diabliyo</a><br>
+Colaboración para <a href="http://www.espaciolinux.com/">espaciolinux.com</a><br><font class="tiny">Fecha: 2005-10-30<br> (4447 Lecturas)</font></div></td></tr></tbody></table><br><br><br><center><p><a href="http://www.espaciolinux.com/copyright.html" target="_top">Copyright ©</a> 2003 por Espacio Linux</p><br>[ <a href="javascript:history.go(-1)">Volver Atrás</a> ]</center></td></tr></tbody></table></td></tr></tbody></table>
+<div align="right"><a href="javascript:openwindow()">Content ©</a></div></td><td><img src="HOWTO.montar-dispositivos_files/pixel.gif" alt="" border="0" height="1" width="2">
+</td></tr></tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top">
+<td height="17">&nbsp;</td>
+</tr></tbody></table>
+<br><table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top">
+</tr><tr align="center">
+<td class="spacefooter" colspan="3" width="100%">
+<span class="footmsg">
+<div align="center">
+<table border="0" cellpadding="4" cellspacing="2" width="100%">
+    
+<tbody><tr>
+        
+<td align="center"><a href="http://www.espaciolinux.com/copyright.html">Copyright</a> | <a href="http://www.espaciolinux.com/terminos.html">Términos de uso</a> | <a href="http://www.espaciolinux.com/privacidad.html">Política de privacidad</a> | <a href="http://www.espaciolinux.com/modules.php?name=Publicidad">Publicidad</a> | <a href="http://www.espaciolinux.com/ayuda.html">Contáctanos</a> | <a href="http://blogel.espaciolinux.info/">Blog</a></td>
+    </tr>
+</tbody></table>
+</div><br>
+</span></td>
+</tr>
+</tbody></table>
+
+    <script src="HOWTO.montar-dispositivos_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-1104537-1";
+urchinTracker();
+</script>
+    </body></html>

@@ -1,0 +1,202 @@
+
+################################################################################
+# Ejemplos básicos
+################################################################################
+
+1) La manera más simple de usarlo, descarga el archivo indicado.
+
+wget http://ejemplo.com/programa.tar.gz
+
+
+2) Es posible indicar más de una descarga a la vez, incluso con distintos
+protocolos.
+
+wget http://ejemplo.com/programa.tar.gz  ftp://otrositio.com/descargas/video.mpg
+
+
+3) Otra manera de descargar varios archivos, con extensión similar.
+
+wget http://ejemplo.com/*.pdf
+
+
+4) Si vas a descargar varios archivos, índicalos a través de una lista en
+un archivo.
+
+(creamos una lista en archivos.txt que serán descargados)
+http://ejemplo.com/programa.tar.gz
+http://ejemplo.com/rpm/paquete.rpm
+ftp://otrositio.com/descargas/distro.iso
+
+(descargamos todos indicando el archivo)
+wget -i archivos.txt
+
+
+5) La opción /c/
+   Si la descarga se interrumpió por algún motivo, continuamos la descarga
+   desde donde se haya quedado con la opción /c/.
+
+wget -c http://ejemplo.com/distro.iso
+wget -i -c archivos.txt
+
+
+6) La opción /o/
+   Proporciona un reporte (log) sobre la descarga.
+
+wget -o reporte.txt http://ejemplo.com/programa.tar.gz
+
+
+7) En descargas muy largas como el iso de alguna distro de Linux, puedes
+   LIMITAR EL ANCHO DE BANDA de la descarga en específico, ya que podría ser
+   que la descarga se llevará todo el ancho de banda durante varias horas.
+
+$ wget -o /reporte.log --limit-rate=50k ftp://ftp.centos.org/download/centos5-dvd.iso
+
+
+8) Si es un sitio donde se requiere de USUARIO/CONTRASEÑA usa estas opciones.
+
+wget –http-user=admin –http-password=secreto http://ejemplo.com/archivo.mp3
+
+
+9) Por defecto, |wget| realiza 20 INTENTOS de establecer la CONEXIÓN e iniciar
+   la descarga, en sitios muy saturados es posible que ni con 20 intentos se
+   logré, con la opción /t/ (tries) aumenta a más intentos.
+
+wget -t 50 http://ejemplo.com/pelicula.mpg
+
+
+10) ¿Quieres que intente hasta que logré la conexión?, usa la opción 'inf'
+de intentos infinitos.
+
+wget -t inf http://ejemplo.com/pelicula.mpg
+
+
+################################################################################
+# Ejemplos avanzados
+################################################################################
+
+11) Puedes descargar toda una página completa, |wget| no está limitado a solo
+    descargas de archivos. Sitios completos pueden descargarse también.
+
+wget www.linuxtotal.com.mx
+
+
+12) La opción /p/
+    Lo mismo que lo anterior pero con esta opción /p/ DESCARGA
+    además todos los ELEMENTOS EXTRAS necesarios de la página como hojas de
+    estilos, imágenes en línea, etc.
+
+wget -p www.linuxtotal.com.mx
+
+
+13) Con la opción /r/ se descarga recursivamente hasta 5 niveles del sitio.
+
+wget -r www.ejemplo.com -o reporte.log
+
+
+14) Con la opción /l/ se aumenta el nivel de recursividad hasta el número
+    indicado, también es posible usar 'inf' como valor de recursividad
+    infinito.
+
+wget -r -l10 www.ejemplo.com -o reporte.log
+
+
+15) Por defecto, los enlaces dentro del sitio apuntan a la dirección del
+    dominio completo. Si deseas descargar el sitio recursivamente y después
+    estudiarlo fuera de línea (OFF LINE) usa la opción /convert-links/ que los
+    convertirá en enlaces locales, apuntando a las páginas dentro del sitio
+    descargado.
+
+wget --convert-links -r http://www.sitio.com/ 
+(o también)
+wget -k -r http://www.sitio.com/ 
+
+
+16) La opción /P/
+    Por defecto, el sitio a descargar se guarda en el mismo directorio donde
+    estés ejecutando |wget|, con la opción /P/ puedes INDICAR un DIRECTORIO
+    distinto.
+
+wget -r -l3 -P/tmp/sitio ftp://www.unsitio.com/
+
+
+17) La opción /--mirror/
+    De este modo obtienes una COPIA (un espejo) COMPLETA DEL SITIO. La opción
+    /--mirror/ es igual a usar las opciones /-r -l inf -N/ que indica
+    recursividad a nivel infinito y obtienendo la marca de tiempo original de
+    cada archivo descargado (opción -N).
+
+wget --mirror http://www.linuxtotal.com.mx/    
+(o también)
+wget -m http://www.linuxtotal.com.mx/ 
+
+
+18) La opción /E o --html-extension/
+    Si descargas el sitio completo para verlo fuera de línea (off line) es
+    posible que varios archivos descargados no se abran, debido a extensiones
+    como .cgi, .asp o .php, es entonces posible indicarle a |wget| con la
+    opción /E o --html-extension/ que CONVIERTA TODOS LOS ARCHIVOS A EXTENSIÓN
+    .html.
+
+wget --mirror --convert-links --html-extension http://www.linuxtotal.com.mx
+ (o tambíen)
+  wget -m -k -E http://www.linuxtotal.com.mx
+
+
+19) La opción /H/ (span hosts)
+    expande la recursividad a los sitios desde donde se enlace el
+    original. Este comando descargará el sitio con una recursividad de 3
+    niveles (-r -l3), conviertiendo los enlaces a locales para examinarlo off
+    line (-k), convierte todo a extensiones .html (-E), descarga completamente
+    imágenes y demás elementos de cada página (-p) y además descarga la página
+    externa de los enlaces que apunten fuera del sitio (-H).
+
+wget -H -r -l3 -k -E -p http://miblog.sitiodeblogs.com
+
+WARNING Este tipo de descargas, dependiendo del sitio, puede llenar todo un
+	disco duro!!!!, asi que úsalo a discresión.
+
+
+
+# Un ejemplo extremo de la potencia de wget
+
+El siguiente ejemplo viene muy bien detallado en este sitio
+<http://www.veen.com/jeff/archives/000573.html>, es una línea que busca
+archivos de música mp3 desde una lista de sitios que previamente hayas
+definido, recuerda, un renglón por cada sitio.
+
+wget -r -l1 -H -t1 -nd -N -np -A.mp3 -erobots=off -i sitiosmp3.txt
+
+Veámoslo por partes:
+
+  * [-r -l1] recursivo en solo un nivel, solo buscará un nivel en cada
+    subdirectorio que encuentre por sitio.
+  * [-H] si dentro del sitio encuentra un enlace externo, que lo siga,
+    ya que posiblemente lleve a otro sitio de descarga de múscia.
+  * [-t1] -t es igual --tries, solo hará un intento de conexión, si no
+    lo logra continua al siguiente sitio.
+  * [-nd] indica no crear subdirectorios para cada archivo descargado,
+    es decir, todo nos lo deja en el mismo lugar.
+  * [-N] conserva la fecha y hora (timestamp) del archivo original que
+    se descargue, de otro modo pondría la fecha y hora de nuestro sistema.
+  * [-np] no parent, no seguir enlaces a directorios superiores, solo
+    del actual y uno hacía abajo, por -r -l1
+  * [-A.mp3] -A indica a wget el tipo de archivo a descargar solamente,
+    en este caso solo "mp3".
+  * [-erobots=off] esto evita que wget ignore los archivos 'robots.txt'
+    que pudiera haber, ya que puede ser que dentro de estos archivos
+    haya indicaciones de que subdirectorios los buscadores no deben
+    hurgar (incluyendo a wget). Con esto lo evitamos y buscamos en todo
+    el nivel.
+  * [-i sitiosmp3.txt] el archivo con la lista (hecha a tu gusto, con
+    unos cuantos o decenas de sitios de música) de los sitios desde
+    donde buscar "mp3" y descargarlos.
+
+Si ejecutas este comando de manera diaria o a través de un cron
+<index.php?cont=info_admon_006> entonces se descargará la música, y
+gracias a la marca de tiempo solo descargará los que sean más nuevos que
+el original.
+
+
+Los anteriores ejemplos demuestran el enorme poder de "wget" y el porque
+es considerado el rey de los "downloaders".
+

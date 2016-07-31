@@ -1,0 +1,11 @@
+
+
+
+Modificar /etcfstab
+
+//MadSfeNAS02/SimSam$    /mnt/SIMSAM    smbfs  
+ noauto,user,username=csvicente,workgroup=INDRA
+//simsamdocu.indra.es/STSS\040HAP    /mnt/SSDocu    smbfs  
+ ro,noauto,user,username=csvicente,workgroup=INDRA
+//simsamdocu.indra.es/STSS\137HAP\137SCSI    /mnt/SSDocu2    smbfs  
+ ro,noauto,user,username=csvicente,workgroup=INDRA 

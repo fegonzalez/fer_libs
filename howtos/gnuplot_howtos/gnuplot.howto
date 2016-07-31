@@ -1,0 +1,38 @@
+
+#basico
+plot "gnu_test.txt" u 1 w l
+
+#en el eje OX pintamos columna 1, en OY col2 
+plot "gnu_test.txt" u 1:2 w l,  "gnu_test.txt" u 1:2 w l
+
+#filas 10 a la 100 de la variable elegida
+plot  [10:100] "bug482.txt_m2_r4__09Sep10_2008.txt" u 1 w l
+
+#comparar vars de 2 ficheros
+plot "bug482.suelo" u 1:21 w l,  "bug482.txt_m2_r0__09Sep10_2005.txt" u 1:21 w l
+
+#elegir el rango a pintar
+set xrange [1700:2100]
+plot "gnu_test.txt" u 1 w l #pintara desde OX=1700 a OX=2100
+
+#How do I print out my graphs?
+
+As an example.-
+
+gnuplot> plot [-6:6] sin(x)
+gnuplot> set terminal postscript
+Terminal type set to 'postscript'
+Options are 'landscape monochrome "Courier" 14'
+gnuplot> set output "sin.ps"
+gnuplot> replot
+gnuplot> set output              # set output back to default
+gnuplot> set terminal x11        # ditto for terminal type
+
+
+
+#Fichero: pasar columnas a filas vía SED
+cat hel_recorded.dat | sed -n '2s/\t/\n/gp' | nl >cols.file
+    2 (en 2s): nº de la fila a tratar
+    -n : no escribir por pantalla
+    p: excepto el resultado del comando
+    g: aplicar la sustitución tantas veces como sea posible

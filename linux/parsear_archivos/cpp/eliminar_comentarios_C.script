@@ -1,0 +1,13 @@
+#Utilizamos el preprocesador 'cpp' para eliminar los comentarios C (//) y C++ (/* */)
+
+#cambiar '#' a otra cosa para que cpp no elimine las lineas de preprocesador
+sed -e 's/#/%#%/g' dummy_input.cpp > sin_preprocesar.testcpp.cpp
+
+#eliminar los comentarios C++ pasando el cpp
+cpp sin_preprocesar.testcpp.cpp > sin_preprocesar.sin_comentarios.testcpp.cpp
+
+#recuperar las lineas de preprocesador -> tenemos fichero original sin comentarios C++
+sed -e '/^#/d;s/%#%/#/g' sin_preprocesar.sin_comentarios.testcpp.cpp > dummy_output.cpp
+
+#borrar los ficheros intermedios
+rm -f sin_preprocesar.testcpp.cpp sin_preprocesar.sin_comentarios.testcpp.cpp

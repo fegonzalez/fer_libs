@@ -1,0 +1,126 @@
+A:visited {
+	COLOR: rgb(51,0,153); FONT-STYLE: oblique; TEXT-DECORATION: none
+}
+A:link {
+	COLOR: rgb(20,18,245); TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: rgb(255,25,5); TEXT-DECORATION: underline
+}
+BODY {
+	MARGIN-TOP: 1px; FONT-SIZE: 9pt; MARGIN-LEFT: 1px; COLOR: rgb(54,81,130); MARGIN-RIGHT: 1px; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Verdana", "Arial", "Sans"; BACKGROUND-COLOR: rgb(255,255,255)
+}
+H5 {
+	FONT-WEIGHT: bold; FONT-SIZE: 12pt; COLOR: rgb(81,109,154); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+H4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: rgb(81,109,154); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+H3 {
+	FONT-WEIGHT: bold; FONT-SIZE: 16pt; COLOR: rgb(81,109,154); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+H2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 18pt; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+H1 {
+	BORDER-RIGHT: rgb(81,109,154) 0px solid; PADDING-RIGHT: 0px; BORDER-TOP: rgb(81,109,154) 0px solid; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: 20pt; PADDING-BOTTOM: 0px; MARGIN: 0px 25% 0px 0px; BORDER-LEFT: rgb(81,109,154) 0px solid; COLOR: rgb(81,109,154); PADDING-TOP: 0px; BORDER-BOTTOM: rgb(81,109,154) 1px solid; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+TD {
+	FONT-SIZE: 10pt; COLOR: rgb(54,81,130); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+LI {
+	FONT-SIZE: 10pt; COLOR: rgb(54,81,130); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+P {
+	FONT-SIZE: 10pt; COLOR: rgb(54,81,130); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"; TEXT-ALIGN: justify
+}
+.content {
+	COLOR: rgb(54,81,130); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"; TEXT-ALIGN: left
+}
+CODE {
+	FONT-SIZE: 10pt; COLOR: rgb(0,0,160); FONT-FAMILY: Courier,fixed
+}
+DL {
+	COLOR: rgb(48,71,130); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+PRE {
+	FONT-SIZE: 10pt; COLOR: rgb(0,0,160); FONT-FAMILY: Courier, courier new, fixed
+}
+UL {
+	LIST-STYLE-IMAGE: url(/linux/images/redball.gif); COLOR: rgb(38,61,128); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"; TEXT-ALIGN: left
+}
+OL {
+	COLOR: rgb(38,61,128); FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"; TEXT-ALIGN: left
+}
+CAPTION {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+.tabla1 {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; MARGIN: 10px; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: rgb(240,240,240)
+}
+.block1 {
+	PADDING-RIGHT: 10px; MARGIN-TOP: 20px; PADDING-LEFT: 10px; MARGIN-BOTTOM: 20px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 40px; PADDING-TOP: 1px; BACKGROUND-COLOR: rgb(245,245,245)
+}
+.block2 {
+	PADDING-RIGHT: 10px; MARGIN-TOP: 20px; PADDING-LEFT: 10px; MARGIN-BOTTOM: 20px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 40px; WIDTH: 85%; PADDING-TOP: 1px; BACKGROUND-COLOR: rgb(245,245,245)
+}
+ACRONYM {
+	CURSOR: help; BORDER-BOTTOM: #ff0000 1px dashed
+}
+abbr {
+	CURSOR: help; BORDER-BOTTOM: #ff0000 1px dashed
+}
+DIV {
+	FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+INPUT {
+	FONT-SIZE: 8pt; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+SELECT {
+	FONT-SIZE: 8pt; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"
+}
+.myboxtitle {
+	BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #ccccff
+}
+.menu {
+	FONT-SIZE: 8pt; TEXT-ALIGN: left
+}
+.menuwarning {
+	FONT-SIZE: 14pt; COLOR: red; TEXT-ALIGN: left
+}
+.PhorumBodyArea {
+	FONT-SIZE: 12px; WIDTH: 500px; FONT-FAMILY: Verdana, Arial, Clean, Helvetica, sans-serif
+}
+.PhorumListTable {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid
+}
+.PhorumListRow {
+	FONT-SIZE: 12px; FONT-FAMILY: Verdana, Arial, Clean, Helvetica, sans-serif; HEIGHT: 21px
+}
+.PhorumListHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; FONT-FAMILY: Verdana, Arial, Clean, Helvetica, sans-serif; HEIGHT: 24px
+}
+.PhorumForumTitle {
+	FONT-WEIGHT: bold; FONT-SIZE: large; FONT-FAMILY: Verdana, Arial, Clean, Helvetica, sans-serif
+}
+.PhorumTableHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; FONT-FAMILY: Verdana, Arial, Clean, Helvetica, sans-serif
+}
+.PhorumNav {
+	FONT-SIZE: 10px; FONT-FAMILY: Geneva, Verdana, MS Sans Serif , Clean, sans-serif
+}
+.PhorumNewFlag {
+	FONT-SIZE: 10px; COLOR: red; FONT-FAMILY: Geneva, Verdana, MS Sans Serif , Clean, sans-serif
+}
+.PhorumMessage {
+	FONT-SIZE: 12px; FONT-FAMILY: Courier New, Geneva, Courier, Clean
+}
+.small8pt {
+	FONT-SIZE: 8pt
+}
+.textbox {
+	SCROLLBAR-FACE-COLOR: #cccccc; FONT-SIZE: x-small; BACKGROUND: white; SCROLLBAR-HIGHLIGHT-COLOR: #ffffff; SCROLLBAR-SHADOW-COLOR: #ffffff; COLOR: #000000; SCROLLBAR-3DLIGHT-COLOR: #ffffff; SCROLLBAR-ARROW-COLOR: #000000; SCROLLBAR-TRACK-COLOR: #ffffff; FONT-FAMILY: "Trebuchet MS", "Bitstream Vera Sans", "Arial", "Verdana", "Luxi Sans", "Sans"; SCROLLBAR-DARKSHADOW-COLOR: #ffffff; TEXT-ALIGN: left
+}
+.capamarconegro {
+	WIDTH: 100%; BACKGROUND-COLOR: black
+}

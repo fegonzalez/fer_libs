@@ -1,0 +1,474 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0056)http://tojpa.objectis.net/Documentacion/c_recetas/tar_gz -->
+<HTML lang=es xml:lang="es" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>Tojpa Linux - Empaquetar y Comprimir</TITLE>
+<META http-equiv=Content-Type content=text/html;charset=utf-8><!-- Basic crude style for Netscape4.x - This can be removed
+         if you don't want the special NS4 look - it will still work,
+	 just be plain text instead. --><LINK 
+href="Empaquetar y Comprimir_archivos/ploneNS4.css" type=text/css 
+rel=Stylesheet><!-- Main style sheets for CSS2 capable browsers -->
+<STYLE type=text/css media=screen>@import url( http://tojpa.objectis.net/plone.css?skin= );
+</STYLE>
+<!-- Custom style sheet if available -->
+<STYLE type=text/css media=all>@import url( http://tojpa.objectis.net/ploneCustom.css );
+</STYLE>
+<!-- Style sheet used for printing --><LINK media=print 
+href="Empaquetar y Comprimir_archivos/plonePrint.css" type=text/css 
+rel=stylesheet><!-- Style sheet used for presentations (Opera is the only browser supporting this at the moment) --><LINK 
+media=projection href="Empaquetar y Comprimir_archivos/plonePresentation.css" 
+type=text/css rel=stylesheet><LINK href="http://tojpa.objectis.net/favicon.ico" 
+type=image/x-icon rel="shortcut icon"><LINK title="Front Page" 
+href="http://tojpa.objectis.net" rel=home><LINK title="Search this site" 
+href="http://tojpa.objectis.net/search_form" rel=search><!-- Disable IE6 image toolbar -->
+<META http-equiv=imagetoolbar content=no><!-- Common Plone ECMAScripts -->
+<SCRIPT language=JavaScript>
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+//-->
+</SCRIPT>
+
+<SCRIPT src="" type=text/javascript></SCRIPT>
+
+<SCRIPT src="Empaquetar y Comprimir_archivos/plone_formtooltip.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2800.1400" name=GENERATOR></HEAD>
+<BODY><A class=skipnav 
+href="http://tojpa.objectis.net/Documentacion/c_recetas/#documentContent">Skip 
+to content</A> 
+<DIV>
+<DIV class=top><A href="http://tojpa.objectis.net/"><IMG class=logo height=64 
+alt="" src="Empaquetar y Comprimir_archivos/logo.jpg" width=700 border=0> 
+</A></DIV>
+<HR class=netscape4>
+
+<DIV class=tabs></DIV>
+<DIV class=personalBar>&nbsp; <SPAN>Visitante</SPAN> </DIV>
+<DIV class=pathBar>Usted esta aqui: <A 
+href="http://tojpa.objectis.net/">Home</A> <STRONG>»</STRONG> <SPAN><A 
+href="http://tojpa.objectis.net/Documentacion/view">Documentación</A> <STRONG>» 
+</STRONG></SPAN><SPAN><A 
+href="http://tojpa.objectis.net/Documentacion/c_recetas/view">c_recetas</A> 
+<STRONG>» </STRONG></SPAN><SPAN><SPAN>Empaquetar y Comprimir</SPAN> 
+</SPAN></DIV>
+<HR class=netscape4>
+</DIV>
+<TABLE class=columns>
+  <TBODY>
+  <TR>
+    <TD class=left>
+      <DIV class=box>
+      <H5>Navegacion</H5>
+      <DIV class=body>
+      <DIV class="content odd">
+      <DIV style="WHITE-SPACE: nowrap"><SPAN><A title="" 
+      href="http://tojpa.objectis.net/"><IMG title="Site icon" height=16 
+      alt="Site icon" src="Empaquetar y Comprimir_archivos/site_icon.gif" 
+      width=16 border=0>&nbsp;Tojpa Linux </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/Acerca/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Acerca de ... </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/actividades/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Actividades </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/foro/"><IMG title="" height=16 alt="" 
+      src="Empaquetar y Comprimir_archivos/fcFolder_icon.gif" width=16 
+      border=0>&nbsp;Foros </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/GNU/"><IMG title="Folder icon" height=16 
+      alt="Folder icon" src="Empaquetar y Comprimir_archivos/folder_icon.gif" 
+      width=16 border=0>&nbsp;GNU </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/linux/"><IMG title="Folder icon" height=16 
+      alt="Folder icon" src="Empaquetar y Comprimir_archivos/folder_icon.gif" 
+      width=16 border=0>&nbsp;Linux </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/ListasCorreo/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Listas </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/noticias/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Noticias </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/Pro-Bolivia/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Pro-Bolivia </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/Proyectos/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Proyectos </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; <A class=plain title="" 
+      href="http://tojpa.objectis.net/Documentacion/"><IMG title="Folder icon" 
+      height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;Documentación </A></SPAN></DIV>
+      <DIV style="WHITE-SPACE: nowrap"><SPAN>&nbsp; &nbsp; <SPAN 
+      class=currentNavItem></SPAN><A class=plain title="" 
+      href="http://tojpa.objectis.net/Documentacion/c_recetas/"><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 
+      border=0>&nbsp;<SPAN class=currentNavItem>c_recetas</SPAN> 
+      </A></SPAN></DIV></DIV></DIV></DIV>
+      <DIV class=box>
+      <H5>Investigacion</H5>
+      <DIV class=body>
+      <DIV class="content even"><IMG title="Folder icon" height=16 
+      alt="Folder icon" src="Empaquetar y Comprimir_archivos/folder_icon.gif" 
+      width=16 border=0> <A 
+      href="http://tojpa.objectis.net/Documentacion/c_recetas/programacion">Programacion</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/Documentacion/c_recetas/basededatos">Bases 
+      de Datos</A><BR><IMG title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/Documentacion/c_recetas/redesseguridad">Redes 
+      &amp; Seguridad</A><BR><IMG title="Folder icon" height=16 
+      alt="Folder icon" src="Empaquetar y Comprimir_archivos/folder_icon.gif" 
+      width=16 border=0> <A 
+      href="http://tojpa.objectis.net/Documentacion/c_recetas/iarobotica">I.A. 
+      &amp; Robotica</A><BR></DIV></DIV></DIV>
+      <DIV class=box>
+      <H5>Documentacion</H5>
+      <DIV class=body>
+      <DIV class="content odd"><IMG title="Folder icon" height=16 
+      alt="Folder icon" src="Empaquetar y Comprimir_archivos/folder_icon.gif" 
+      width=16 border=0> <A 
+      href="http://tojpa.objectis.net/Documentacion/articulos">Articulos(3)</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A href="http://tojpa.objectis.net/Documentacion/faq">FAQ</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/Documentacion/tutoriales">Tutoriales</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/Documentacion/recetas">Recetas(2)</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/Documentacion/trucos">Trucos</A><BR></DIV></DIV></DIV>
+      <DIV class=box>
+      <H5>Semana del Pinguino</H5>
+      <DIV class=body><IMG src="Empaquetar y Comprimir_archivos/inch.jpg"> 
+      </DIV></DIV>
+      <DIV class=box>
+      <H5>Humor Gráfico</H5>
+      <DIV class=body><A href="http://tira.escomposlinux.org/"><IMG 
+      src="Empaquetar y Comprimir_archivos/icono-mini.png"> </A></DIV></DIV>
+      <DIV class=box>
+      <H5>Lista de Correo</H5>
+      <DIV class=body>
+      <FORM action=http://www.eListas.net/cgi-bin/eGruposSubscribe.cgi 
+      method=post target=_blank><FONT face=Verdana color=#000000 size=2><INPUT 
+      class=textfields type=hidden value=7 name=type><INPUT type=hidden 
+      value=all name=submode></FONT> 
+      <DIV align=center><FONT face=Verdana color=#000000 size=2>Participa de la 
+      Lista de correo del grupo&nbsp;<BR>vuelvete miembro:<BR><INPUT 
+      class=textfields maxLength=250 size=19 value=Email name=email> <INPUT 
+      type=hidden value=tojpa name=lname><INPUT class=textfields type=submit value=Suscribirme></FONT> 
+      </DIV></FORM></DIV></DIV>
+      <DIV class=box>
+      <H5>Búsqueda en Google</H5>
+      <DIV class=body>
+      <FORM action=http://www.google.com/search method=get>
+      <TABLE width=166 bgColor=#ffffff>
+        <TBODY>
+        <TR>
+          <TD width=173>
+            <P align=center><A href="http://www.google.com/"><IMG height=53 
+            alt=Google src="Empaquetar y Comprimir_archivos/Logo_40wht.gif" 
+            width=128 align=center border=0></A> <INPUT maxLength=255 size=23 
+            name=q> <INPUT type=hidden value=es name=hl> <INPUT type=submit value="Búsqueda Google" name=btnG></P></TD></TR></TBODY></TABLE></FORM></DIV></DIV></TD>
+    <TD class=main>
+      <DIV class=document>
+      <DIV id=content>
+      <DIV class=documentActions><A name=documentContent><A 
+      href="javascript:this.print();"><IMG title="Print this page" alt=Print 
+      src="Empaquetar y Comprimir_archivos/print_icon.gif"> </A></DIV>
+      <DIV>
+      <H1>Empaquetar y Comprimir</H1>
+      <DIV class=description></DIV>
+      <DIV class=stx>
+      <H1>1) ¿Para qué sirven las opciones del comando rpm y con que opciones se 
+      debe colocar ".rpm" y con que opciones no?</H1>
+      <H2>comando rpm : opciones</H2>
+      <P># -i : instala el paquete. # -U : instala o actualiza el paquete. # -vh 
+      : se muestra el estado de la instalación del paquete. # -e : desintala el 
+      paquete. # -F : actualiza un paquete si encuentra una versión anterior del 
+      mismo en el sistema. # -q : para verificar si esta instalado un paquete. # 
+      -a : consulta todos los paquetes actualmente instalados # -V : que 
+      verifica si todos los archivos en el paquete se encuentran en el mismo 
+      estado en que estaban cuando originalmente fueron instalados</P>
+      <P>Las opciones en las que se coloca .rpm son : -i , -U, -vh , -F .</P>
+      <P>Las opciones en las que no se coloca .rpm son : -e , -q , -a , -V .</P>
+      <H1>Por Ejemplo:</H1>
+      <P>rpm -Fvh foo-1.2-1.i386.rpm : Refresca un paquete es parecido a 
+      actualizarlo (colocamos la extencion .rpm)</P>
+      <P>rpm -q foo : imprimirá el nombre de paquete (se ve que no se coloca la 
+      extencion .rpm)</P>
+      <P>rpm –e foo : desinstalara el paquete (no colocamos la extencion .rpm 
+      )</P>
+      <OL>
+        <LI>- Crear cualquier archivo y empaquetar ,con tar , comprimir , 
+        descomprimir con gzip , gunzip , zip , bzip2 , bunzip. 
+        <H1>Empaquetar-Desempaquetar.- (comando tar)</H1>
+        <H2>a) Empaquetar:</H2>
+        <P>tar -cvf instalar.tar /home/ronald/instalar</P></LI></OL>
+      <H1>•Empaquetar y comprimir con bzip2:</H1>
+      <P>tar -cjvf instalar tar.bz2 /home/ronald/instalar</P>
+      <H1>•Empaquetar y comprimir con bzip2:</H1>
+      <P>tar -czvf instalar.tgz /home/ronald/instalar-tar.gz</P>
+      <H2>b) Desempaquetar:</H2>
+      <P>tar -xvf instalar.tar</P>
+      <H1>• Desmpaquetar y descomprimir archivos comprimidos con bzip2</H1>
+      <P>tar -xjvf instalar.tar.bz2</P>
+      <H1>• Desmpaquetar y descomprimir archivos comprimidos con gzip</H1>
+      <P>tar -xzvf instalar.tgz</P>
+      <P>Algunas de las opciones que se usan con el comando tar son:</P>
+      <P>· -c — crea un nuevo archivo.</P>
+      <P>· -f — cuando se usa con la opción -c, usa el nombre del archivo 
+      especificado para la creación del archivo tar; cuando se usa con la opción 
+      -x, retira del archivo el archivo específico.</P>
+      <P>· -t — muestra la lista de archivos en el archivo tar.</P>
+      <P>· -v — muestra el progreso de los archivos que están siendo 
+      archivados.</P>
+      <P>· -x — extrae los archivos desde un fichero.</P>
+      <P>· -z — comprime el archivo tar con gzip.</P>
+      <P>· -j — comprime el archivo tar con bzip2.</P>
+      <P>c) Comprimir -Descomprimir con bzip2</P>
+      <H1>• Comprimir</H1>
+      <P>bzip2 -z documento</P>
+      <H1>• Descomprimir (bunzip2)</H1>
+      <H2>bzip2 -d documento.bz2</H2>
+      <P>bunzip2 documento.bz2</P>
+      <P>d) Comprimir -Descomprimir con gzip</P>
+      <H1>• Comprimir</H1>
+      <P>gzip -z documento</P>
+      <H1>•Descomprimir (gunzip)</H1>
+      <H2>gzip -d documento.gz</H2>
+      <P>gùnzip documento.gz</P>
+      <H1>e) Comprimir -Descomprimir con zip</H1>
+      <P>zip -r documento.zip</P>
+      <P>unzip documento.zip</P>
+      <P>Como pueden ver no estan complicado el manejo de estos comandos, pero 
+      si necesitan alguna información adicional no duden en escribirme :D. <A 
+      href="mailto:dydierr@linuxmail.org">ogm</A></P></DIV></DIV>
+      <DIV></DIV></DIV></DIV></TD>
+    <TD class=right>
+      <DIV class=box>
+      <H5>Distribuciones</H5>
+      <DIV class=body>
+      <DIV class="content odd"><IMG title="Folder icon" height=16 
+      alt="Folder icon" src="Empaquetar y Comprimir_archivos/folder_icon.gif" 
+      width=16 border=0> <A 
+      href="http://tojpa.objectis.net/distribuciones/debian">Debian</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/fedora">Fedora</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/freebsd">FreeBSD</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/mandrake">Mandrake</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/gentoo">Gentoo</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/OpenBSD">OpenBSD</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A href="http://tojpa.objectis.net/distribuciones/redhat">Red 
+      Hat</A><BR><IMG title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/slackware">Slackware</A><BR><IMG 
+      title="Folder icon" height=16 alt="Folder icon" 
+      src="Empaquetar y Comprimir_archivos/folder_icon.gif" width=16 border=0> 
+      <A 
+      href="http://tojpa.objectis.net/distribuciones/suse">Suse</A><BR></DIV></DIV></DIV>
+      <DIV class=box>
+      <H5>Imagen de la semana</H5>
+      <DIV class=body><IMG 
+      src="Empaquetar y Comprimir_archivos/logo_semana.jpg"> </DIV></DIV><!-- The calendar, rendered as a table -->
+      <TABLE class=calendar id=thecalendar cellSpacing=0 cellPadding=2 
+        border=0><TBODY>
+        <TR>
+          <TH><A 
+            href="http://tojpa.objectis.net/Documentacion/c_recetas/tar_gz/document_view?month:int=9&amp;year:int=2004">«</A> 
+          </TH>
+          <TH colSpan=5><SPAN>October 2004 </SPAN></TH>
+          <TH><A 
+            href="http://tojpa.objectis.net/Documentacion/c_recetas/tar_gz/document_view?month:int=11&amp;year:int=2004">»</A> 
+          </TH></TR>
+        <TR>
+          <TD class=weekdays>Su</TD>
+          <TD class=weekdays>Mo</TD>
+          <TD class=weekdays>Tu</TD>
+          <TD class=weekdays>We</TD>
+          <TD class=weekdays>Th</TD>
+          <TD class=weekdays>Fr</TD>
+          <TD class=weekdays>Sa</TD></TR>
+        <TR>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>1</TD>
+          <TD class=noevent>2</TD></TR>
+        <TR>
+          <TD class=noevent>3</TD>
+          <TD class=noevent>4</TD>
+          <TD class=noevent>5</TD>
+          <TD class=noevent>6</TD>
+          <TD class=noevent>7</TD>
+          <TD class=noevent>8</TD>
+          <TD class=noevent>9</TD></TR>
+        <TR>
+          <TD class=noevent>10</TD>
+          <TD class=noevent>11</TD>
+          <TD class=noevent>12</TD>
+          <TD class=noevent>13</TD>
+          <TD class=noevent>14</TD>
+          <TD class=noevent>15</TD>
+          <TD class=noevent>16</TD></TR>
+        <TR>
+          <TD class=noevent>17</TD>
+          <TD class=noevent>18</TD>
+          <TD class=noevent>19</TD>
+          <TD class=noevent>20</TD>
+          <TD class=noevent>21</TD>
+          <TD class=noevent>22</TD>
+          <TD class=noevent>23</TD></TR>
+        <TR>
+          <TD class=noevent>24</TD>
+          <TD class=noevent>25</TD>
+          <TD class=noevent>26</TD>
+          <TD class=noevent>27</TD>
+          <TD class=noevent>28</TD>
+          <TD class=noevent>29</TD>
+          <TD class=noevent>30</TD></TR>
+        <TR>
+          <TD class=todaynoevent>31</TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD>
+          <TD class=noevent>&nbsp; </TD></TR></TBODY></TABLE><!-- The sticky notes -->
+      <DIV>
+      <DIV class=box>
+      <H5>Noticias</H5>
+      <DIV class=body>
+      <DIV class="content odd"><A 
+      href="http://tojpa.objectis.net/noticias/News_Item.2004-10-29.0558"><IMG 
+      title="News icon" height=16 alt="News icon" 
+      src="Empaquetar y Comprimir_archivos/newsitem_icon.gif" width=16 border=0> 
+      Ballmer insta a descartar Linux debido al riesgo de demandas </A>
+      <DIV class=boxDetails>2004-10-29</DIV></DIV>
+      <DIV class="content even"><A 
+      href="http://tojpa.objectis.net/noticias/News_Item.2004-10-23.1619"><IMG 
+      title="News icon" height=16 alt="News icon" 
+      src="Empaquetar y Comprimir_archivos/newsitem_icon.gif" width=16 border=0> 
+      Un argentino ganó el concurso de programación de Google </A>
+      <DIV class=boxDetails>2004-10-23</DIV></DIV>
+      <DIV class="content odd"><A 
+      href="http://tojpa.objectis.net/noticias/News_Item.2004-10-22.5954"><IMG 
+      title="News icon" height=16 alt="News icon" 
+      src="Empaquetar y Comprimir_archivos/newsitem_icon.gif" width=16 border=0> 
+      Crece a pasos agigantados el uso de robots en la industria </A>
+      <DIV class=boxDetails>2004-10-23</DIV></DIV>
+      <DIV class="content even"><A 
+      href="http://tojpa.objectis.net/noticias/suse_9.2"><IMG title="News icon" 
+      height=16 alt="News icon" 
+      src="Empaquetar y Comprimir_archivos/newsitem_icon.gif" width=16 border=0> 
+      Novell lanza Suse Linux Professional 9.2 </A>
+      <DIV class=boxDetails>2004-10-19</DIV></DIV>
+      <DIV class="content odd"><A 
+      href="http://tojpa.objectis.net/noticias/top_20_fallas"><IMG 
+      title="News icon" height=16 alt="News icon" 
+      src="Empaquetar y Comprimir_archivos/newsitem_icon.gif" width=16 border=0> 
+      Publican lista con las 20 mayores vulnerabilidades de Windows y Linux </A>
+      <DIV class=boxDetails>2004-10-19</DIV></DIV></DIV></DIV></DIV>
+      <DIV class=box>
+      <H5>Grupos Linux</H5>
+      <DIV class=body><A href="http://www.softwarelibre.org.bo/">Software Libre 
+      Bolivia</A><BR><A href="http://www.glisc.org/">GLISC </A><BR><A 
+      href="http://www.somoslibres.org/">Somos Libres</A><BR><A 
+      href="http://gultar.uajms.edu.bo/">GULTAR </A><BR><A 
+      href="http://www.pinguinos.tk/">PiMI's</A><BR><A 
+      href="http://www.linux.org.bo/">LUGBOL </A><BR></DIV></DIV>
+      <DIV class=box>
+      <H5>Link's de Interes</H5>
+      <DIV class=body><A href="http://www.gnu.org/">GNU' Not Unix </A><BR><A 
+      href="http://www.linux-es.org/">El rincon de Linux</A><BR><A 
+      href="http://www.debian.org/">Debian</A><BR><A 
+      href="http://www.freebsd.org/es/">FreeBSD</A><BR><A 
+      href="http://www.gentoo-es.org/">Comunidad Gentoo</A><BR><A 
+      href="http://www.hispalinux.es/">Hispalinux</A><BR><A 
+      href="http://metadistros.software-libre.org/es/">Metadistros </A><BR><A 
+      href="http://www.eslack.org/">Grupo de Slackware</A><BR><A 
+      href="http://www.barrapunto.com/">Barra Punto </A><BR><A 
+      href="http://www.diarioti.com/">DiarioTi </A><BR><A 
+      href="http://tojpa.objectis.net/linuxchix.org">LinuxChix</A><BR><A 
+      href="http://www.solar.org.ar/">Solar</A><BR></DIV></DIV></TD></TR></TBODY></TABLE>
+<HR class=netscape4>
+
+<DIV class=footer><A href="http://plone.org/"><IMG 
+title="This site was built using the Plone Content Management System. Click for more information." 
+height=30 alt="Powered by Plone" 
+src="Empaquetar y Comprimir_archivos/plone_powered.gif" width=96> </A><!--
+
+     Please keep the Plone Powered button (or a textual link to us) if you use
+     Plone on your site. It's a nice token of gratitude, and we appreciate your
+     help in promoting the Plone name.
+
+     Plone is powered by the combined forces of Zope and CMF, two absolutely
+     great systems made by Zope Corporation (http://zope.com) and they in turn
+     are based on the best programming language in the world - Python
+     (http://www.python.org). We owe these guys a lot, thanks for making Plone
+     possible!
+
+ --><BR><SPAN 
+style="FONT-SIZE: 120%"><A href="http://www.objectis.org/">Objectis</A> is a <A 
+href="http://www.pilotsystems.net/">Pilot Systems</A> and <A 
+href="http://www.bluedynamics.org/">Blue Dynamics</A> service </SPAN><BR>This 
+service is supported by <A href="http://www.zope-europe.org/">Zope Europe 
+Association</A> and <A href="http://plone.org/">Plone.org</A> <BR>Plone is 
+Copyright © 2000-<SPAN>2004</SPAN> by <A 
+href="http://www.plonesolutions.com/">Alexander Limi</A>, <A 
+href="http://www.runyaga.com/">Alan Runyan</A>, <A 
+href="http://blacktar.com/">Vidar Andersen</A>. 
+<HR class=netscape4>
+<STRONG class=netscape4>If you can read this text, it means you are not 
+experiencing the Plone design at its best. Plone makes heavy use of CSS, which 
+means it is accessible to any internet browser, but the design needs a <A 
+href="http://www.webstandards.org/upgrade/">standards-compliant browser to look 
+like we intended it</A>. Just so you know ;) </STRONG></DIV></BODY></HTML>

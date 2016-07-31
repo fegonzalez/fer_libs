@@ -1,0 +1,4 @@
+* cifs :	acceso a red windows  (evita problemas con el español: acentos, ...)
+* SAMBA :	acceso a red windows
+
+* gcalctool : calculadora científica

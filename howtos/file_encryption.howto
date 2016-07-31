@@ -1,0 +1,31 @@
+
+1) tool: file manager (debian's aptitude like)
+
+   - brew
+
+     brew list # installed programs
+     brew search
+     brew install
+     ...
+
+2) tool: file encryption
+
+   - gpg2: OpenPGP encryption and signing tool
+
+     options: -d == --decrypt; ...
+
+   use: encrypt a compressed file
+
+   i)   compress: tar file.tar.gz file/
+   ii)  simple encrypt / decry-pt compressed files
+
+   	gpg2 --symmetric pruen.tar.gz
+	# encrypt pruen.tar.gz to a file named "pruen.tar.gz.gpg"
+	
+	gpg2 --output example_name.tar.gz --decrypt pruen.tar.gz.gpg
+	# decrypt pruen.tar.gz.gpg to a file named "example_name.tar.gz"
+
+   use: encrypt and compress a normal file
+   
+   i)  $ gpg2 -c clear_text                             # Compress & Encrypt
+       $ gpg2 -d --output example_name clear_text.gpg   # Decrypt & Decompress

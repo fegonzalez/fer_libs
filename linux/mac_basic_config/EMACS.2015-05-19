@@ -1,0 +1,229 @@
+
+;; .emacs
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; setq section BEGIN
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; uncomment this line to disable loading of "default.el" at startup
+(setq inhibit-default-init t)
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to better frame titles
+(setq frame-title-format
+      (concat  "%b - emacs@" (system-name)))
+
+;; default to unified diffs
+(setq diff-switches "-u")
+
+;; always end a file with a newline
+(setq require-final-newline 'query)
+
+;;; uncomment for CJK utf-8 support for non-Asian users
+;; (require 'un-define)
+ 
+
+;;using ispelll dictionary
+; MacBook Pro 13.3":  aspell
+(setq ispell-program-name "/usr/local/bin/aspell")
+(setq ispell-dictionary "english")
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; defun section BEGIN
+;;
+;; (defun function-name (arguments…)
+;;   "optional-documentation…"
+;;   (interactive argument-passing-info)     ; optional
+;;   body…)
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;2014-10-03: adding a key to print "~"
+;; MacBook Pro 13.3"
+(defun tilde () (interactive) (insert "~"))
+(defun close-corchete () (interactive) (insert "]"))
+(defun ++ () (interactive) (insert "]"))
+(defun almu () (interactive) (insert "#"))
+(defun ç () (interactive) (insert "}"))
+(defun back-slash() (interactive) (insert "\\"))
+(defun pipe() (interactive) (insert "|"))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Screen Size
+;;
+;; MacBook Pro 13.3 values (width, height)
+;; double screen: (166, 53)
+;; single screen: (80, 53)
+
+
+;;;; Dividing the screen in two 80 columns fixed size buffers)
+;; the width and height bellow depens on the kind of font (see custom-set-face
+;; above)
+;;
+(setq default-frame-alist (append (list
+				   '(width  . 166)
+				   '(height . 53))
+				  default-frame-alist))
+
+
+;;;; Double-single screen toggle
+(defvar double-screen 'nil
+  "non-nil if current frame is in double size (allowing two full buffers in the screen) screen mode. See double-screen-on, double-screen-off, double-screen-toggle")
+
+(defun double-screen-on ()
+  "Sets fullscreen on (based on ???display??? with font ???)"
+  (interactive)
+  (set-frame-width (selected-frame) 166) ; adapt size
+  (set-frame-height (selected-frame) 53) ; adapt size
+  (setq double-screen t)
+  )
+
+(defun double-screen-off ()
+  "Sets fullscreen off (based on ???display??? with font ???)"  
+  (interactive)
+  (set-frame-width (selected-frame) 80) ; adapt size
+  (set-frame-height (selected-frame) 53) ; adapt size
+  (setq double-screen nil)
+  )
+
+(defun double-screen-toggle ()
+  "Toggles fullscreen on/off (based on ???Display??? with font ???)"    
+  (interactive)
+  (if (eq double-screen 'nil)
+      (double-screen-on)
+					 ;else
+    (double-screen-off)
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; defun section END
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;begin R configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'ess-site)
+
+;; watch images inside emacs buffer ??  -> NOT WORKING
+;; (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;end R configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;  Set colors (as in ~/.Xdefaults).
+(set-border-color "lightblue")
+(set-border-color "blue")
+(set-cursor-color "red")
+(set-mouse-color "red")
+(set-foreground-color "DarkOliveGreen3")
+(set-background-color "black")
+ 
+;; Display the time in the status line 
+(load "time" t t)
+(display-time)
+
+;;custom-set-variables
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(case-fold-search t)
+ '(column-number-mode t)
+ '(current-language-environment "English")
+ '(display-time-mode t)
+ '(fill-column 79)
+ '(inhibit-startup-screen t)
+;;
+;;WARNING iswitchb-mode obsolete, use icomplete-mode instead
+;;'(iswitchb-mode t)
+'(icomplete-mode 99)
+ 
+;; '(scroll-bar-mode nil)
+ '(show-paren-mode t)
+)
+
+
+;; windmove
+(windmove-default-keybindings)
+
+;; turn on paren match highlighting
+(show-paren-mode 1)
+
+; show line number the cursor is on, in status bar (the mode line)
+(line-number-mode 1)
+
+;;show column number position
+(column-number-mode 1)
+
+;;truncate long lines
+(global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+
+
+(put 'upcase-region 'disabled nil)
+
+
+; display line numbers in margin (fringe). Emacs 23 only.
+;(global-linum-mode 1) ; always show line numbers
+
+
+; Make new frames fullscreen by default. Note: this hook doesn't do
+; anything to the initial frame if it's in your .emacs, since that
+    ;file is read _after_ the initial frame is created.
+(add-hook 'after-make-frame-functions 'toggle-fullscreen)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;begin OCTAVE configuration
+;;
+;;\warning NOT NEEDED ANYMORE since emacs 24.4.1
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (add-to-list 'exec-path "/Applications/Octave.app/Contents/Resources/bin")
+
+
+;;# (autoload 'octave-mode "octave-mod" nil t)
+
+;;# (setq auto-mode-alist
+;;#       (cons '(\"\\\\.m$\" . octave-mode) auto-mode-alist))
+
+;;# (add-hook 'octave-mode-hook
+;;#           (lambda ()
+;;#             (abbrev-mode 1)
+;;#             (auto-fill-mode 1)
+;;#             (if (eq window-system 'x)
+;;#                 (font-lock-mode 1))))
+
+
+;;inferior-octave-prompt                         ;;;  NOT WORKING
+;; MUST match "PS1" label at "octaverc" file
+;; (setq inferior-octave-prompt "octave>>")
+
+;;(autoload 'run-octave "octave-inf" nil t) ;; not needed
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;end OCTAVE configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+;;truncate long lines
+;; (global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+;; (global-set-key [f11] 'toggle-fullscreen)

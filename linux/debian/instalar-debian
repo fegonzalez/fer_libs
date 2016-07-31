@@ -1,0 +1,30 @@
+1) Arrancar CD aparece prompt:
+	install acpi = off 	//opcional; usarlo si no funciona de otra forma
+
+2) Cuando me dice si quiero instalar por red:
+	SI	// necesito conocer proxy/puerto/password
+
+3) Si casca el Xwindow (me lo dice debian)
+	nano /etc/X11/xorg.conf
+   y poner modo de pantalla a 16 bits
+
+4) Si no me carga el entorno grafico b�sico: hay que instalar los paquetes basicos a
+   pelo:
+   
+	+ Fichero de repositorios:
+				/etc/apt/sources.list
+
+	+ Comandos:
+   				apt-cache search [algo_que_buscar]
+   				apt-get install [nombre-paquete]
+
+	+ Paquetes basicos:
+				synaptic
+				// X11
+				x-window-sytem
+				x-window-system-core 
+   				// gnome grafico basico
+   				gnome-desktop	??
+   				gnome-core 		??
+
+		

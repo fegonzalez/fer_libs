@@ -1,0 +1,7 @@
+ 2>/dev/null
+
+
+#ejemplo
+cvs -z9 -n update 2>/dev/null |grep ^M  # mostrar ficheros modificados
+					# Z9 compresión de nivel 9 (máximo)
+

@@ -1,0 +1,47 @@
+#############################################################################
+
+#PROBLEMA
+No me deja escribir en español en la partición NTFS desde LINUX
+
+#PROBLEMA
+no compilo el modulo VirtualBox como módulo del kernel 
+(GENERALIZABLE para cualquier programa)
+
+#############################################################################
+
+#PROBLEMA
+
+No me deja escribir en español en la partición NTFS desde LINUX
+
+#SOLUCIÓN
+
+# /etc/fstab: static file system information.
+#
+# Añadir la opción locale=es_ES.utf8
+#
+/dev/sda5	/media/windows_datos	ntfs-3g	rw,auto,user,umask=000,locale=es_ES.utf8
+#############################################################################
+
+#PROBLEMA: 	no compilo el modulo VirtualBox como módulo del kernel (GENERALIZABLE para cualquier programa)
+
+MODULO QUE INSTALA EL VBOX (probablemente residuo de una instalación anterior)
+/lib/modules/2.6.18-4-686/misc/vboxdrv.ko
+
+Mi kernel es 2.6.18-5-686 -> no coincide con el esperado por el modulo vbox -> no compila
+
+
+#SOLUCION
+
+
+1) copiarlo como:
+/lib/modules/2.6.18-5-686/misc/vboxdrv.ko
+
+2) insmod — simple program to insert a module into the Linux Kernel
+insmod /lib/modules/2.6.18-5-686/misc/vboxdrv.ko
+#Esto habría que repetirlo cada vez que se arranca el sistema
+#SOLUCION
+
+Editar el fichero "/lib/modules/2.6.18-5-686/modules.dep" (contiene todos los módulos que se arrancan con el S.O. -> se invoca insmod sobre ellos),
+y añadir la línea:
+/lib/modules/2.6.18-5-686/misc/vboxdrv.ko:
+#############################################################################

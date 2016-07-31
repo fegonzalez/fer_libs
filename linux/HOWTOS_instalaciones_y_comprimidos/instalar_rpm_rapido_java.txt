@@ -1,0 +1,68 @@
+Installation of Self-Extracting Binary
+Use these instructions if you want to use the self-extracting binary file to install the JDK. If you want to install RPM packages instead, see Installation of RPM File. 
+
+1. Download and check the download file size to ensure that you have downloaded the full, uncorrupted software bundle.
+
+
+You can download to any directory you choose; it does not have to be the directory where you want to install the JDK. 
+Before you download the file, notice its byte size provided on the download page on the web site. Once the download has completed, compare that file size to the size of the downloaded file to make sure they are equal. 
+
+2. Make sure that execute permissions are set on the self-extracting binary. 
+Run this command:
+chmod +x jdk-1_5_0_<version>-linux-i586.bin 
+3. Change directory to the location where you would like the files to be installed. 
+
+The next step installs the JDK into the current directory. 
+4. Run the self-extracting binary. 
+
+Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with "./" (necessary if "." is not in the PATH environment variable): 
+./jdk-1_5_0_<version>-linux-i586.bin 
+
+The binary code license is displayed, and you are prompted to agree to its terms. 
+
+The JDK files are installed in a directory called jdk1.5.0_<version> in the current directory. Follow this link to see its directory structure. The JDK documentation is a separate download. 
+
+
+ 
+
+Note about Root Access: Unbundling the software automatically creates a directory called jdk1.5.0_<version>. Note that if you choose to install the JDK into system-wide location such as /usr/local, you must first become root to gain the necessary permissions. If you do not have root access, simply install the JDK into your home directory, or a subdirectory that you have permission to write to. 
+Note about Overwriting Files: If you unpack the software in a directory that contains a subdirectory named jdk1.5.0_<version>, the new software overwrites files of the same name in that jdk1.5.0_<version> directory. Please be careful to rename the old directory if it contains files you would like to keep. 
+
+Note about System Preferences: By default, the installation script configures the system such that the backing store for system preferences is created inside the JDK's installation directory. If the JDK is installed on a network-mounted drive, it and the system preferences can be exported for sharing with Java runtime environments on other machines. As an alternative, root users can use the -localinstall option when running the installation script, as in this example: 
+
+jdk-1_5_0_<version>-linux-i586.bin -localinstall
+
+This option causes the system preferences to be stored in the /etc directory from which they can be shared only by VMs running on the local machine. You must be root user for the -localinstall option to work. 
+See the Preferences API documentation for more information about preferences in the Java platform. 
+
+ 
+
+ 
+
+Installation of RPM File
+Use these instructions if you want to install JDK in the form of RPM packages. If you want to use the self-extracting binary file instead, see Installation of Self-Extracting Binary. 
+1. Download and check the file size. 
+
+You can download to any directory you choose. 
+Before you download the file, notice its byte size provided on the download page on the web site. Once the download has completed, compare that file size to the size of the downloaded file to make sure they are equal. 
+
+2. Extract the contents of the downloaded file. 
+
+Change directory to where the downloaded file is located and run these commands to first set the executable permissions and then run the binary to extract the RPM file: 
+
+chmod a+x jdk-1_5_0_<version>-linux-i586-rpm.bin
+
+./jdk-1_5_0_<version>-linux-i586-rpm.bin
+
+Note that the initial "./" is required if you do not have "." in your PATH environment variable. 
+
+The script displays a binary license agreement, which you are asked to agree to before installation can proceed. Once you have agreed to the license, the install script creates the file jdk-1_5_0_<version>-linux-i586.rpm in the current directory. 
+
+3. Become root by running the su command and entering the super-user password. 
+
+4. Run the rpm command to install the packages that comprise the JDK: 
+
+rpm -iv jdk-1_5_0_<version>-linux-i586.rpm
+
+5. Delete the bin and rpm file if you want to save disk space. 
+6. Exit the root shell. 
