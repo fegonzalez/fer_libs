@@ -1,29 +1,105 @@
-
-EMACS>>
-
-ALT-X gdb
-ALT-X   path (relativo o absoluto) hasta el binario a depurar
-M-x gdb-many-windows
-
-GDB>>
-#cambiar path a otra maquina is es necesario
-#set substitute-path /home/aw159/pruebas/USERNAME /home/aw159pru
-start
-
-#crear (borrar) break points
-pinchar en el margen sonbreado (pinchar)
-add CTRL-X ESPACIO
-remove  (CTRL-X CTRL-A CTRL-D)
+# 1) Start gdb session in emacs
+#
+# 2) gdb session commands
+#    2.1) howto change the path to a remote host (set substitute-path)
+#    2.2) start debug
+#    2.3) create/remove breakpoints
+#    2.4) basic commands
+#
+# 3) [Example system_test
 
 
-########################
-turret test
+################################################################################
+# 1) Start gdb session in emacs
+################################################################################
+
+# Inside emacs:
+
+# 2014:
+
+ALT-X
+  gdb path (relative or absolute) to the binary file to debug
+  # i.e. 
+  gdb ../../.object/simdebug/systems/system_name/system_test
+
+M-x
+  gdb-many-windows
+
+
+# 2016
+
+# one debug
+ALT-X
+  gdb -i=mi <path-exec_file>
+
+# OR
+
+# debug session
+ALT-X
+  gdb
+
+# debug one exec-file ...
+(gdb) file <path-exec_file>
+
+
+# ... and debug another exec-file ...
+(gdb) file <path-another-exec_file>
+
+
+M-x
+  gdb-many-windows
+
+
+################################################################################
+# 2) gdb session commands
+#
+# (inside gdb)
+################################################################################
+
+# 2.1) howto change the path to a remote host (set substitute-path)
+
+(gdb) set substitute-path /home/aw159/pruebas/USERNAME /home/aw159pru
+
+
+# 2.2) start debug
+(gdb) file <exec_name>
+(gdb) start
+
+
+# 2.3 create/remove breakpoints
+
+# a) on-screen mode:  clicking over the shadowed margin 
+(gdb) add CTRL-X ESPACIO
+(gdb) remove  (CTRL-X CTRL-A CTRL-D)
+
+# b) command-line mode
+(gdb) break file.cpp:95
+
+#    2.4) basic commands
+
+(gdb) help
+
+(gdb) next
+
+(gdb) step
+
+(gdb) cont
+
+(gdb) kill
+
+(gdb) attach / detach
+
+
+################################################################################
+# 3) [Example system_test
+################################################################################
 
 #Run gdb (like this): gdb --annotate=3
- ../../.object/simdebug/systems/eods/turret_test
+ ../../.object/simdebug/systems/system_name/system_test
 
-break eods_test_common.cpp:95
-break eodsParameters.cpp:23
-break paramfile.cpp:26
-break paramfile.cpp:38
-break paramfile.cpp:43
+(gdb) break file2.cpp:23
+
+- end Example]
+
+################################################################################
+
