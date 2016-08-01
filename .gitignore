@@ -1,0 +1,31 @@
+# when not working try this to update the ignored files
+# git rm -r --cached .
+# git add .
+# git commit -m "fixed untracked files"
+
+###############################
+# old fer_libs
+###############################
+
+old.fer_libs/*
+
+
+###############################
+# file extensions
+###############################
+
+*~
+*.*~
+# *.zip
+# *.tar.gz
+
+# html
+*_files/*
+
+#links
+
+# videos
+*.mp4
+*.srt
+
+
