@@ -1,7 +1,7 @@
 ---------------------------
 ssh configuration
-version number: 2.0
-july 14, 2009
+version number: 3.0
+ago 9, 2016
 ---------------------------
 
 REPOSITORIO DMZ
@@ -9,6 +9,7 @@ REPOSITORIO DMZ
 
 -- Maquina local:
 
+	   cd .ssh    // mkdir .ssh si no existe
 	   ssh-keygen 
 
 // Si pide el tipo de la clave teclear:
@@ -18,7 +19,7 @@ REPOSITORIO DMZ
    Aceptar todos los parametros. No introducir passphrase, dar a enter.
    Se generan 2 ficheros en el directorio $HOME/.ssh
 	- Clave privada: id_rsa
-        - Clave publica: id_rsa.pub
+    - Clave publica: id_rsa.pub
 
 // Enviar el fichero 'id_rsa.pub' al directorio '$HOME/.ssh' de la maquina remota a la que queremos 
 //   conectarnos con "ssh" "cvs" "sftp" , ...,
@@ -32,20 +33,21 @@ REPOSITORIO DMZ
 
 	  ssh -Y usuario_remoto@maquina_remota
 	  cd .ssh
+	  // mover id_rsa.pub a .ssh 
  
 -- Copiar (aniadir al final del fichero) la clave publica al fichero 'authorized_keys'
 
 	  cat id_rsa.pub >> authorized_keys
 
 -- \warning BORRAR EL FICHERO id_rsa.pub: ya no es necesario y ademas si queremos traer claves de otras maquina
-    sus ficheros tendran este mismo nombre
+    sus ficheros tendran este mismo nolmbre
 
 	rm id_rsa.pub
 
 
 -- Ficheros y permisos finales necesarios en la maquina remota (con otros permisos puede que no funcione) 
-	drwx------  para la carpeta .ssh
-	-rw-------  para el fichero authorized_keys
+	drwx------  para la carpeta .ssh               // chmod 700 .ssh
+	-rw-------  para el fichero authorized_keys    // chmod 600 authorized_keys
 
 -- Ficheros y permisos finales necesarios en la maquina local (con otros permisos puede que no funcione) 
 	drwx------  para la carpeta .ssh
@@ -56,7 +58,7 @@ REPOSITORIO DMZ
 //! \warning MUY importante los permisos aunque sean menos restrictivos !!!
 
 
-Ahora ya debefuncionar "ssh" y "cvs" sin que nos pida password
+Ahora ya debe funcionar "ssh" y "cvs" sin que nos pida password
 
 //------------------------------------------------------------------------------
 
