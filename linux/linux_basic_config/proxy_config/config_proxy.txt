@@ -1,0 +1,44 @@
+
+Nota.- add user:password@ip_proxy if needed (see file "proxy")
+
+
+##---------------------------------------------------------------
+
+/etc/environment
+
+
+#Creamos las reglas del proxy
+ 
+http_proxy=192.168.x.x:8080
+ 
+https_proxy=192.168.x.x.:8080
+ 
+ftp_proxy=192.168.x.x:8080
+
+##---------------------------------------------------------------
+
+/etc/apt/apt.conf
+
+
+Acquire::http::Proxy "http://192.168.x.x:8080/";
+ 
+Acquire::https::Proxy "http://192.168.x.x:8080/";
+ 
+Acquire::ftp::Proxy "http://192.168.x.x:8080/";
+
+##---------------------------------------------------------------
+
+/etc/bash.bashrc
+
+# add the end of the file add:
+
+
+#Reglas de proxy
+ 
+export http_proxy=http://192.168.x.x:8080/
+ 
+export https_proxy=http://192.168.x.x:8080/
+ 
+export ftp_proxy=http://192.168.x.x:8080/
+
+##---------------------------------------------------------------
