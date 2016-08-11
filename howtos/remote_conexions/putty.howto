@@ -1,0 +1,13 @@
+Desde Windows, acceso remoto a linux host:
+
+
+A) Acceso putty
+
+1. Lanzar Xming
+2. Lanzar ssh client (i.e. Bitvise SSH Client)
+   - Activar X11 (terminal X11 Forwarding)
+
+
+B) Acceso desde linux vía ssh
+
+>> ssh -X user@ip
