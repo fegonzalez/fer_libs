@@ -1,0 +1,11 @@
+Para solucionar el tema de que en la sala, al montar en el Host del test bed el
+usuario del Host de desarrollo, no se ven los breakpoints en el depurador, hay
+que hacer:
+
+ (gdb) set substitute-path ruta_en_la_que_se_compilo ruta_en_la_que_se_monta
+
+ejemplo:
+
+ (gdb) set substitute-path /home/wildcat/pruebas/mario /home/ofic
+
+para más información RTFM
