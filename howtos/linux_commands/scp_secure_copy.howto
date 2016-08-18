@@ -5,4 +5,4 @@ scp  hostname:/dir/subdir/subsubdir/file_name.txt   .
 
 De local a remota:
 
-scp file_name.file_extension  hostname:/complete_path/
+scp file_name.file_extension  remoteuser@remotehost:/complete_path/
