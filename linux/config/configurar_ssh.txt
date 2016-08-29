@@ -15,14 +15,16 @@ REPOSITORIO DMZ
 // Si pide el tipo de la clave teclear:
 	   ssh-keygen -t rsa
 
-//! \warning  SIEMPRE HAY QUE DAR COMO NOMBRE DEL FICHERO EL SUGERIDO POR EL SISTEMA:   id_rsa
-   Aceptar todos los parametros. No introducir passphrase, dar a enter.
-   Se generan 2 ficheros en el directorio $HOME/.ssh
-	- Clave privada: id_rsa
-    - Clave publica: id_rsa.pub
+//! \warning SIEMPRE HAY QUE DAR COMO NOMBRE DEL FICHERO EL SUGERIDO
+POR EL SISTEMA: id_rsa
 
-// Enviar el fichero 'id_rsa.pub' al directorio '$HOME/.ssh' de la maquina remota a la que queremos 
-//   conectarnos con "ssh" "cvs" "sftp" , ...,
+Aceptar todos los parametros. No introducir passphrase, dar a enter.
+Se generan 2 ficheros en el directorio $HOME/.ssh
+   - Clave privada: id_rsa
+   - Clave publica: id_rsa.pub
+
+// Enviar el fichero 'id_rsa.pub' al directorio '$HOME/.ssh' de la maquina
+remota a la que queremos // conectarnos con "ssh" "cvs" "sftp" , ...,
    
 	    sftp dmz
 	    cd .ssh
@@ -35,25 +37,34 @@ REPOSITORIO DMZ
 	  cd .ssh
 	  // mover id_rsa.pub a .ssh 
  
--- Copiar (aniadir al final del fichero) la clave publica al fichero 'authorized_keys'
+-- Copiar (aniadir al final del fichero) la clave publica al fichero
+   'authorized_keys'
 
 	  cat id_rsa.pub >> authorized_keys
 
--- \warning BORRAR EL FICHERO id_rsa.pub: ya no es necesario y ademas si queremos traer claves de otras maquina
-    sus ficheros tendran este mismo nolmbre
+-- \warning BORRAR EL FICHERO id_rsa.pub: ya no es necesario y ademas
+    si queremos traer claves de otras maquina sus ficheros tendran
+    este mismo nolmbre
 
 	rm id_rsa.pub
 
 
--- Ficheros y permisos finales necesarios en la maquina remota (con otros permisos puede que no funcione) 
-	drwx------  para la carpeta .ssh               // chmod 700 .ssh
-	-rw-------  para el fichero authorized_keys    // chmod 600 authorized_keys
+-- Ficheros y permisos finales necesarios en la maquina remota (con
+   otros permisos puede que no funcione)
 
--- Ficheros y permisos finales necesarios en la maquina local (con otros permisos puede que no funcione) 
-	drwx------  para la carpeta .ssh
-	-rw-------  para el fichero id_rsa
-	-rw-r--r--  para el fichero id_rsa.pub
-	-rw-r--r--  para el fichero known_hosts		//el sistema lo crea la primera vez que intentamos un acceso ssh a una maquina remota
+   drwx------  para la carpeta .ssh               // chmod 700 .ssh
+   -rw-------  para el fichero authorized_keys    // chmod 600 authorized_keys
+
+-- Ficheros y permisos finales necesarios en la maquina local (con
+   otros permisos puede que no funcione)
+
+   drwx------  para la carpeta .ssh
+   -rw-------  para el fichero id_rsa
+   -rw-r--r--  para el fichero id_rsa.pub
+   
+   -rw-r--r--  para el fichero known_hosts   // el sistema lo crea la primera
+   	       	       	       		     // vez que intentamos un acceso
+					     // ssh a una maquina remota
 
 //! \warning MUY importante los permisos aunque sean menos restrictivos !!!
 

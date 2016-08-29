@@ -1,0 +1,20 @@
+1) send from local to remote:
+
+$ sftp REMOTE_USER@REMOTE_HOST
+$ cd RELATIVE_PATH
+$ put FILE_NAME
+
+[Example
+	    sftp fer@dmz
+	    cd .ssh
+	    put id_rsa.pub
+
+end-example]
+
+2) get from remote
+
+$ sftp REMOTE_HOST
+$ cd RELATIVE_PATH
+$ get FILE_NAME
+
+
