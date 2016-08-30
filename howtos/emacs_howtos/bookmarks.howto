@@ -1,0 +1,28 @@
+
+fichero    ".emacs.bmk"
+
+Uso:
+
+Desde emacs
+
+1) Crear bookmark:
+
+ +   ctr-x r-m
+
+ +   la ventana emacs se ve en dos mitades horizontaleS:
+       arriba: cñodigo
+       abajo: bookmarks
+
+2) add comment
+
++ ir hasta la línea de un bookmark y predionar   -e
+
+
+3) delete comment
+
++ ir hasta la línea de un bookmark y predionar   -d -x
+
+4) buscar
+
++ ctr-x ctr-b
+
