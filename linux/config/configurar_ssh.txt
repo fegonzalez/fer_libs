@@ -1,88 +1,76 @@
----------------------------
-ssh configuration
-version number: 3.0
-ago 9, 2016
----------------------------
+# ---------------------------
+# ssh configuration
+# version number: 4.0
+# sep 27, 2016
+# ---------------------------
 
-REPOSITORIO DMZ
+# Ejemplo.- repositorio dmz
 
 
--- Maquina local:
+## 1) Maquina local:
 
-	   cd .ssh    // mkdir .ssh si no existe
-	   ssh-keygen 
+$ mkdir ssh   # solamente si el directorio .ssh no existe
+$ cd .ssh
+$ ssh-keygen 
 
-// Si pide el tipo de la clave teclear:
-	   ssh-keygen -t rsa
+# Si pide el tipo de la clave teclear:
+$ ssh-keygen -t rsa
 
-//! \warning SIEMPRE HAY QUE DAR COMO NOMBRE DEL FICHERO EL SUGERIDO
-POR EL SISTEMA: id_rsa
+#!\warning SIEMPRE HAY QUE DAR COMO NOMBRE DEL FICHERO EL SUGERIDO
+# POR EL SISTEMA: id_rsa
 
-Aceptar todos los parametros. No introducir passphrase, dar a enter.
-Se generan 2 ficheros en el directorio $HOME/.ssh
-   - Clave privada: id_rsa
-   - Clave publica: id_rsa.pub
+# Aceptar todos los parametros. No introducir passphrase, dar a enter.
+# Se generan 2 ficheros en el directorio $HOME/.ssh
+#    - Clave privada: id_rsa
+#    - Clave publica: id_rsa.pub
 
-// Enviar el fichero 'id_rsa.pub' al directorio '$HOME/.ssh' de la maquina
-remota a la que queremos // conectarnos con "ssh" "cvs" "sftp" , ...,
+# Enviar el fichero 'id_rsa.pub' al directorio '$HOME/.ssh' de la maquina
+# remota a la que queremos conectarnos con "ssh" "cvs" "sftp" , ...,
    
-	    sftp dmz
-	    cd .ssh
-	    put id_rsa.pub
+$ sftp dmz
+$ cd .ssh
+$ put id_rsa.pub
 
 
---Maquina remota:
+## 2) Maquina remota:
 
-	  ssh -Y usuario_remoto@maquina_remota
-	  cd .ssh
-	  // mover id_rsa.pub a .ssh 
- 
--- Copiar (aniadir al final del fichero) la clave publica al fichero
-   'authorized_keys'
-
-	  cat id_rsa.pub >> authorized_keys
-
--- \warning BORRAR EL FICHERO id_rsa.pub: ya no es necesario y ademas
-    si queremos traer claves de otras maquina sus ficheros tendran
-    este mismo nolmbre
-
-	rm id_rsa.pub
+$ ssh -Y usuario_remoto@maquina_remota
+$ cd .ssh
+$ mv id_rsa.pub .ssh  # si no está ya allí
 
 
--- Ficheros y permisos finales necesarios en la maquina remota (con
-   otros permisos puede que no funcione)
+# Copiar (aniadir al final del fichero) la clave publica al fichero
+# 'authorized_keys'
 
-   drwx------  para la carpeta .ssh               // chmod 700 .ssh
-   -rw-------  para el fichero authorized_keys    // chmod 600 authorized_keys
+$ cat id_rsa.pub >> authorized_keys
 
--- Ficheros y permisos finales necesarios en la maquina local (con
-   otros permisos puede que no funcione)
 
-   drwx------  para la carpeta .ssh
-   -rw-------  para el fichero id_rsa
-   -rw-r--r--  para el fichero id_rsa.pub
+# \warning BORRAR EL FICHERO id_rsa.pub: ya no es necesario y ademas
+# si queremos traer claves de otras maquina sus ficheros tendran
+# este mismo nolmbre
+
+$ rm id_rsa.pub
+
+
+# Ficheros y permisos finales necesarios en la maquina remota (con
+# otros permisos puede que no funcione)
+
+#    drwx------  para la carpeta .ssh               # chmod 700 .ssh
+#    -rw-------  para el fichero authorized_keys    # chmod 600 authorized_keys
+
+# Ficheros y permisos finales necesarios en la maquina local (con
+# otros permisos puede que no funcione)
+
+#    drwx------  para la carpeta .ssh
+#    -rw-------  para el fichero id_rsa
+#    -rw-r--r--  para el fichero id_rsa.pub
    
-   -rw-r--r--  para el fichero known_hosts   // el sistema lo crea la primera
-   	       	       	       		     // vez que intentamos un acceso
-					     // ssh a una maquina remota
+#    -rw-r--r--  para el fichero known_hosts   # el sistema lo crea la primera
+#    	       	       	       		       # vez que intentamos un acceso
+# 					       # ssh a una maquina remota
 
-//! \warning MUY importante los permisos aunque sean menos restrictivos !!!
+#!\warning MUY importante mantener los permisos aunque sean menos restrictivos.
 
+# Ahora ya debe funcionar "ssh" y "cvs" sin que nos pida password
 
-Ahora ya debe funcionar "ssh" y "cvs" sin que nos pida password
-
-//------------------------------------------------------------------------------
-
-Máquina con repositorio	: DMZ
-Máquina desde la que se accede	: GRIS
-Tipo de clave			: rsa
-Si no funciona el ftp		: sftp
-Para bajar src primera vez	: cvs co -d src Tiger
-Variable de entorno CVSROOT	: /home/cvs
-	de ':ext:user@gris:/home/tigre/cvs/Repositorio_host' a ':ext:user@dmz:/home/cvs'
-Archivos CVS 			: ext:user@dmz:/home/cvs
-Archivos Repository 		: Tiger/directorio
-Para cambia CVS recursivamente	: find . -name Root -exec cp path_completo_hasta_el_Root_cambiado/Root {} \;
-Para cambiar Repository 	: for file in $(find . -name Repository); do echo "${file%/CVS/Repository}" | sed 's/\./Tiger/' > "$file"; done
-
-//------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
