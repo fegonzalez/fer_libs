@@ -1,60 +1,74 @@
+  
+Note.- add user:password@ip_proxy if needed (see file "proxy")
 
-Nota.- add user:password@ip_proxy if needed (see file "proxy")
+
+1) How to activate proxy settings
+
+   a) try 1
+   b) try 2
+   
+2) How to DEACTIVATE proxy settings
 
 
 ##===============================================================
-#try 1
-#
-# 1 action
+## 1) How to activate proxy settings
 ##===============================================================
+
+
+##---------------------------------------------------------------
+# a) try 1  (1 action)
+##---------------------------------------------------------------
+
+
+# Action (1)
 
 sudo cp proxy /etc/apt/apt.conf.d
 
-##===============================================================
-# try 2  (iff try 1 doesn't work)
-#
-# 3 actions
-##===============================================================
-
 
 ##---------------------------------------------------------------
+# b) Try 2 (plus 3 actions)
+##---------------------------------------------------------------
+
+WARNING  (IN ADDITION to try 1), (iff try 1 doesn't work)
 
 
-/etc/environment
+# Action (2)
 
+# Add to "/etc/environment"
 
 #Creamos las reglas del proxy
- 
 http_proxy=192.168.x.x:8080
- 
 https_proxy=192.168.x.x.:8080
- 
 ftp_proxy=192.168.x.x:8080
 
-##---------------------------------------------------------------
 
-/etc/apt/apt.conf
+# Action (3)
 
+# Add to "/etc/apt/apt.conf"
 
-Acquire::http::Proxy "http://192.168.x.x:8080/";
- 
+Acquire::http::Proxy "http://192.168.x.x:8080/"; 
 Acquire::https::Proxy "http://192.168.x.x:8080/";
- 
 Acquire::ftp::Proxy "http://192.168.x.x:8080/";
 
-##---------------------------------------------------------------
 
-/etc/bash.bashrc
+# (4)
 
-# add the end of the file add:
+# Add (at the end of the file) "/etc/bash.bashrc"
 
-
-#Reglas de proxy
- 
+# Reglas de proxy
 export http_proxy=http://192.168.x.x:8080/
- 
 export https_proxy=http://192.168.x.x:8080/
- 
 export ftp_proxy=http://192.168.x.x:8080/
 
-##---------------------------------------------------------------
+
+##===============================================================
+## 2) How to DEACTIVATE proxy settings
+##===============================================================
+
+
+Just reverse action (4) ...
+
+
+... then reactive action (4) to use the proxy again.
+
+
