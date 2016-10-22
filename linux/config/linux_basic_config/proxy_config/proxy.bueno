@@ -1,0 +1,3 @@
+Acquire::http::Proxy "http://forodriguezd:nh2nH2..@proxy.indra.es:8080";
+Acquire::ftp::Proxy "http://forodriguezd:nh2nH2..@proxy.indra.es:8080";
+Acquire::https::Proxy "http://forodriguezd:nh2nH2..@proxy.indra.es:8080";
