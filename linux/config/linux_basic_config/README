@@ -1,9 +1,9 @@
 
 #debian sources
-/apt/sources.list
+/etc//apt/sources.list
 
 #proxy connection
-/apt/apt.conf.d/proxy
+/etc//apt/apt.conf.d/proxy
 
 #mounting  partitions
 /etc/fstab
