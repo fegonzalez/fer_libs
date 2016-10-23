@@ -9,7 +9,9 @@ Note.- add user:password@ip_proxy if needed (see file "proxy")
    
 2) How to DEACTIVATE proxy settings
 
-
+   a) Temporary, n the current terminal
+   b) Permanently
+   
 ##===============================================================
 ## 1) How to activate proxy settings
 ##===============================================================
@@ -66,9 +68,13 @@ export ftp_proxy=http://192.168.x.x:8080/
 ##===============================================================
 
 
-Just reverse action (4) ...
+a) Temporary, n the current terminal
 
+   $ unset http_proxy	    # same for https_proxy  |  ftp_proxy
 
-... then reactive action (4) to use the proxy again.
+b) Permanently
 
+   Reverse actions 1 to 4.
+   Restart the session
+   
 
