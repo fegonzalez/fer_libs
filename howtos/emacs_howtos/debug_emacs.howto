@@ -4,9 +4,13 @@
 #    2.1) howto change the path to a remote host (set substitute-path)
 #    2.2) start debug
 #    2.3) create/remove breakpoints
+#    	  2.3.1) breakpoint al nombre de una función
 #    2.4) basic commands
 #
 # 3) [Example system_test
+#
+# 4) Debugging binaries (.so, ...)
+
 
 
 ################################################################################
@@ -24,6 +28,9 @@ ALT-X
 
 M-x
   gdb-many-windows
+
+
+(gdb) attach <pid>
 
 
 # 2016
@@ -63,17 +70,23 @@ M-x
 
 # 2.2) start debug
 (gdb) file <exec_name>
-(gdb) start
+(gdb) start 
 
 
 # 2.3 create/remove breakpoints
 
 # a) on-screen mode:  clicking over the shadowed margin 
+
 (gdb) add CTRL-X ESPACIO
 (gdb) remove  (CTRL-X CTRL-A CTRL-D)
 
 # b) command-line mode
+
 (gdb) break file.cpp:95
+
+# 2.3.1) breakpoint al nombre de una función
+
+(gdb) b FPRcvDispatcher::notifyFP
 
 #    2.4) basic commands
 
@@ -101,5 +114,37 @@ M-x
 
 - end Example]
 
+
 ################################################################################
+# 4) Debugging binaries (.so, ...)
+################################################################################
+
+[doc_1] https://reverseengineering.stackexchange.com/questions/1935/how-to-handle-stripped-binaries-with-gdb-no-source-no-symbols-and-gdb-only-sho
+
+
+# 4.1.- path  (see 1 above)
+
+OPTION-1: dos pasos = dbg proceso + attach pid
+
+ALT-X
+  gdb -i=mi <path-exec_file>
+
+(gdb) attach <file-pid>
+
+OPTION-2: un paso: desde consola / emacs 
+
+>> gdb -  <file-pid>
+
+
+# 4.2  Breakpoints en la librería
+
+# Se puede hacer directamente (ver 2.3.1)
+
+(gdb) b FPRcvDispatcher::notifyFP
+(gdb) b FPRcvDispatcher.cc:229
+
+
+# 4.3 info del binario
+
+(gdb) info file
 
