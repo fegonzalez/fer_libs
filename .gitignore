@@ -29,3 +29,8 @@ old.fer_libs/*
 *.srt
 
 
+###############################
+# files
+###############################
+
+howtos/tools/valgrind/doc/valgrind_manual.pdf
