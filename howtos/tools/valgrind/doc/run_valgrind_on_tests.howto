@@ -1,0 +1,187 @@
+ 
+GOAL To execute valgrind over a test suite.
+
+Index
+
+# 0) Overview
+
+# 1) Paths to the resources
+#    1.1) src code:
+#    1.2) Executable code:
+#    1.3) Compilation code:
+
+# 2) Test Execution (one by one)
+
+# 3) Valgrind usage (one by one)
+
+# 4) A script example to execute valgrind over a set of tests individually
+
+
+################################################################################
+# 0) Overview
+################################################################################
+
+We will use the FlightPlanTranslator test suite as an example, but the
+same procedure is valid (and equivalent) for all the tests cases:
+- components  (i.e. fp_receiver)
+- translators (i.e. FLightPlanTranslator)
+  ...
+
+
+WARNING It is recommended (*) to set the optimization flag to "-O0" in
+	"SWIS_root/environment/common_definitions.cmake" and then
+	compile with that value.
+
+(*) http://valgrind.org/docs/manual/quick-start.html#quick-start.prepare
+
+
+################################################################################
+
+[ Example  FLightPlanTranslator
+
+################################################################################
+# 1) Paths to the resources
+################################################################################
+
+# 1.1) src code:
+
+  $SWIS_HOME/common/translators/FlightPlanTranslator/test/test.cc
+
+>> export FP_TEST_DIR=$SWIS_HOME/common/translators/FlightPlanTranslator/test
+
+
+# 1.2) Executable code:
+
+$SWIS_HOME/common/translators/FlightPlanTranslator/bin/FlightPlanTranslator_test
+
+ 
+>> export FP_RUN_DIR=$SWIS_HOME/common/translators/FlightPlanTranslator/bin
+>> export FP_RUN_EXEC=FlightPlanTranslator_test
+
+# 1.3) Compilation code:
+
+  $SWIS_HOME/../SWIS_comp/common/translators/FlightPlanTranslator/test/
+
+>> export FP_COMPIL_DIR="$SWIS_HOME/../SWIS_comp/common/translators/FlightPlanTranslator/test/"
+
+# compilation instructions:
+
+>> cd $FP_COMPIL_DIR
+>> make $FP_RUN_EXEC  # USEFUL to avoid long compilations
+
+
+################################################################################
+# 2) Test Execution (one by one)
+################################################################################
+
+# prerequisite: select the test to execute:
+
+     Some BOOST_AUTO_TEST_CASE, i.e. BOOST_AUTO_TEST_CASE(Convert_FP_RULES)
+
+>> export FP_TEST_NAME="Convert_FP_RULES"   # [optional]
+
+# a) Executing from any place:
+
+>> $FP_RUN_DIR/$FP_RUN_EXEC  --run_test=$FP_TEST_NAME
+
+
+# b) Executing from the executable directory
+
+    This is prefered when you are going to generate local log files
+    (see Valgrind usage bellow)
+
+>> cd $FP_RUN_DIR   
+>> ./$FP_RUN_EXEC --run_test=$FP_TEST_NAME
+
+
+################################################################################
+# 3) Valgrind usage (one by one)
+################################################################################
+
+>> cd $FP_RUN_DIR   # valgrind.log file will be generated here
+
+>> export RUN_COMMAND="$FP_RUN_EXEC --run_test=$FP_TEST_NAME"
+
+>> export VALGRIND_OPTIONS="--leak-check=full --leak-resolution=high --partial-loads-ok=yes --undef-value-errors=yes --track-origins=yes --log-file=valgrind.vout"
+
+## other possible options
+--log-file=valgrind.vout   # e.g.  valgrind.vout
+--track-origins=yes
+--undef-value-errors=yes
+## "deep" options
+--num-callers=40 # implicitly used with value default value = 12
+--show-reachable=yes
+
+
+>> valgrind $VALGRIND_OPTIONS $RUN_COMMAND
+
+# log file created at "valgrind.vout" (--log-file option)
+
+
+​end example ]
+
+
+################################################################################
+# 4) A script example to execute valgrind over a set of tests individually
+################################################################################
+
+\info Use the next script to execute valgrind over a set of tests,
+      storing each individual result in a different log file.
+
+\info Test execution notes: this script is executed from "$FP_RUN_DIR"
+      over a source test file "FP_TEST_DIR/test.cc". Adapt the script
+      parameters when necessary.
+
+
+################################################################################
+
+#!/bin/bash
+
+#!\file valgrind_to_each_test.sh
+
+##------------------------------------------------------------------------------
+
+VALGRIND_OPTIONS="--leak-check=full --leak-resolution=high --partial-loads-ok=yes --track-origins=yes --undef-value-errors=yes"
+
+START_DATE=$(date) # just to check the total execution time
+
+##------------------------------------------------------------------------------
+
+for test in $(grep BOOST_AUTO_TEST_CASE ../test/test.cc \
+   | sed 's/\/\/.*//g' \
+   | sed 's/.*(//g' \
+   | sed 's/)//g')
+do
+#    echo Executing: valgrind $test
+
+    LOCAL_VALGRIND_OPTIONS="$VALGRIND_OPTIONS --log-file=vgrind.$test.out"
+#    echo LOCAL_VALGRIND_OPTIONS : $LOCAL_VALGRIND_OPTIONS
+
+    RUN_COMMAND="./FlightPlanTranslator_test --run_test=$test"
+#    echo RUN_COMMAND : $RUN_COMMAND 
+        
+   valgrind $LOCAL_VALGRIND_OPTIONS $RUN_COMMAND
+
+done 
+
+##------------------------------------------------------------------------------
+
+echo
+echo
+echo Start time...
+echo $START_DATE
+echo
+echo End time...
+date
+echo 
+
+# Example brief error info
+echo
+echo Memory errors:
+grep -L "ERROR SUMMARY: 0" *.out
+echo
+echo Memory leaks:
+grep -L "definitely lost: 0" *.out
+echo
+
+################################################################################
