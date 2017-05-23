@@ -1,25 +1,252 @@
-# ==============================================================================
-# SUMMARY (following the order in "The ANSI C Programming Language" [3.1] )
-# ==============================================================================
+################################################################################
 
-# I. The Valgrind Quick Start Guide
+\info Testing the valgrind tool suite with C++
+
+################################################################################
+
+Index
+
+# 1 Introduction
+# 1.1 Overview
+
+
+# 3. Using and understanding the Valgrind core: Advanced Topics
 #
-# 1. Introduction
-# 2. Preparing your program
-# 3. Running your program under Memcheck
-# 4. Interpreting Memcheck's output
-# 5. Caveats
-# 6. More information
+# 3.2. Debugging your program using Valgrind gdbserver and GDB
+#      3.2.1. Quick Start: debugging in 3 steps
+#      3.2.5. Monitor command handling by the Valgrind gdbserver
+#      3.2.8. Limitations of the Valgrind gdbserver
+#      3.2.10. Valgrind monitor commands
+
+
+# 4. Memcheck: a memory error detector
+#
+# 4.0 Valgrind quick start
+#
+#    2. Preparing your program
+#    3. Running your program under Memcheck
+#    4. Interpreting Memcheck's output
+#
+# 4.2. Explanation of error messages from Memcheck 
+
+
+# 5. Cachegrind: a cache and branch-prediction profiler
+
+
+# 6. Callgrind: a call-graph generating cache and branch prediction profiler
+
+
+# Appendix A - Useful valgrind options to C++
+
+# Appendix K - Code examples (../code_examples)
+
+# Appendix T - Defined Terms
 
 # Appendix Z - References
 
 
-# ==============================================================================
-# I. The Valgrind Quick Start Guide [1_1]
-# ==============================================================================
+
+################################################################################
+# 1 Introduction
+################################################################################
+
+# 1.1 Overview
+
+Tools:
+
+- None:
+
+  runs the code in the virtual machine without performing any
+  analysis and thus has the smallest possible CPU and memory overhead
+  of all tools. Since valgrind itself provides a trace back from a
+  segmentation fault, the none tool provides this traceback at minimal
+  overhead.
+
+- memcheck (memory checking):
+
+  make your programs more correct.
+
+- cachegrind/callgrind (time profiling):
+
+  make your programs run faster.
+  \info The separate GUI KCacheGrind visualizes output from Cachegrind/callgrind
+
+- massif (heap profiling):
+
+  make your programs use less memory.
+  \info The separate GUI massif-visualizer visualizes output from Massif.
+
+- dhat  (heap profiling):
+
+  Analyzes how much memory is allocated and for how long as well as
+  patterns of memory usage.
+
+- helgrind/drd (thread hazard detection):
+
+  make your multi-threaded programs more correct. 
 
 
-2) Preparing your program
+Experimentakl tools:
+
+- sgcheck (global/stack overrun detection):
+
+  Its functionality is complementary to that of Memcheck: SGcheck
+  finds problems that Memcheck can't, and vice versa.
+  \warning Some code results in false positives from this tool.[101]
+
+- bbv (extrapolating longer executions from smaller samples).
+
+  It is useful to people doing computer architecture research and development.
+
+
+################################################################################
+# 3. Using and understanding the Valgrind core: Advanced Topics
+################################################################################
+
+#===============================================================================
+# 3.2. Debugging your program using Valgrind gdbserver and GDB
+#===============================================================================
+
+1) A program running under Valgrind is not executed directly by the
+   CPU. Instead it runs on a synthetic CPU provided by Valgrind.
+
+2) Debug in a synthetic environment too: Valgrind gdbserver.
+
+   vgdb ("Valgrind to GDB") is a small program that is used as an
+   intermediary between Valgrind and GDB or a shell. (3.2.9. vgdb
+   command line options)
+
+
+# 3.2.1. Quick Start: debugging in 3 steps
+
+1) Run valgrind in a unix shell (i.e. a progma named 'prog')
+
+   >> valgrind --vgdb=yes --vgdb-error=0 prog   #  --vgdb=yes is defaulot value
+
+   --vgdb=yes or --vgdb=full (*1) 
+
+   --vgdb-error=number 
+    
+		# tell the gdbserver only to become active once the
+		# specified number of errors have been shown.
+		# default = 0
+
+2) In ANOTHER shell, start GDB:
+
+   >> gdb prog
+
+3) Then give the following command to GDB:
+
+   (gdb) target remote | vgdb
+
+   You can now debug your program ...
+
+
+# see [1]-3.2.8. for the drawbacks of using --vgdb=full
+
+
+# 3.2.5. Monitor command handling by the Valgrind gdbserver
+
+Additional valgrind-specific functionality
+
+1) Example (from within gdbserver)
+
+   (gdb) monitor leak_check full reachable any
+
+2) Example (from a shell command)
+
+   vgdb --pid=3145 leak_check full reachable any
+
+
+# 3.2.8. Limitations of the Valgrind gdbserver
+
+1) Precision of "stop-at" commands.
+
+  --vgdb=full, --gdb=no, --vgdb=yes 
+
+WARNING With the option --vgdb=yes, the process might not stop at the
+	exact requested instruction.
+ 
+2) Processor registers and flags values.
+
+When Valgrind gdbserver stops on an error, on a breakpoint or when
+single stepping, registers and flags values might not be always up to
+date due to the optimisations done by the Valgrind core.
+
+     --vex-iropt-register-updates=
+     
+3) Breakpoints encountered multiple times.
+
+Some instructions (e.g. x86 "rep movsb") are translated by Valgrind
+using a loop. If a breakpoint is placed on such an instruction, the
+breakpoint will be encountered multiple times -- once for each step of
+the "implicit" loop implementing the instruction.
+
+4) Execution of Inferior function calls by the Valgrind gdbserver.
+
+   i.e  print (a>4)
+
+WARNING Whilst an inferior call is running, the Valgrind tool will
+	report errors as usual. If you do not want to have such errors
+	stop the execution of the inferior call, you can use v.set
+	vgdb-error to set a big value before the call, then manually
+	reset it to its original value when the call is complete.
+
+WARNING In a multithreaded program, all threads are continued, not
+	just the thread instructed to make the inferior call.
+
+5) Changing register values.
+
+The Valgrind gdbserver will only modify the values of the thread's
+registers when the thread is in status Runnable or Yielding.
+
+
+3.2.10. Valgrind monitor commands
+
+See [1] for details
+
+
+
+################################################################################
+# 4. Memcheck: a memory error detector
+################################################################################
+
+Memcheck is a memory error detector. It can detect the following
+problems that are common in C and C++ programs.
+
+- Accessing memory you shouldn't, e.g. overrunning and underrunning
+  heap blocks, overrunning the top of the stack, and accessing memory
+  after it has been freed.
+
+- Using undefined values, i.e. values that have not been initialised,
+  or that have been derived from other undefined values.
+
+- Incorrect freeing of heap memory, such as double-freeing heap
+  blocks, or mismatched use of malloc/new/new[] versus
+  free/delete/delete[]
+
+- Overlapping src and dst pointers in memcpy and related functions.
+
+- Passing a fishy (presumably negative) value to the size parameter of
+  a memory allocation function.
+
+- Memory leaks.
+
+
+#===============================================================================
+# 4.0 Valgrind quick start (valgrind.org/docs/manual/quick-start.html)
+#===============================================================================
+
+# How to launch
+
+  valgrind --tool=memcheck EXECUTABLE-NAME
+
+or
+
+  valgrind EXECUTABLE-NAME  # as memcheck is the default tool	
+
+
+# 2. Preparing your program
 
 a) Compiling with Debug info
    
@@ -28,7 +255,16 @@ a) Compiling with Debug info
 b) compiling with Optimization
 
    Using -O0 is also a good idea (Makefile: OPTIM_FLAGS = -O0 # the default)
-  
+
+
+   WARNING
+   If you are planning to use Memcheck: On rare occasions, compiler
+   optimisations (at -O2 and above, and sometimes -O1) have been
+   observed to generate code which fools Memcheck into wrongly
+   reporting uninitialised value errors, or missing uninitialised
+   value errors.  (valgrind manual, 2.2. Getting started)
+
+
    With -O1 line numbers in error messages can be inaccurate, although
    generally speaking running Memcheck on code compiled at -O1 works
    fairly well, and the speed improvement compared to running -O0 is
@@ -38,7 +274,7 @@ b) compiling with Optimization
    reports uninitialised-value errors which don't really exist.
 
 
-3. Running your program under Memcheck
+# 3. Running your program under Memcheck
 
 If you normally run your program like this:
 
@@ -52,7 +288,7 @@ Use this command line:
 # The --leak-check option turns on the detailed memory leak detector.
 
 
-4. Interpreting Memcheck's output
+# 4. Interpreting Memcheck's output
  
 [ Example
 
@@ -130,16 +366,237 @@ there are mechanisms for suppressing these (see Suppressing errors in
 the Valgrind User Manual). However, it is typically right 99% of the time.
 
 
+#===============================================================================
+# 4.1. Overview
+#===============================================================================
+
+1)  Memory errors versus memory leaks [2_1]
+
+    a) Memory errors: are a red alert, they can destroy your program.
+
+    b) Memory leaks: are not an urgent situation.
+
+
+2) Memory leaks
+
+   --leak-check=full
+   --show-leak-kinds=all
+
+   Valgrind categorizes leaks using these terms:
+
+   + definitely lost: heap-allocated memory that was never freed to
+     which the program no longer has a pointer. Valgrind knows that
+     you once had the pointer, but have since lost track of it. This
+     memory is definitely orphaned.
+
+   + indirectly lost: heap-allocated memory that was never freed to
+     which the only pointers to it also are lost. For example, if you
+     orphan a linked list, the first node would be definitely lost,
+     the subsequent nodes would be indirectly lost.
+
+   + possibly lost: heap-allocated memory that was never freed to
+     which valgrind cannot be sure whether there is a pointer or not.
+
+   + still reachable: heap-allocated memory that was never freed to
+     which the program still has a pointer at exit (typically this
+     means a global variable points to it).
+
+
+   WARNING Check whether the memory leaks exists if the execution
+      	   ends early due to a fatal error.
+
+
+3) Using gdb and Valgrind together
+
+One handy Valgrind trick is the ability to drop into the debugger as
+soon as it encounters a memory error (not a leak). You do this by
+specifying the db-attach option when starting valgrind:
+
+      valgrind --db-attach=yes
+
+As soon as it encounters a memory error, Valgrind will ask you if you
+would like to start up the debugger:
+
+      ==6459== ---- Attach to debugger? --- [Return/N/n/Y/y/C/c] ----
+
+When you exit the debugger, you will return to valgrind.
+
+WARNING (Sometimes gdb will ask if you would like to kill the running
+	program to which you should answer "no")
+
+
+#===============================================================================
+# 4.2. Explanation of error messages from Memcheck 
+#===============================================================================
+
+1) \brief Most commone errors [2_1]
+
+- Invalid read/write of size X
+
+  The program was observed to read/write X bytes of memory that was
+  invalid. Common causes include accessing beyond the end of a heap
+  block, accessing memory that has been freed, or accessing into an
+  unallocated region such as from use of a uninitialized pointer.
+
+- Use of uninitialised value /
+  Conditional jump or move depends on uninitialised value(s)
+
+  The program read the value of a memory location that was not
+  previously written to, i.e. uses random junk. The second more
+  specifically indicates the read occurred in the test expression in
+  an if/for/while.
+
+  Tip: flag --track-origins=yes
+
+- Source and destination overlap in memcpy()
+
+  Tip: use memmove in the src. code instead
+
+- Invalid free() The program attempted to free a non-heap address or
+  free the same block more than once.
+
+
+# 4.2.1. Illegal read / Illegal write errors
+# 4.2.2. Use of uninitialised values
+# 4.2.3. Use of uninitialised or unaddressable values in system calls
+# 4.2.4. Illegal frees
+# 4.2.5. When a heap block is freed with an inappropriate deallocation function
+# 4.2.6. Overlapping source and destination blocks
+# 4.2.7. Fishy argument values
+# 4.2.8. Memory leak detection
+
+See [1] for details
+
+
+#===============================================================================
+4.6. Memcheck Monitor Commands
+#===============================================================================
+
+block_list
+
+who_points_at <addr> [<len>]
+
+
+See [1] for details
+
+
+################################################################################
+# 5. Cachegrind: a cache and branch-prediction profiler
+################################################################################
+
+5.1. Overview
+
+1) Cachegrind simulates how your program interacts with a machine's
+   cache hierarchy and (optionally) branch predictor.
+
+2) Cache simulation [1]: Cachegrind always refers to the I1, D1 and LL
+   (last-level) caches.
+
+3) Cachegrind gathers the following statistics (abbreviations used for
+   each statistic is given in parentheses):
+
+   - I cache reads (Ir, which equals the number of instructions
+     executed), I1 cache read misses (I1mr) and LL cache instruction
+     read misses (ILmr).
+
+   - D cache reads (Dr, which equals the number of memory reads), D1
+     cache read misses (D1mr), and LL cache data read misses (DLmr).
+
+   - D cache writes (Dw, which equals the number of memory writes), D1
+     cache write misses (D1mw), and LL cache data write misses (DLmw).
+
+   - Conditional branches executed (Bc) and conditional branches
+     mispredicted (Bcm).
+
+   - Indirect branches executed (Bi) and indirect branches mispredicted (Bim).
+
+See [1] for details
+
+
+################################################################################
+# 6. Callgrind: a call-graph generating cache and branch prediction profiler
+################################################################################
+
+# 6.1. Overview
+
+1) Callgrind is a profiling tool that records the call history among
+   functions in a program's run as a call-graph:
+
+   - number of instructions executed
+   - their relationship to source lines
+   - the caller/callee relationship between functions
+   - and the numbers of such calls.
+   - Optionally, cache simulation and/or branch prediction (similar to Cachegrind)
+
+
+################################################################################
+# Appendix A - Useful valgrind options to C++
+################################################################################
+
+# C++ compiler                # valgrind (alternative)
+
+-g
+-O0
+-Wall
+
+-fno-inline                    --read-inline-info=yes 
+
+
+			       --leak-check=yes
+			       --track-origins=yes
+			       --undef-value-errors=yes
+
+
 # ==============================================================================
+# Appendix K - Code examples (../code_examples)
+# ==============================================================================
+
+# source path for boost test:  "../code_examples/valgrind/"
+
+# Init (memcheck), "../code_examples/valgrind/quick_star_example"
+
+# callgrind, "../code_examples/valgrind/callgrind"
+
+
+################################################################################
+# Appendix T - Defined Terms
+################################################################################
+
+
+P
+
+- Profiling (computer programming)
+
+  In software engineering, profiling ("program profiling", "software
+  profiling") is a form of dynamic program analysis that measures, for
+  example, the space (memory) or time complexity of a program, the
+  usage of particular instructions, or the frequency and duration of
+  function calls. Most commonly, profiling information serves to aid
+  program optimization.
+  (https://en.wikipedia.org/wiki/Profiling_(computer_programming)
+
+
+
+
+################################################################################
 # Appendix Z - References
-# ==============================================================================
+################################################################################
+
+[1] Official manual - http://valgrind.org/docs/manual/index.html
 
 
-# ------------------------------------------------------------------------------
+[2] memcheck-links
 
-[1] Official doc - http://valgrind.org/
-
-[1_1] The Valgrind Quick Start Guide -
-      http://valgrind.org/docs/manual/QuickStart.html
+[2_1] Guide to memcheck - https://web.stanford.edu/class/cs107/guide_valgrind.html
 
 
+[3] callgrind-links
+
+[3_1] Guide to callgrind - https://web.stanford.edu/class/cs107/guide_callgrind.html
+
+[3_2] How to profile C++ application with Callgrind / KCacheGrind - https://baptiste-wicht.com/posts/2011/09/profile-c-application-with-callgrind-kcachegrind.html
+
+
+[100] General links
+
+[101] wikipedia valgrind - https://en.wikipedia.org/wiki/Valgrind
