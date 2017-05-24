@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 
 \info Testing the valgrind tool suite with C++
 
@@ -9,6 +9,9 @@ Index
 # 1 Introduction
 # 1.1 Overview
 
+# 2. Using and understanding the Valgrind core
+#
+# 2.5. Suppressing errors
 
 # 3. Using and understanding the Valgrind core: Advanced Topics
 #
@@ -27,16 +30,28 @@ Index
 #    3. Running your program under Memcheck
 #    4. Interpreting Memcheck's output
 #
+# 4.1. Overview
+#
 # 4.2. Explanation of error messages from Memcheck 
+#
+# 4.6. Memcheck Monitor Commands
+#
+# 4.10 Errors that memcheck does not detect
+#
+# 4.11 Advanced memcheck
 
 
 # 5. Cachegrind: a cache and branch-prediction profiler
 
-
 # 6. Callgrind: a call-graph generating cache and branch prediction profiler
 
+# 11. SGCheck: an experimental stack and global array overrun detector
 
 # Appendix A - Useful valgrind options to C++
+
+# Appendix B - Advanced Topics
+#
+# B.1. Running valgrind with multiple processes
 
 # Appendix K - Code examples (../code_examples)
 
@@ -54,7 +69,7 @@ Index
 
 Tools:
 
-- None:
+- None (nulgrind):  'valgrind --tool=none'
 
   runs the code in the virtual machine without performing any
   analysis and thus has the smallest possible CPU and memory overhead
@@ -76,7 +91,7 @@ Tools:
   make your programs use less memory.
   \info The separate GUI massif-visualizer visualizes output from Massif.
 
-- dhat  (heap profiling):
+- exp-dhat  (heap profiling):
 
   Analyzes how much memory is allocated and for how long as well as
   patterns of memory usage.
@@ -88,15 +103,35 @@ Tools:
 
 Experimentakl tools:
 
-- sgcheck (global/stack overrun detection):
+- exp-sgcheck (global/stack overrun detection):
 
   Its functionality is complementary to that of Memcheck: SGcheck
   finds problems that Memcheck can't, and vice versa.
   \warning Some code results in false positives from this tool.[101]
 
-- bbv (extrapolating longer executions from smaller samples).
+- exp-bbv (extrapolating longer executions from smaller samples).
 
   It is useful to people doing computer architecture research and development.
+
+
+
+################################################################################
+# 2. Using and understanding the Valgrind core
+################################################################################
+
+
+#===============================================================================
+# 2.5. Suppressing errors
+#===============================================================================
+
+1) Valgrind reads a list of errors to suppress at startup. 
+
+2) You can modify and add to the suppressions file at your leisure,
+   or, better, write your own. (see 4.4. Writing suppression
+   files). Multiple suppression files are allowed.
+
+
+\brief [103]
 
 
 ################################################################################
@@ -211,26 +246,14 @@ See [1] for details
 # 4. Memcheck: a memory error detector
 ################################################################################
 
-Memcheck is a memory error detector. It can detect the following
-problems that are common in C and C++ programs.
+Memcheck is a memory error detector:
 
-- Accessing memory you shouldn't, e.g. overrunning and underrunning
-  heap blocks, overrunning the top of the stack, and accessing memory
-  after it has been freed.
-
-- Using undefined values, i.e. values that have not been initialised,
-  or that have been derived from other undefined values.
-
-- Incorrect freeing of heap memory, such as double-freeing heap
-  blocks, or mismatched use of malloc/new/new[] versus
-  free/delete/delete[]
-
-- Overlapping src and dst pointers in memcpy and related functions.
-
-- Passing a fishy (presumably negative) value to the size parameter of
-  a memory allocation function.
-
-- Memory leaks.
+    Illegal read/write
+    Use of uninitialized memory
+    Invalid system call parameters
+    Illegal frees
+    Source/destination overlap
+    Memory leaks
 
 
 #===============================================================================
@@ -426,10 +449,10 @@ WARNING (Sometimes gdb will ask if you would like to kill the running
 
 
 #===============================================================================
-# 4.2. Explanation of error messages from Memcheck 
+# 4.2. Explanation of error messages from Memcheck  [103]
 #===============================================================================
 
-1) \brief Most commone errors [2_1]
+1) \brief Most common errors [2_1]
 
 - Invalid read/write of size X
 
@@ -456,8 +479,8 @@ WARNING (Sometimes gdb will ask if you would like to kill the running
   free the same block more than once.
 
 
-# 4.2.1. Illegal read / Illegal write errors
-# 4.2.2. Use of uninitialised values
+# 4.2.1. Illegal read / Illegal write errors [103]
+# 4.2.2. Use of uninitialised values 
 # 4.2.3. Use of uninitialised or unaddressable values in system calls
 # 4.2.4. Illegal frees
 # 4.2.5. When a heap block is freed with an inappropriate deallocation function
@@ -469,7 +492,7 @@ See [1] for details
 
 
 #===============================================================================
-4.6. Memcheck Monitor Commands
+# 4.6. Memcheck Monitor Commands
 #===============================================================================
 
 block_list
@@ -478,6 +501,51 @@ who_points_at <addr> [<len>]
 
 
 See [1] for details
+
+
+#===============================================================================
+# 4.10 Errors that memcheck does not detect  [103]
+#===============================================================================
+
+There are a few types of memory errors that memcheck does not detect.
+
+Reading or writing beyond arrays that are global or on the stack, for instance
+
+  int x[10]; 
+  // local, global or static
+
+  x[10] = 1;
+
+Try using exp-sgcheck for this sort of error.
+
+
+#===============================================================================
+# 4.11 Advanced memcheck [104]
+#===============================================================================
+
+4.11.1 Compiling with Valgrind macros.
+
+1) Valgrind provides you with macros that allow you to actively
+   control output and interact with the VM.
+
+   i.e. VALGRIND_CHECK_MEM_IS_DEFINED(_qzz_addr,_qzz_len)
+
+2) Used: used like the cout traces
+
+3) The macros may return a value, either ‘directly’ from the macro as
+   a status, or through inout arguments to the macro.
+
+4) There are also macros to trigger Valgrind actions like performing a
+   leak check.
+
+
+
+
+4.11.2 Attaching a debugger.
+
+       See 3.2. too
+
+4.11.3 Using memory pools.
 
 
 ################################################################################
@@ -530,6 +598,37 @@ See [1] for details
 
 
 ################################################################################
+# 11. SGCheck: an experimental stack and global array overrun detector
+################################################################################
+
+1) SGCheck is a tool for finding overruns of stack and global arrays
+
+   [ Example [103]
+
+     int x[10];  // local, global or static
+
+     x[10] = 1;  // stack array: writing out of bounds 
+
+   end example ]
+
+2) MEMCHECK vs SGCHECK
+
+   SGCheck and Memcheck are complementary: their capabilities do not overlap.
+
+3) Limitations  [1] [101]
+
+   WARNING Experimental tool
+
+   - False negatives (missed errors)
+
+   - False positives (false errors)
+
+   ...
+
+   See [1].11.5 for details.
+   
+
+################################################################################
 # Appendix A - Useful valgrind options to C++
 ################################################################################
 
@@ -547,9 +646,28 @@ See [1] for details
 			       --undef-value-errors=yes
 
 
-# ==============================================================================
+			       --log-file=parent.%p.log  # %p = process PID 
+
+
+1) It is best to put options that are independent of the test in the
+   ".valgrindrc" and to pass options that may change on the command line. [102]
+
+
+
+################################################################################
+# Appendix B - Advanced Topics
+################################################################################
+
+# B.1. Running valgrind with multiple processes
+
+i.e. Analyzing a father and a children process (see [102] Processes and output)
+
+
+
+################################################################################
 # Appendix K - Code examples (../code_examples)
-# ==============================================================================
+################################################################################
+
 
 # source path for boost test:  "../code_examples/valgrind/"
 
@@ -600,3 +718,12 @@ P
 [100] General links
 
 [101] wikipedia valgrind - https://en.wikipedia.org/wiki/Valgrind
+
+[102] Valgrind Part 1: Introduction - https://accu.org/index.php/journals/1930
+
+[103] Valgrind Part 2: Basic memcheck - https://accu.org/index.php/journals/1913
+
+[104] Valgrind Part 3: Advanced memcheck - https://accu.org/index.php/journals/1905
+
+[105] Valgrind Part 4: Cachegrind and Callgrind - https://accu.org/index.php/journals/1886
+
