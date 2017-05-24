@@ -42,6 +42,9 @@ Index
 
 
 # 5. Cachegrind: a cache and branch-prediction profiler
+#
+# 5.3. Cachegrind Command-line Options
+
 
 # 6. Callgrind: a call-graph generating cache and branch prediction profiler
 
@@ -131,7 +134,7 @@ Experimentakl tools:
    files). Multiple suppression files are allowed.
 
 
-\brief [103]
+\brief [2_3]
 
 
 ################################################################################
@@ -177,7 +180,7 @@ Experimentakl tools:
    You can now debug your program ...
 
 
-# see [1]-3.2.8. for the drawbacks of using --vgdb=full
+# see [1_1]-3.2.8. for the drawbacks of using --vgdb=full
 
 
 # 3.2.5. Monitor command handling by the Valgrind gdbserver
@@ -238,7 +241,7 @@ registers when the thread is in status Runnable or Yielding.
 
 3.2.10. Valgrind monitor commands
 
-See [1] for details
+See [1_1] for details
 
 
 
@@ -449,7 +452,7 @@ WARNING (Sometimes gdb will ask if you would like to kill the running
 
 
 #===============================================================================
-# 4.2. Explanation of error messages from Memcheck  [103]
+# 4.2. Explanation of error messages from Memcheck  [2_3]
 #===============================================================================
 
 1) \brief Most common errors [2_1]
@@ -479,7 +482,7 @@ WARNING (Sometimes gdb will ask if you would like to kill the running
   free the same block more than once.
 
 
-# 4.2.1. Illegal read / Illegal write errors [103]
+# 4.2.1. Illegal read / Illegal write errors [2_3]
 # 4.2.2. Use of uninitialised values 
 # 4.2.3. Use of uninitialised or unaddressable values in system calls
 # 4.2.4. Illegal frees
@@ -488,7 +491,7 @@ WARNING (Sometimes gdb will ask if you would like to kill the running
 # 4.2.7. Fishy argument values
 # 4.2.8. Memory leak detection
 
-See [1] for details
+See [1_1] for details
 
 
 #===============================================================================
@@ -500,11 +503,11 @@ block_list
 who_points_at <addr> [<len>]
 
 
-See [1] for details
+See [1_1] for details
 
 
 #===============================================================================
-# 4.10 Errors that memcheck does not detect  [103]
+# 4.10 Errors that memcheck does not detect  [2_3]
 #===============================================================================
 
 There are a few types of memory errors that memcheck does not detect.
@@ -520,7 +523,7 @@ Try using exp-sgcheck for this sort of error.
 
 
 #===============================================================================
-# 4.11 Advanced memcheck [104]
+# 4.11 Advanced memcheck [2_4]
 #===============================================================================
 
 4.11.1 Compiling with Valgrind macros.
@@ -552,33 +555,149 @@ Try using exp-sgcheck for this sort of error.
 # 5. Cachegrind: a cache and branch-prediction profiler
 ################################################################################
 
+1) In general, profiling tools will tell you the time spent in each
+   function, inclusive and exclusive of time spent in calls to other
+   functions. They may also tell you the time spent on each line of code.
+
+2) cachegrind Vs callgrind: the main differences are that Callgrind
+   has more information about the callstack whilst cachegrind gives
+   more information about cache hit rates.
+
+3) KCachegrind: When you’re using these tools, you’re likely to want
+   to use the GUI that is available to browse the results.
+
+4) Cache model example
+
+   MEM  <=>  L3 cache  <=>  L2 cache  <=>  L1  <=> CORE_1
+                                           L1  <=> CORE_2
+                                           ..............
+                                           L1  <=> CORE_N
+
 5.1. Overview
 
 1) Cachegrind simulates how your program interacts with a machine's
    cache hierarchy and (optionally) branch predictor.
 
-2) Cache simulation [1]: Cachegrind always refers to the I1, D1 and LL
-   (last-level) caches.
+2) Cache simulation [1_1]:
 
-3) Cachegrind gathers the following statistics (abbreviations used for
-   each statistic is given in parentheses):
+It simulates a machine with independent first-level instruction and
+data caches (I1 and D1), backed by a unified second-level cache (L2).
 
-   - I cache reads (Ir, which equals the number of instructions
-     executed), I1 cache read misses (I1mr) and LL cache instruction
-     read misses (ILmr).
+For machines with more levels of cache (if detected), Cachegrind
+simulates the first-level and last-level caches. The reason for this
+choice is that the last-level cache has the most influence on runtime,
+as it masks accesses to main memory.
 
-   - D cache reads (Dr, which equals the number of memory reads), D1
-     cache read misses (D1mr), and LL cache data read misses (DLmr).
+Therefore, Cachegrind always refers to the I1, D1 and LL (last-level) caches.
 
-   - D cache writes (Dw, which equals the number of memory writes), D1
-     cache write misses (D1mw), and LL cache data write misses (DLmw).
 
-   - Conditional branches executed (Bc) and conditional branches
-     mispredicted (Bcm).
+3) Cachegrind gathers the following statistics:
 
-   - Indirect branches executed (Bi) and indirect branches mispredicted (Bim).
+   # Note.- Cache miss brief [102]
+   a) instruction read miss: cause the largest delay.
+   b) data read miss:  	     smaller delay
+   c) data write miss: 	     the shortest delay
 
-See [1] for details
+   Stats:
+
+   a) I read miss:
+
+   - I cache reads (Ir, which equals the number of instructions executed)
+
+   - I1 cache instruction read misses (I1mr)
+
+   - LL cache instruction read misses (ILmr).
+
+
+   b) Data read miss:
+   
+   - D cache reads (Dr, which equals the number of memory reads)
+
+   - D1 cache read misses (D1mr)
+
+   - LL cache data read misses (DLmr).
+
+
+   c) Data write miss:
+   
+   - D cache writes (Dw, which equals the number of memory writes)
+
+   - D1 cache write misses (D1mw)
+
+   - LL cache data write misses (DLmw).
+
+
+   d) Branch prediction stats  (--branch-sim=yes)
+   
+   - Conditional branches executed (Bc)
+
+   - Conditional branches mispredicted (Bcm).
+
+   - Indirect branches executed (Bi)
+
+   - Indirect branches mispredicted (Bim).
+
+
+Note.- D1 total accesses is given by D1mr + D1mw
+
+Note.- LL total accesses is given by ILmr + DLmr + DLmw.
+
+
+4) These statistics are presented for the entire program and for each
+   function in the program. You can also annotate each line of source
+   code in the program with the counts that were caused directly by it.
+
+5) On a modern machine:
+
+   - An L1 miss will typically cost around 10 cycles,
+
+   - An LL miss can cost as much as 200 cycles, (because this implies
+     a main memory access)
+
+   - A mispredicted branch costs in the region of 10 to 30 cycles.
+
+6) Also, since one instruction cache read is performed per instruction
+   executed, you can find out how many instructions are executed per
+   line, which can be useful for traditional profiling.
+
+
+#===============================================================================
+# 5.3. Cachegrind Command-line Options
+#===============================================================================
+
+Cachegrind-specific options are:
+
+--I1=<size>,<associativity>,<line size>
+
+    Specify the size, associativity and line size of the level 1 inst. cache
+
+
+--D1=<size>,<associativity>,<line size>
+
+    Specify the size, associativity and line size of the level 1 data cache.
+
+
+--LL=<size>,<associativity>,<line size>
+
+    
+--cache-sim=no|yes [yes]
+
+    Enables or disables collection of cache access and miss counts.
+
+
+--branch-sim=no|yes [no]
+
+    Branch instruction and misprediction counts.
+
+
+--cachegrind-out-file=<file>
+
+    Write the profile data to file rather than to the default output
+    file, cachegrind.out.<pid>.
+
+    The %p and %q format specifiers can be used to embed the process
+    ID and/or the contents of an environment variable in the name, as
+    is the case for the core option --log-file.
 
 
 ################################################################################
@@ -603,7 +722,7 @@ See [1] for details
 
 1) SGCheck is a tool for finding overruns of stack and global arrays
 
-   [ Example [103]
+   [ Example [2_3]
 
      int x[10];  // local, global or static
 
@@ -615,7 +734,7 @@ See [1] for details
 
    SGCheck and Memcheck are complementary: their capabilities do not overlap.
 
-3) Limitations  [1] [101]
+3) Limitations  [1_1] [101]
 
    WARNING Experimental tool
 
@@ -625,7 +744,7 @@ See [1] for details
 
    ...
 
-   See [1].11.5 for details.
+   See [1_1].11.5 for details.
    
 
 ################################################################################
@@ -650,7 +769,7 @@ See [1] for details
 
 
 1) It is best to put options that are independent of the test in the
-   ".valgrindrc" and to pass options that may change on the command line. [102]
+   ".valgrindrc" and to pass options that may change on the command line. [2_2]
 
 
 
@@ -660,7 +779,7 @@ See [1] for details
 
 # B.1. Running valgrind with multiple processes
 
-i.e. Analyzing a father and a children process (see [102] Processes and output)
+i.e. Analyzing a father and a children process (see [2_2] Processes and output)
 
 
 
@@ -700,30 +819,35 @@ P
 # Appendix Z - References
 ################################################################################
 
-[1] Official manual - http://valgrind.org/docs/manual/index.html
+[1] Valgrind general doc
+
+[1_1] Official manual - http://valgrind.org/docs/manual/index.html
+
+[1_2] wikipedia valgrind - https://en.wikipedia.org/wiki/Valgrind
 
 
 [2] memcheck-links
 
 [2_1] Guide to memcheck - https://web.stanford.edu/class/cs107/guide_valgrind.html
 
+[2_2] Valgrind Part 1: Introduction - https://accu.org/index.php/journals/1930
+
+[2_3] Valgrind Part 2: Basic memcheck - https://accu.org/index.php/journals/1913
+
+[2_4] Valgrind Part 3: Advanced memcheck - https://accu.org/index.php/journals/1905
+
 
 [3] callgrind-links
 
 [3_1] Guide to callgrind - https://web.stanford.edu/class/cs107/guide_callgrind.html
 
-[3_2] How to profile C++ application with Callgrind / KCacheGrind - https://baptiste-wicht.com/posts/2011/09/profile-c-application-with-callgrind-kcachegrind.html
+[3_2] Valgrind Part 4: Cachegrind and Callgrind - https://accu.org/index.php/journals/1886
+
+[3_3] How to profile C++ application with Callgrind / KCacheGrind - https://baptiste-wicht.com/posts/2011/09/profile-c-application-with-callgrind-kcachegrind.html
 
 
-[100] General links
+[100] General concepts
 
-[101] wikipedia valgrind - https://en.wikipedia.org/wiki/Valgrind
+[101] CPU cache - https://en.wikipedia.org/wiki/CPU_cache
 
-[102] Valgrind Part 1: Introduction - https://accu.org/index.php/journals/1930
-
-[103] Valgrind Part 2: Basic memcheck - https://accu.org/index.php/journals/1913
-
-[104] Valgrind Part 3: Advanced memcheck - https://accu.org/index.php/journals/1905
-
-[105] Valgrind Part 4: Cachegrind and Callgrind - https://accu.org/index.php/journals/1886
-
+[102] fast_cpp.howto - cpp/estudio/cpp_language/concrete_topics/fast_cpp.howto
