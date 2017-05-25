@@ -34,6 +34,8 @@ Index
 #
 # 4.2. Explanation of error messages from Memcheck 
 #
+#	4.2.4. Illegal frees
+#
 # 4.6. Memcheck Monitor Commands
 #
 # 4.10 Errors that memcheck does not detect
@@ -354,7 +356,7 @@ end example ]
    common cause of difficulty with Memcheck.
 
 
-4.2 memory leak.
+# 4.2 memory leak.
 
 1) Memory leak messages look like this:
 
@@ -376,7 +378,27 @@ end example ]
 	  	 point to the middle of a heap block).
 
 
-4.3  uninitialised values
+# 4.2.4. Illegal frees
+
+1) Duplicate frees are detected by memcheck.
+
+2) Not setting a pointer to 0 is not detected (because it is not an error [103])
+
+  [ Example
+
+    void fnonfree()
+    {
+      int * kk = new int[10];
+      kk[0]=5;
+      delete [] kk;
+
+      // kk=0;        // warning: not reset to 0 not detected by memcheck
+      delete [] kk;   // ok: (invalid free) detected 
+    }
+
+  end example ]
+
+# 4.3  uninitialised values
 
 1) Memcheck also reports uses of uninitialised values, most commonly with
    the message "Conditional jump or move depends on uninitialised value(s)".
@@ -851,3 +873,6 @@ P
 [101] CPU cache - https://en.wikipedia.org/wiki/CPU_cache
 
 [102] fast_cpp.howto - cpp/estudio/cpp_language/concrete_topics/fast_cpp.howto
+
+[103] https://stackoverflow.com/questions/704466/why-doesnt-delete-set-the-pointer-to-null
+
