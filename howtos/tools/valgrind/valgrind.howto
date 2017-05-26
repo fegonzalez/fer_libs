@@ -24,7 +24,7 @@ Index
 
 # 4. Memcheck: a memory error detector
 #
-# 4.0 Valgrind quick start
+# 4.0 Valgrind (memcheck) quick start
 #
 #    2. Preparing your program
 #    3. Running your program under Memcheck
@@ -45,7 +45,28 @@ Index
 
 # 5. Cachegrind: a cache and branch-prediction profiler
 #
+# 5.2. Using Cachegrind, cg_annotate and cg_merge
+#      5.2.1. Running Cachegrind
+#      5.2.2. Output File
+#      5.2.3. Running cg_annotate
+#      5.2.4. The Output Preamble
+#      5.2.5. The Global and Function-level Counts
+#      5.2.6. Line-by-line Counts
+#      5.2.7. Annotating Assembly Code Programs
+#      5.2.8. Forking Programs
+#      5.2.9. cg_annotate Warnings
+#      5.2.10. Unusual Annotation Cases
+#      5.2.11. Merging Profiles with cg_merge
+#      5.2.12. Differencing Profiles with cg_diff
+#
 # 5.3. Cachegrind Command-line Options
+# 5.4. cg_annotate Command-line Options
+# 5.5. cg_merge Command-line Options
+# 5.6. cg_diff Command-line Options
+#
+# 5.7. Acting on Cachegrind's Information
+#
+# 5.8. Simulation Details
 
 
 # 6. Callgrind: a call-graph generating cache and branch prediction profiler
@@ -262,8 +283,11 @@ Memcheck is a memory error detector:
 
 
 #===============================================================================
-# 4.0 Valgrind quick start (valgrind.org/docs/manual/quick-start.html)
+# 4.0 Valgrind (memcheck) quick start 
 #===============================================================================
+
+(valgrind.org/docs/manual/quick-start.html)
+
 
 # How to launch
 
@@ -674,13 +698,246 @@ Note.- LL total accesses is given by ILmr + DLmr + DLmw.
    - An L1 miss will typically cost around 10 cycles,
 
    - An LL miss can cost as much as 200 cycles, (because this implies
-     a main memory access)
+     a main memory access) (see 5.7 3)
 
    - A mispredicted branch costs in the region of 10 to 30 cycles.
 
 6) Also, since one instruction cache read is performed per instruction
    executed, you can find out how many instructions are executed per
    line, which can be useful for traditional profiling.
+
+
+#===============================================================================
+# 5.2. Using Cachegrind, cg_annotate and cg_merge
+#===============================================================================
+
+1) Compilation options for cachegrind
+
+   a) Compiling with Debug info_ -g (idem memcheck)
+
+   b) compiling with Optimization
+
+      WARNING by contrast with normal Valgrind use, you probably do
+      	      want to turn optimisation on, since you should profile
+      	      your program as it will be normally run; i.e.:
+
+	      memcheck:   OPTIM_FLAGS = -O0
+	      cachegrind: OPTIM_FLAGS = -OX   X:the actual project level
+
+2) Brief use
+
+   a) run CACHEGRIND to gather the profiling information
+
+   b) and then run CG_ANNOTATE to get a detailed presentation of that
+      information.
+
+   c) As an optional intermediate step, you can use CG_MERGE to sum
+      together the outputs of multiple Cachegrind runs into a single
+      file as input for cg_annotate.
+
+   d) Alternatively, you can use CG_DIFF to difference the outputs of
+      two Cachegrind runs into a single file which you then use as the
+      input for cg_annotate.
+
+
+# 5.2.1. Running Cachegrind
+
+	valgrind --tool=cachegrind [CACHEGRIND-OPTIONS] prog
+
+	==31751== I   refs:      27,742,716      # nº of instructions executed
+	==31751== I1  misses:           276
+	==31751== LLi misses:           275
+	==31751== I1  miss rate:        0.0%
+	==31751== LLi miss rate:        0.0%
+	...
+
+Note.- LL miss rate is computed relative to the total number of memory
+       accesses, not the number of L1 misses:
+       (ILmr + DLmr + DLmw) / (Ir + Dr + Dw)
+
+
+# 5.2.2. Output File (profile data file)
+
+1) Default name:  "cachegrind.out.<pid>"
+
+WARNING The default <pid> allows correct profiling with the
+	"--trace-children=yes" option of programs that spawn child
+	processes.
+
+2) Changing the default name:  –cachegrind-out-file
+
+3) This file is not meant for human conssumption, use "cg_annotate" instead.
+
+
+# 5.2.3. Running cg_annotate
+
+  cg_annotate <filename>
+
+
+TIP You can filter and sort the output with the "--threshold" and
+    "--sort options"
+
+    --threshold=<0--20>   a function is shown if it accounts for more than x% of
+                          the counts of the primary sort event [0.1]
+
+
+TIP annotated source: either with --auto=yes or on a file by file
+    basis by passing the (fully qualified) filename as an argument.
+
+    --auto=yes|no         annotate all source files containing functions
+                          that helped reach the event count threshold [no]
+
+
+INFO running kcachegrind
+
+     >> kcachegrind cachegrind.out.13789 &
+
+
+# 5.2.4. The Output Preamble
+
+# cg_annonate output header:
+
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+...
+Thresholds:       1 100 100 100 100 100 100 100 100 100 100 100 100
+Auto-annotation:  off
+...
+--------------------------------------------------------------------------------
+
+1) Threshold: cg_annotate by default omits functions that cause very
+   low counts to avoid drowning you in information. In this case,
+   cg_annotate shows summaries the functions that account for 99% of
+   the Ir counts; Ir is chosen as the threshold event since it is the
+   primary sort event. The threshold can be adjusted with the
+   --threshold option.
+     
+
+# 5.2.5. The Global and Function-level Counts
+
+1) Then follows summary statistics for the whole program:
+
+--------------------------------------------------------------------------------
+Ir         I1mr ILmr Dr         D1mr   DLmr  Dw        D1mw   DLmw
+--------------------------------------------------------------------------------
+27,742,716  276  275 10,955,517 21,905 3,987 4,474,773 19,280 19,098  PROG. TOT
+
+
+2) Then comes function-by-function statistics:
+
+[ Example
+
+--------------------------------------------------------------------------------
+Ir        I1mr ILmr Dr        D1mr  DLmr  Dw        D1mw   DLmw    file:function
+--------------------------------------------------------------------------------
+8,821,482    5    5 2,654  1,621    73 1,794,230      0      0  getc.c:_IO_getc
+5,222,023    4    4 2,004   16    12   875,959      1      1    ???:???
+2,649,248    2    2 1,343  7,326 1,385         .      .      .  vg_main.c:strcmp
+
+
+end example ]
+
+
+file_name:function_name: Each function is identified by file:function name pair.
+
+"???": the file name and/or function name could not be determined from
+       debugging information. If most of the entries have the form
+       ???:???  the program probably wasn't compiled with -g.
+
+"."  : If a column contains only a dot it means the function never
+     performs that event.
+
+
+# 5.2.6. Line-by-line Counts
+
+1) There are two ways to annotate source files:
+
+a) all files: --auto=yes option  (see 5.4)
+
+   WARNING auto-annotation can produce a lot of output if your program is large!
+
+   WARNING the files chosen for auto-annotation are affected by the
+   	   --sort and --threshold options.
+
+   [ Example
+     
+     >> cg_annotate --auto=yes cachegrind.out.31510
+
+     #output lines after:   -- Auto-annotated source: ... 
+
+   end example ]
+
+
+b) a concrete file: cg_annotate <cachegrind.out.???>  <source-file>
+
+   WARNING <source-file> must be in the path in order to be detected:
+
+   Use the -I/--include option to tell Valgrind where to look for
+   source files if the filenames found from the debugging information
+   aren't specific enough.
+   
+   [ Example
+     
+     >> cg_annotate cachegrind.out.31510 main.cpp
+     # main.cpp not detected:  -- Auto-annotated source: ...
+
+
+     >> cg_annotate cachegrind.out.31510  -I../main.cpp
+     # detected:               -- User-annotated source: ...
+
+   end example ]
+
+
+2) --context option (see  5.4)
+
+Sometimes only a small section of a source file is executed. To
+minimise uninteresting output, Cachegrind only shows annotated lines
+and lines within a small distance of annotated lines. Gaps are marked
+with the line numbers so you know which part of a file the shown code
+comes from, eg:
+
+[ Example
+
+      (figures and code for line 704)
+      -- line 704 ----------------------------------------
+      -- line 878 ----------------------------------------
+      (figures and code for line 878)
+
+end example ]
+
+The amount of context to show around annotated lines is controlled by
+the --context option.
+
+
+# 5.2.7. Annotating Assembly Code Programs [1_1]
+# 5.2.8. Forking Programs [1_1]
+# 5.2.9. cg_annotate Warnings [1_1]
+# 5.2.10. Unusual Annotation Cases [1_1]
+
+
+# 5.2.11. Merging Profiles with cg_merge
+
+  	  cg_merge -o outputfile file1 file2 file3 ...
+
+1) Merge multiple results of cachegrind over a set of files.
+
+2) Costs are summed on a per-function, per-line and per-instruction basis. 
+
+See [1_1] for details.
+
+
+# 5.2.12. Differencing Profiles with cg_diff
+
+  	  >> cg_diff file1 file2 > cgdiff.out
+	  >> cg_annotate cgdiff.out 
+
+
+1) This is very useful if you want to measure how a change to a
+   program affected its performance.
+
+2) reads two profile files, finds the difference between them, and
+   writes the results into another file in the same format.  You can
+   then examine the merged results using cg_annotate <filename>.
 
 
 #===============================================================================
@@ -691,7 +948,7 @@ Cachegrind-specific options are:
 
 --I1=<size>,<associativity>,<line size>
 
-    Specify the size, associativity and line size of the level 1 inst. cache
+    Specify the size, associativity and line size (*) of the level 1 inst. cache
 
 
 --D1=<size>,<associativity>,<line size>
@@ -722,6 +979,130 @@ Cachegrind-specific options are:
     is the case for the core option --log-file.
 
 
+(*) See [102], 4.3 Cache lines
+      ___________________________________
+      | tag |	data block |  flag bits |
+      |_________________________________|
+
+      The data block (cache line) contains the actual data fetched
+      from the main memory.
+
+
+#===============================================================================
+# 5.4. cg_annotate Command-line Options
+#===============================================================================
+
+--show=A,B,C [default: all, using order in cachegrind.out.<pid>]
+
+    Specifies which events to show (and the column order). Useful if
+    you want to concentrate on, for example, I cache misses
+    (--show=I1mr,ILmr), or data read misses (--show=D1mr,DLmr), or LL
+    data misses (--show=DLmr,DLmw). Best used in conjunction with
+
+
+--sort.  --sort=A,B,C [default: order in cachegrind.out.<pid>]
+
+    Specifies the events upon which the sorting of the
+    function-by-function entries will be based.
+
+
+--threshold=X [default: 0.1%]
+
+    Sets the threshold for the function-by-function summary. A
+    function is shown if it accounts for more than X% of the counts
+    for the primary sort event. If auto-annotating, also affects which
+    files are annotated.
+
+    Note: thresholds can be set for more than one of the events,
+    	  e.g. --sort=DLmr:1,DLmw:1
+
+
+--auto=<no|yes> [default: no]
+
+    When enabled, automatically annotates every file that is mentioned
+    in the function-by-function summary that can be found. Also gives
+    a list of those that couldn't be found.
+
+
+--context=N [default: 8]
+
+    Print N lines of context before and after each annotated line.
+    Avoids printing large sections of source files that were not executed.
+    Use a large number (e.g. 100000) to show all source lines.
+
+
+-I<dir> --include=<dir> [default: none]
+
+    Adds a directory to the list in which to search for files. Multiple
+    -I/--include options can be given to add multiple directories.
+
+
+# 5.5. cg_merge Command-line Options
+# 5.6. cg_diff Command-line Options
+
+
+#===============================================================================
+# 5.7. Acting on Cachegrind's Information
+#===============================================================================
+
+1) Global cout Vs function-by-function
+
+   The global hit/miss counts and miss rates are not that useful.
+   The function-by-function counts are more useful to look at.
+
+   WARNING
+   If a function f is always inlined, counts will be attributed to the
+   functions it is inlined into, rather than itself.
+
+
+2) The line-by-line source code annotations are much more useful.
+
+   In our experience, the best place to start is by looking at the Ir numbers.
+
+   They simply measure how many instructions were executed for each
+   line, and don't include any cache information, but they can still
+   be very useful for identifying bottlenecks.
+
+
+3) LL vs L1: we have found that LL misses are typically a much bigger
+   source of slow-downs than L1 misses. (see 5.1. 5)
+
+   (You can use --show=DLmr --sort=DLmr with cg_annotate to focus just
+   on DLmr counts, for example.)
+
+
+4) Looking at the Bcm and Bim misses can also be helpful. In
+   particular, Bim mis ses are often caused by switch statements, and
+   in some cases these switch statements can be replaced with
+   table-driven code. (see [1_1] example)
+
+
+#===============================================================================
+# 5.8. Simulation Details
+#===============================================================================
+
+This section talks about details you don't need to know about in order
+to use Cachegrind, but may be of interest to some people.
+
+# 5.8.1. Cache Simulation Specifics
+
+[1_1]
+
+
+# 5.8.2. Branch Simulation Specifics
+
+Cachegrind simulates branch predictors intended to be typical of
+mainstream desktop/server processors of around 2004.
+
+
+# 5.8.3. Accuracy
+
+Valgrind's cache profiling has a number of shortcomings: [1_1]
+
+WARNING While you shouldn't trust the results to be super-accurate,
+	they should be close enough to be useful.
+
+
 ################################################################################
 # 6. Callgrind: a call-graph generating cache and branch prediction profiler
 ################################################################################
@@ -735,7 +1116,8 @@ Cachegrind-specific options are:
    - their relationship to source lines
    - the caller/callee relationship between functions
    - and the numbers of such calls.
-   - Optionally, cache simulation and/or branch prediction (similar to Cachegrind)
+   - Optionally, cache simulation and/or branch prediction (similar to
+     Cachegrind)
 
 
 ################################################################################
