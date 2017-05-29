@@ -70,6 +70,31 @@ Index
 
 
 # 6. Callgrind: a call-graph generating cache and branch prediction profiler
+#
+# 6.1. Overview
+#    6.1.1. Functionality
+#    6.1.2. Basic Usage
+#
+# 6.2. Advanced Usage
+#    6.2.1. Multiple profiling dumps from one program run
+#    6.2.2. Limiting the range of collected events
+#    6.2.3. Counting global bus events
+#    6.2.4. Avoiding cycles
+#    6.2.5. Forking Programs
+#
+# 6.3. Callgrind Command-line Options
+#    6.3.1. Dump creation options
+#    6.3.2. Activity options
+#    6.3.3. Data collection options
+#    6.3.4. Cost entity separation options
+#    6.3.5. Simulation options
+#    6.3.6. Cache simulation options
+#
+# 6.4. Callgrind Monitor Commands
+# 6.5. Callgrind specific client requests
+# 6.6. callgrind_annotate Command-line Options
+# 6.7. callgrind_control Command-line Options
+
 
 # 11. SGCheck: an experimental stack and global array overrun detector
 
@@ -713,9 +738,9 @@ Note.- LL total accesses is given by ILmr + DLmr + DLmw.
 
 1) Compilation options for cachegrind
 
-   a) Compiling with Debug info_ -g (idem memcheck)
+   a) Compiling with Debug info -g (idem memcheck)
 
-   b) compiling with Optimization
+   b) Compiling with Optimization turned on (-O)
 
       WARNING by contrast with normal Valgrind use, you probably do
       	      want to turn optimisation on, since you should profile
@@ -1107,7 +1132,7 @@ WARNING While you shouldn't trust the results to be super-accurate,
 # 6. Callgrind: a call-graph generating cache and branch prediction profiler
 ################################################################################
 
-# 6.1. Overview
+# 6.1. Overview [1_1]
 
 1) Callgrind is a profiling tool that records the call history among
    functions in a program's run as a call-graph:
@@ -1118,6 +1143,189 @@ WARNING While you shouldn't trust the results to be super-accurate,
    - and the numbers of such calls.
    - Optionally, cache simulation and/or branch prediction (similar to
      Cachegrind)
+
+2) For presentation of the data, and interactive control of the
+   profiling, two command line tools are provided:
+
+
+callgrind_annotate
+
+    This command reads in the profile data, and prints a sorted lists
+    of functions, optionally with source annotation. (You can use
+    kcachegrind or graphical visualization of the data)
+
+
+callgrind_control
+
+    This command enables you to INTERACTIVELY observe and control the
+    status of a program currently running under Callgrind's control,
+    without stopping the program. You can get statistics information
+    as well as the current stack trace, and you can request zeroing of
+    counters or dumping of profile data.
+
+
+# 6.1.1. Functionality [1_1]
+
+1) Cachegrind collects flat profile data: event counts (data reads,
+   cache misses, etc.) are attributed directly to the function they
+   occurred in. This cost attribution mechanism is called self or
+   exclusive attribution.
+
+2) Callgrind extends this functionality by propagating costs across
+   function call boundaries. If function foo calls bar, the costs from
+   bar are added into foo's costs. When applied to the program as a
+   whole, this builds up a picture of so called inclusive costs, that
+   is, where the cost of each function includes the costs of all
+   functions it called, directly or indirectly.
+
+3) Together with the call graph, this allows you to find the specific
+   call chains starting from main in which the majority of the
+   program's costs occur.
+
+4) Caller/callee cost attribution is also useful for profiling
+   functions called from multiple call sites, and where optimization
+   opportunities depend on changing code in the callers, in particular
+   by reducing the call count.
+
+
+WARNING Callgrind's ability to detect function calls and returns
+	depends on the instruction set of the platform it is run
+	on. It works best on x86 and amd64,
+
+
+#===============================================================================
+#  6.1.2. Basic Usage
+#===============================================================================
+
+1) Compilation options for callgrind: the same as cachegrind
+
+   a) Compiling with Debug info -g 
+
+   b) Compiling with Optimization turned on (-O)
+
+
+2) To start a profile run for a program, execute: 
+
+ >> valgrind --tool=callgrind [callgrind options] your-program [program options]
+
+
+3) Interactive info: callgrind_control
+
+   >> callgrind_control [-e] -b   # -b: print backtrace;
+   		     	  	  # -e: annotate the backtrace with event counts
+
+4) Offline info: callgrind_annotate
+
+   callgrind.out.<pid> is generated. The data file contains
+   information about the calls made in the program among the functions
+   executed, together with Instruction Read (Ir) event counts.
+
+   To generate a function-by-function summary from the profile data file, use
+
+   >> callgrind_annotate [options] callgrind.out.<pid>
+
+
+5) callgrind_annotate's important options:
+
+   --inclusive=yes  Instead of using exclusive cost of functions as
+   		    sorting order, use and show inclusive costs.
+
+   --tree=both 	    Interleave into the top level list of functions,
+   		    information on the callers and the callees of each function.
+
+   --auto=yes 	    to get annotated source code for all relevant functions
+   		    for which the source can be found
+
+
+6) callgrind_annotate's secundary options:
+
+   --cache-sim=yes  measuring the cache behavior
+
+   --branch-sim=yes branch prediction simulation (execc slow down by factor 2)
+
+
+7) WARNING kcachegrind required usage
+
+   If your code has a significant fraction of its cost in cycles (sets
+   of functions calling each other in a recursive manner), you have to
+   use KCachegrind, as callgrind_annotate currently does not do any cycle
+   detection, which is important to get correct results in this case.
+
+
+8) Profiling code somewhere in the middle of the run:
+
+   --instr-atstart=no	    callgrind option
+
+   and running, in a shell: "callgrind_control -i" on just before the
+   interesting code section is executed.
+
+   To exactly specify the code position where profiling should start,
+   use the client request CALLGRIND_START_INSTRUMENTATION.
+
+
+9) If you want to be able to see assembly code level annotation
+
+   --dump-instr=yes  	  callgrind option
+   --collect-jumps=yes	  callgrind option
+
+   WARNING resulting profile data can only be viewed with KCachegrind
+
+
+#===============================================================================
+# 6.2. Advanced Usage
+#===============================================================================
+
+
+aki lo dejo
+
+
+
+//=======================================
+//  [3_2] doc extraction BEGIN
+//=======================================
+
+3) Practical difficulties [3_2]
+
+   3.1) Lost of precision in floating point operations [3_2]. This is
+   due to the virtual environment where valgrind operates.
+
+   3.2) Speed. You can mitigate this by controlling when callgrind
+      performs data collection.
+
+      a) The controlling can be done using command line options, using
+      	 callgrind_control --instr=<on|off>
+
+      b) or lastly by attaching gdb and using the monitor commands
+      	 instrumentation on|off.
+
+      c) You can statically control callgrind using Valgrind macros
+      	 defined in callgrind.h
+   
+
+//=======================================
+//  [3_2] doc extraction END
+//=======================================
+
+# 6.2. Advanced Usage
+#    6.2.1. Multiple profiling dumps from one program run
+#    6.2.2. Limiting the range of collected events
+#    6.2.3. Counting global bus events
+#    6.2.4. Avoiding cycles
+#    6.2.5. Forking Programs
+#
+# 6.3. Callgrind Command-line Options
+#    6.3.1. Dump creation options
+#    6.3.2. Activity options
+#    6.3.3. Data collection options
+#    6.3.4. Cost entity separation options
+#    6.3.5. Simulation options
+#    6.3.6. Cache simulation options
+#
+# 6.4. Callgrind Monitor Commands
+# 6.5. Callgrind specific client requests
+# 6.6. callgrind_annotate Command-line Options
+# 6.7. callgrind_control Command-line Options
+
 
 
 ################################################################################
