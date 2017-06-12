@@ -94,6 +94,8 @@ Index
 # 6.5. Callgrind specific client requests
 # 6.6. callgrind_annotate Command-line Options
 # 6.7. callgrind_control Command-line Options
+#
+# 6.8 Interpreting the results
 
 
 # 11. SGCheck: an experimental stack and global array overrun detector
@@ -637,12 +639,15 @@ Try using exp-sgcheck for this sort of error.
 3) KCachegrind: When you’re using these tools, you’re likely to want
    to use the GUI that is available to browse the results.
 
-4) Cache model example
+4) Cache model example 
 
    MEM  <=>  L3 cache  <=>  L2 cache  <=>  L1  <=> CORE_1
                                            L1  <=> CORE_2
                                            ..............
                                            L1  <=> CORE_N
+
+
+   Note.- Linux commands [104]: lscpu, 					   
 
 5.1. Overview
 
@@ -763,6 +768,20 @@ Note.- LL total accesses is given by ILmr + DLmr + DLmw.
    d) Alternatively, you can use CG_DIFF to difference the outputs of
       two Cachegrind runs into a single file which you then use as the
       input for cg_annotate.
+
+
+3) Brief useful info (complete ifo at 5.7. Acting on Cachegrind's Information)
+
+   1) The function-by-function counts are more useful to look at.
+
+   2) The line-by-line source code annotations are much more useful.
+
+      First: Ir numbers
+
+   3) Firs look LL misses
+
+
+   Thus, ILmr: "cg_annonate --show=ILmr --sort=ILmr"
 
 
 # 5.2.1. Running Cachegrind
@@ -969,34 +988,11 @@ See [1_1] for details.
 # 5.3. Cachegrind Command-line Options
 #===============================================================================
 
-Cachegrind-specific options are:
+Cachegrind-specific options are:  [104]
 
---I1=<size>,<associativity>,<line size>
+--I1=<size>,<associativity>,<line size>   
 
-    Specify the size, associativity and line size (*) of the level 1 inst. cache
-
-
---D1=<size>,<associativity>,<line size>
-
-    Specify the size, associativity and line size of the level 1 data cache.
-
-
---LL=<size>,<associativity>,<line size>
-
-    
---cache-sim=no|yes [yes]
-
-    Enables or disables collection of cache access and miss counts.
-
-
---branch-sim=no|yes [no]
-
-    Branch instruction and misprediction counts.
-
-
---cachegrind-out-file=<file>
-
-    Write the profile data to file rather than to the default output
+    Specify the size, associativity and o the default output
     file, cachegrind.out.<pid>.
 
     The %p and %q format specifiers can be used to embed the process
@@ -1097,7 +1093,7 @@ Cachegrind-specific options are:
 
 
 4) Looking at the Bcm and Bim misses can also be helpful. In
-   particular, Bim mis ses are often caused by switch statements, and
+   particular, Bim misses are often caused by switch statements, and
    in some cases these switch statements can be replaced with
    table-driven code. (see [1_1] example)
 
@@ -1164,6 +1160,15 @@ callgrind_control
     counters or dumping of profile data.
 
 
+3) Practical difficulties [3_2]
+
+   3.1) Lost of precision in floating point operations [3_2]. This is
+   	due to the virtual environment where valgrind operates.
+
+   3.2) Speed. You can mitigate this by controlling when callgrind
+      	performs data collection. (se 6.2.2)
+
+
 # 6.1.1. Functionality [1_1]
 
 1) Cachegrind collects flat profile data: event counts (data reads,
@@ -1191,6 +1196,9 @@ callgrind_control
 WARNING Callgrind's ability to detect function calls and returns
 	depends on the instruction set of the platform it is run
 	on. It works best on x86 and amd64,
+
+WARNING Callgrind records the count of instructions, not the actual
+	time spent in a function (I/O bottlenecks not detected).
 
 
 #===============================================================================
@@ -1223,6 +1231,13 @@ WARNING Callgrind's ability to detect function calls and returns
    To generate a function-by-function summary from the profile data file, use
 
    >> callgrind_annotate [options] callgrind.out.<pid>
+
+
+# basic callgrind  [3_1]
+
+  >> valgrind --tool=callgrind [--simulate-cache=yes]  main # optional cache sim
+  >> callgrind_annotate --auto=yes <callgrind.out.pid>
+
 
 
 5) callgrind_annotate's important options:
@@ -1275,57 +1290,207 @@ WARNING Callgrind's ability to detect function calls and returns
 # 6.2. Advanced Usage
 #===============================================================================
 
+# 6.2.1. Multiple profiling dumps from one program run
 
-aki lo dejo
+Sometimes you are not interested in characteristics of a full program
+run, but only of a small part of it, ... [1_1]
 
 
+# 6.2.2. Limiting the range of collected events
 
-//=======================================
-//  [3_2] doc extraction BEGIN
-//=======================================
+1) you can disable event aggregation for uninteresting program parts.
 
-3) Practical difficulties [3_2]
+2) First, there is the collection state. If this is off, no
+   aggregation will be done: there is not much difference in regard to
+   execution speed of Callgrind
 
-   3.1) Lost of precision in floating point operations [3_2]. This is
-   due to the virtual environment where valgrind operates.
+    --instr-atstart=no.         # start mode
 
-   3.2) Speed. You can mitigate this by controlling when callgrind
-      performs data collection.
+    CALLGRIND_TOGGLE_COLLECT;	# programatically mode change
+    				#!\warning required: 
+                                #          #include <valgrind/callgrind.h>
 
-      a) The controlling can be done using command line options, using
-      	 callgrind_control --instr=<on|off>
+    --toggle-collect=function	# limit event collection to a specific function
+    				# Recursive calls of the given function do not
+				# trigger any action.
 
-      b) or lastly by attaching gdb and using the monitor commands
-      	 instrumentation on|off.
+3) Second, there is the instrumentation mode in which Callgrind is
+   running: The huge benefit is the much higher speed with
+   instrumentation switched off.
 
-      c) You can statically control callgrind using Valgrind macros
-      	 defined in callgrind.h
-   
+   --instr-atstart=no.	            # start mode
 
-//=======================================
-//  [3_2] doc extraction END
-//=======================================
+   callgrind_control -i on/off      # interactively instr mode change
 
-# 6.2. Advanced Usage
-#    6.2.1. Multiple profiling dumps from one program run
-#    6.2.2. Limiting the range of collected events
-#    6.2.3. Counting global bus events
-#    6.2.4. Avoiding cycles
-#    6.2.5. Forking Programs
-#
+   CALLGRIND_START_INSTRUMENTATION; # programatically mode change
+   CALLGRIND_STOP_INSTRUMENTATION;  #!\warning required: 
+                                    #          #include <valgrind/callgrind.h>
+
+
+# 6.2.3. Counting global bus events
+
+For access to shared data among threads in a multithreaded code, ...
+
+
+# 6.2.4. Avoiding cycles
+
+PROBLEM: you lose the nice property to let you pinpoint the
+bottlenecks by following call chains from main, guided via inclusive
+cost. In addition, KCachegrind loses its ability to show interesting
+parts of the call graph, as it uses inclusive costs to cut off
+uninteresting areas.
+
+\warning callgrind_annotate does not do any cycle detection at all
+(see 6.1.2, 7) above)
+
+[1_1]
+
+# 6.2.5. Forking Programs
+
+If your program forks, the child will inherit ... [1_1]
+
+
+#===============================================================================
 # 6.3. Callgrind Command-line Options
-#    6.3.1. Dump creation options
-#    6.3.2. Activity options
-#    6.3.3. Data collection options
-#    6.3.4. Cost entity separation options
-#    6.3.5. Simulation options
-#    6.3.6. Cache simulation options
-#
-# 6.4. Callgrind Monitor Commands
-# 6.5. Callgrind specific client requests
-# 6.6. callgrind_annotate Command-line Options
-# 6.7. callgrind_control Command-line Options
+#===============================================================================
 
+# 6.3.1. Dump creation options
+
+--callgrind-out-file=<file>
+
+... [1_1]
+
+
+# 6.3.2. Activity options
+
+These options specify when actions relating to event counts are to be
+executed. For interactive control use callgrind_control.
+
+--dump-every-bb=<count> [default: 0, never]
+
+--dump-before=<function>
+
+--zero-before=<function>
+
+--dump-after=<function>
+
+
+# 6.3.3. Data collection options
+
+These options specify when events are to be aggregated into event
+counts. Also see Limiting range of event collection.
+
+--instr-atstart=<yes|no> [default: yes]
+
+[1_1]
+
+
+# 6.3.4. Cost entity separation options
+
+These options specify how event counts should be attributed to
+execution contexts.
+
+--fn-skip=<function>
+
+... [1_1]
+
+
+# 6.3.5. Simulation options
+
+--cache-sim=<yes|no> [default: no]
+
+    Full cache simulation ...
+
+ --branch-sim=<yes|no> [default: no]
+
+    Specify if you want to do branch prediction simulation
+
+
+# 6.3.6. Cache simulation options
+
+[1_1]
+
+
+#===============================================================================
+# 6.4. Callgrind Monitor Commands
+#===============================================================================
+
+The Callgrind tool provides monitor commands handled by the Valgrind
+gdbserver (see Monitor command handling by the Valgrind gdbserver).
+
+    dump [<dump_hint>] requests to dump the profile data.
+
+    zero requests to zero the profile data counters.
+
+    instrumentation [on|off] requests to set (if parameter on/off is
+    		    given) or get the current instrumentation state.
+
+    status requests to print out some status information.
+
+
+#===============================================================================
+# 6.5. Callgrind specific client requests
+#===============================================================================
+
+Callgrind provides the following specific client requests in
+callgrind.h. See that file for the exact details of their arguments.
+
+CALLGRIND_DUMP_STATS
+
+CALLGRIND_DUMP_STATS_AT(string)
+
+CALLGRIND_TOGGLE_COLLECT 
+
+CALLGRIND_START_INSTRUMENTATION
+
+CALLGRIND_STOP_INSTRUMENTATION
+
+
+#===============================================================================
+# 6.6. callgrind_annotate Command-line Options
+#===============================================================================
+
+--auto=<yes|no> [default: no]
+
+
+... [1_1]
+
+
+#===============================================================================
+# 6.7. callgrind_control Command-line Options
+#===============================================================================
+
+--instr=<on|off>
+
+... [1_1]
+
+
+#===============================================================================
+# 6.8 Interpreting the results  [3_1] [3_3]
+#===============================================================================
+
+HINT Understanding the Ir counts
+The Ir counts are basically the count of assembly instructions executed.
+A single C statement can translate to 1, 2, or several assembly instructions.
+
+
+WARNING
+Callgrind records the count of instructions, not the actual time spent
+in a function. If you have a program where the bottleneck is file I/O,
+the costs associated with reading and writing files won't show up in
+the profile, as those are not CPU-intensive tasks.
+
+
+HINT The line-by-line counts are key for getting more helpful detail. 
+
+
+WARNING deep analysis (assembly level)
+You can even drop down to observe event counts at the assembly
+level. Build the code with assembly-level debug information by editing
+your Makefile to include compiler flags -Wa,--gstabs -save-temps. Then
+when running callgrind, use the option --dump-instr=yes which requests
+counts per assembly instruction. When annotating this output,
+callgrind_annotate will now match events to assembly statements. Cool!
 
 
 ################################################################################
@@ -1455,8 +1620,7 @@ P
 
 [3_2] Valgrind Part 4: Cachegrind and Callgrind - https://accu.org/index.php/journals/1886
 
-[3_3] How to profile C++ application with Callgrind / KCacheGrind - https://baptiste-wicht.com/posts/2011/09/profile-c-application-with-callgrind-kcachegrind.html
-
+[3_3] Callgrind, a practical example of use - https://blog.josefsson.org/2008/02/27/real-world-performance-tuning-with-callgrind/
 
 [100] General concepts
 
@@ -1465,4 +1629,9 @@ P
 [102] fast_cpp.howto - cpp/estudio/cpp_language/concrete_topics/fast_cpp.howto
 
 [103] https://stackoverflow.com/questions/704466/why-doesnt-delete-set-the-pointer-to-null
+
+[104] cache/CPU info in Linux - https://unix.stackexchange.com/questions/167038/is-there-any-way-to-know-the-size-of-l1-l2-l3-cache-and-ram-in-linux
+
+[105] All about memory - https://www.akkadia.org/drepper/cpumemory.pdf
+
 

@@ -34,3 +34,4 @@ old.fer_libs/*
 ###############################
 
 howtos/tools/valgrind/doc/valgrind_manual.pdf
+howtos/tools/valgrind/doc/cpumemory.pdf
