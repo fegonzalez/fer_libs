@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema
+   attributeFormDefault="unqualified"
+   elementFormDefault="qualified"
+   targetNamespace="MyPreprocessingTest"
+   version="1.0.0"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:fb="http://www.fixm.aero/base/3.0"
+   xmlns:fx="http://www.fixm.aero/flight/3.0"
+   xmlns:ff="http://www.fixm.aero/foundation/3.0"
+   xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+   xmlns:tsms="TacticalSeparationManagementService"
+   vc:minVersion="1.0"
+   vc:maxVersion="1.1">
+
+
+
+<!--#######################################################-->
+<!--                                                       -->
+<!-- \info f3_test.xsd (preprocessed) -->
+<!--                                                       -->
+<!--#######################################################-->
+
+
+
+
+
+<!--*************************************************************************-->
+<!-- \test <documentation/>  
+     \file f3_test.xsd -->    
+<!--*************************************************************************-->
+
+   <annotation>
+      <documentation>
+         NOTE: f3.xsd file.
+      </documentation>
+   </annotation>
+
+
+
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!-- \bug FIXME  CHOICE: -->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+
+<complexType name="choice_bucle_mio">
+  <sequence>
+    <choice>
+
+      <element name="el_simple_level1" type="boolean"
+	       minOccurs="1" maxOccurs="1">
+      </element>
+
+    </choice>
+  </sequence>
+</complexType>
+
+
+
+
+<!--#######################################################-->
+<!--                                                       -->
+<!-- \info f1_test.xsd (preprocessed) -->
+<!--                                                       -->
+<!--#######################################################-->
+
+
+
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!-- \file f1_test.xsd -->
+<!-- \brief <complexType> tag test -->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+
+
+   <annotation>
+      <documentation>
+         NOTE: f1.xsd file first
+      </documentation>
+   </annotation>
+
+
+<complexType name="complextype_uno">
+
+  <attribute name="attr_required_level1" type="long" use="required" >
+  </attribute>
+
+  <attribute name="attr_opt_level1" type="integer" use="optional" >
+  </attribute>
+  
+</complexType>
+
+
+
+
+
+<!--#######################################################-->
+<!--                                                       -->
+<!-- \info f2_test.xsd (preprocessed) -->
+<!--                                                       -->
+<!--#######################################################-->
+
+
+
+
+<include schemaLocation="../f1_test.xsd" />
+
+
+<!--*************************************************************************-->
+<!-- \test <documentation/>  
+     \file f2_test.xsd -->    
+<!--*************************************************************************-->
+
+   <annotation>
+      <documentation>
+         NOTE: f2.xsd file.
+      </documentation>
+   </annotation>
+
+
+
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!-- \bug FIXME  CHOICE: -->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+
+<complexType name="choice_bucle_mio">
+  <sequence>
+    <choice>
+
+      <element name="el_simple_level1" type="boolean"
+	       minOccurs="1" maxOccurs="1">
+      </element>
+
+    </choice>
+  </sequence>
+</complexType>
+
+</schema>
