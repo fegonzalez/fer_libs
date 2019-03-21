@@ -1,0 +1,21 @@
+
+EXIT vi
+
+command     :wq<return>   salir grabando cambios
+command     :q<return>    salir sin grabar
+command     :q!<return>   forzar salir sin grabar
+
+
+Moving the cursor
+
+command     :0<return>    ir inicio fichero
+command     :G<return>    ir final
+command     :nG<return>   ir línea <n>
+
+
+Insert /adding text
+
+:i<return>   entrar en modo eición
+ESC          salir de edición
+:u<return>   UNDO
+
