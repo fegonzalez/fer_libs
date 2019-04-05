@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/array/subnivel_pv/Version_3_5_Z_V80_D_DCL_PeS_noe/ADA95/src/tpvt/gpvt/proc_eve'
+let g:netrw_dirhist_2='/array/subnivel_pv/Version_3_5_Z_V80_D_DCL_PeS_noe/ADA95/src'
+let g:netrw_dirhist_3='/array/subnivel_pv/Version_3_5_Z_V80/ADA95/src/tpvt/gpvt/proc_eve'
+let g:netrw_dirhist_4='/array/subnivel_pv/Version_3_5_Z_V80_osf_recalculo/ADA95/src'
+let g:netrw_dirhist_5='/array/subnivel_pv/Version_3_5_Z_V80_incidencias_BOM_noe/IDL/idl_sdv'
+let g:netrw_dirhist_6='/array/subnivel_pv/Version_3_5_Z_V80_incidencias_BOM_01_noe/ADA95/src/tpvt'
