@@ -9,8 +9,8 @@ command     :q!<return>   forzar salir sin grabar
 # Moving the cursor
 
 command     :0<return>    ir inicio fichero
-command     :G<return>    ir final
-command     :nG<return>   ir línea <n>
+command     :$<return>    ir final
+command     :n<return>    ir línea <n>
 
 
 # Insert /adding text

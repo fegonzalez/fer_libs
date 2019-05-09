@@ -1,0 +1,251 @@
+## SUMMARY
+
+# 1 basic vi commands
+#
+### EXIT vi
+#
+### file management
+#
+### Moving the cursor
+#
+### Insert /adding text
+#
+### Deletion
+#
+### blocks management
+#
+### search & replace
+#
+### buffer management
+#
+### misc
+#
+### misc (VISUAL MODES)
+#
+### macros
+
+
+# 2 IDE actions 
+#
+# open console in buffer
+#
+# closing
+#
+# Buffer navigation
+
+
+
+################################################################################
+# 1 basic vi commands
+################################################################################
+
+
+### shortcuts
+
+^  : CTRL
+C- : CTRL
+
+
+
+### EXIT vi
+
+command     :wq<return>   salir grabando cambios
+command     :q<return>    salir sin grabar
+command     :q!<return>   forzar salir sin grabar
+command     :qa!<return>  all changes are lost!
+
+
+### file management
+
+command     :e<file-name>       open <file-name>
+command     :w                  save
+command     :save<file-name>    save as <file-name>
+
+
+### Moving the cursor
+
+#position
+command     h, j, k, l    ir posición izquierda, abajo, arriba, derecha
+
+#line
+command     w             (beginning of the) word forward 
+command     e             (end of the) word forward 
+command     b             word backwards
+command     0             goto begin line
+command     $             goto end line
+
+#block
+command     C-f           block forward
+command     C-b           block backwards
+
+#file
+command     :0<return>    goto begin file
+            gg
+
+command     :$<return>    goto end file
+            G
+
+command     :<n> <return>      goto <n> line
+             <n>G
+
+command     %             goto symmetric () {} []
+
+command     m<word>       mark line
+command     '<word>       go back to mark
+
+command     f and F       search character in line
+
+
+### Insert /adding text
+
+:i<return>   entrar en modo edición
+ESC          salir de edición
+
+:u<return>   UNDO
+u
+U            UDO whole line
+
+CTRL-R       REDO
+
+
+# insert/add detail:
+i, a	     Sin moverse.
+I, A	     Al comienzo o al final de línea.
+O, o	     Por encima o debajo de la línea.
+
+
+### Deletion
+
+# Operations and motions
+
+Many commands that change text are made from an operator and a motion
+(e.g. "d motion"):
+
+  Where:
+    d      - is the delete operator.
+    motion - is what the operator will operate on (listed below).
+
+  A short list of motions:
+    w - until the start of the next word, EXCLUDING its first character.
+    e - to the end of the current word, INCLUDING the last character.
+    $ - to the end of the line, INCLUDING the last character.
+
+
+  USING A COUNT FOR A MOTION
+
+  Typing a number before a motion repeats it that many times (eg  2w, d2w).
+   
+
+
+#
+x             Borrar un caracter
+dd            Borrar una línea completa
+d$ or D       Borrar el resto de la línea
+dw            Borrar el resto de la palabra
+d^            Borrar desde el comienzo de línea
+db            Borrar la palabra anterior
+
+# change = remove & insert, all in one
+# note.- C-key combinations (C for change)
+cw            Change next word
+cb            Change previous word
+c$ or C       Change until end of line
+c0            
+r             replace one char
+
+### blocks management
+
+(go to the beginning of the block)
+V            select block init 
+
+(go to the end of the block)
+y            (copy) yank
+
+(go to the destination position)
+p or P       paste
+
+
+
+### search & replace
+
+/            search
+s            search & replace
+
+v or V       copy (VISUAL MODES)
+C-v
+
+y            (copy) yank
+
+p or P       paste
+
+
+### buffer management (text mode)
+
+command     *                   Buscar la palabra bajo el cursor
+
+command     :tabnew [fichero]   Abrir una pestaña
+
+command      gt, gT             Circular por las pestañas
+
+command     :split [fichero]    Dividir la vista
+
+command     C-ww: Circular por las ventanas
+
+
+
+### misc
+
+command     :!<shell-name>  open shell buffer # ( e.g. ":!bash", ":!ksh" )
+
+command     :!             exec command and show exit
+
+command     .             repeat last insert operation
+
+command     J             Join lines
+
+command     =             indent code
+
+<Número><Cosa>            Hacer <Cosa> <Número> veces
+
+
+### misc (VISUAL MODES)
+
+command     U / u         Uppercase / lowercase
+
+
+### macros
+
+q<registro> y @<registro>
+
+Las macros de VIM se guardan en registros.
+
+Estos registros contienen texto en general, y se pueden usar para más cosas.
+
+Las macros permiten reproducir exactamente nuestras pulsaciones.
+
+
+################################################################################
+# 2 IDE actions 
+################################################################################
+
+# open console in buffer
+
+
+# closing
+
+:qa!<return>  all changes are lost!
+
+
+# Buffer navigation
+
+command     *                   Buscar la palabra bajo el cursor
+
+command     :tabnew [fichero]   Abrir una pestaña
+
+command      gt, gT             Circular por las pestañas
+
+
+command     :split [fichero]    Dividir la vista
+
+command     C-ww: Circular por las ventanas
+
