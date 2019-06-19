@@ -1,0 +1,98 @@
+
+
+# Packages:
+
+https://shapeshed.com/vim-packages/
+
+
+https://vimhelp.org/repeat.txt.html#packages
+
+    "/.vim/pack/": each inner folder contains a plugin (several files)
+
+    Note.- package README file:
+           "pack/NAME-PACKAGE-PLUGIN/start/NAME-PLUGIN/do/NAME-FILE.txt
+	   (ej. ".vim/pack/themes/start/vim-airline-master/doc/airline.txt" )
+
+
+# Sessions:
+
+https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
+
+https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
+
+
+# Activating tags in the source code
+
+  Allowing navigation between declarations and definitions, and so on.
+
+(1) gvim command:  "ctags"
+
+(2) execution mode:
+
+    1. Add function "dotags" (**) to your .bashrc_aliases or .profile_alias.s
+
+    2. Activate gvim's tags in the working repository branch (*)
+       a) Go to the root directory of the working repository branch.
+       b) execute "dotags" function
+
+      [ Example "/array/subnivel_posT/Version_3_5_Z_V80_incidencias_BOM_01"
+      
+        >> cd /array/subnivel_posT/Version_3_5_Z_V80_incidencias_BOM_01
+	>> dotags
+        
+      end example ]
+
+    3: Use within gvim
+
+       "CTRL+ MOUSE_LEFT_CLICK" over the function name to navigate.
+
+
+(*) This MUST be executed for every different working branch.
+
+(**)
+#-------------------------------------------------------------------------------
+ function dotags {
+
+   ruta=$(pwd)
+   arr=$(echo $ruta | tr "/" "\n")  
+   let i=0
+   let j=0
+   let k=0
+      #Buscamos la posicion del subnivel y lo almacenamos en j
+   for x in $arr 
+   do     
+     let i=$i+1
+     case $x in
+        *'subnivel'*) let j=$i
+     esac
+   done 
+      #Guardamos en niveles los directorios que tenemos que "bajar"
+   niveles=""
+   while [[ $k -lt $((i-j-1)) ]]
+   do
+         niveles=$niveles"../"
+         let k=$k+1
+   done
+
+      #En caso de que nos encontremos en la raiz del directorio no realizamos el
+      #cambio de directorio (cd)
+   if [[ $niveles = "" ]]
+   then
+      
+      #
+      # HERE: exclude any directory from indexing via "--exlude option"
+      # 
+      ctags -h ".h,.ads" -f tags --exclude="COTS" --exclude="JAVA" --exclude="lib" --exclude="MACROS" --exclude="Operational" --exclude="bin" --exclude="obj_linux_x86" --exclude="CONFIG" -R .
+
+
+   else
+      cd $niveles
+     ctags -h ".h,.ads" -f tags --exclude="COTS" --exclude="JAVA" --exclude="lib" --exclude="MACROS" --exclude="Operational" --exclude="bin" --exclude="obj_linux_x86" --exclude="CONFIG" -R .
+
+      cd -
+
+   fi
+}
+#-------------------------------------------------------------------------------
+
+

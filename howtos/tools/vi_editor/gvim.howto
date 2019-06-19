@@ -79,7 +79,10 @@ command     C-f           block forward
 command     C-b           block backwards
 
 #file
+command     CTRL-G        show your location in the file and the file status
+
 command     :0<return>    goto begin file
+            gg
             gg
 
 command     :$<return>    goto end file
@@ -136,8 +139,6 @@ Many commands that change text are made from an operator and a motion
   Typing a number before a motion repeats it that many times (eg  2w, d2w).
    
 
-
-#
 x             Borrar un caracter
 dd            Borrar una línea completa
 d$ or D       Borrar el resto de la línea
@@ -145,9 +146,21 @@ dw            Borrar el resto de la palabra
 d^            Borrar desde el comienzo de línea
 db            Borrar la palabra anterior
 
+
+### Replacing
+
+# the put command
+p             put previously deleted text after the cursor. 
+
+# the replace command
+rx            to replace the character at the cursor with  x . **
+
+# The change operator
+# 
 # change = remove & insert, all in one
 # note.- C-key combinations (C for change)
 cw            Change next word
+ce            change to -the-end of the word
 cb            Change previous word
 c$ or C       Change until end of line
 c0            
@@ -162,13 +175,18 @@ V            select block init
 y            (copy) yank
 
 (go to the destination position)
-p or P       paste
+p or P       put command (paste)
 
 
 
 ### search & replace
 
-/            search
+/            search forwards
+?            search backwards
+n - N        next f/b
+CTRL-o       To go back to where you came from
+CTRL-I       goes forward.
+
 s            search & replace
 
 v or V       copy (VISUAL MODES)
@@ -176,9 +194,18 @@ C-v
 
 y            (copy) yank
 
-p or P       paste
+p or P       paste 
+
+# The substitute command (sed alike)
+#
+
+:s/old/new/g
+:#,#s/old/new/g    # between  lines #,#
+%s/old/new/g       # whole file
+:%s/old/new/gc     #whole file with prompt
 
 
+#
 ### buffer management (text mode)
 
 command     *                   Buscar la palabra bajo el cursor
