@@ -1,0 +1,12 @@
+
+# 1 día
+>> find /directory_path -mtime -1 -ls
+
+# The - before 1 is important - it means anything changed one day or
+# less ago. A + before 1 would instead mean anything changed at least
+# one day ago, while having nothing before the 1 would have meant it was
+# changed exacted one day ago, no more, no less.
+
+
+# -3:  3 días   y copiarlos a /tmp
+>>find /etc -type f -mtime -3 -exec cp '{}' /tmp/modificados/ \;
