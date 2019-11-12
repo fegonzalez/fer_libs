@@ -1,0 +1,17 @@
+
+
+As of gdb 7.2 you can now use the save breakpoints command.
+
+save breakpoints <filename>
+  Save all current breakpoint definitions to a file suitable for use
+  in a later debugging session.  To read the saved breakpoint
+  definitions, use the `source' command.
+
+Use source <filename> to restore the saved breakpoints from the file.
+
+
+
+
+--------------
+
+https://stackoverflow.com/questions/501486/getting-gdb-to-save-a-list-of-breakpoints

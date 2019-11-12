@@ -25,7 +25,7 @@ Index
 # 4. Memcheck: a memory error detector
 #
 # 4.0 Valgrind (memcheck) quick start
-#
+#    1. How to launch
 #    2. Preparing your program
 #    3. Running your program under Memcheck
 #    4. Interpreting Memcheck's output
@@ -316,7 +316,7 @@ Memcheck is a memory error detector:
 (valgrind.org/docs/manual/quick-start.html)
 
 
-# How to launch
+# 1. How to launch
 
   valgrind --tool=memcheck EXECUTABLE-NAME
 
@@ -463,6 +463,25 @@ end example ]
 Memcheck is not perfect; it occasionally produces false positives, and
 there are mechanisms for suppressing these (see Suppressing errors in
 the Valgrind User Manual). However, it is typically right 99% of the time.
+
+
+6. memcheck options
+
+
+## usual options:
+--leak-check=full
+--leak-resolution=high
+--partial-loads-ok=yes
+--undef-value-errors=yes
+
+## other possible options
+--log-file=valgrind.vout   # e.g.  valgrind.vout
+--track-origins=yes
+--undef-value-errors=yes
+## "deep" options
+--num-callers=40 # implicitly used with value default value = 12
+--show-reachable=yes
+
 
 
 #===============================================================================
@@ -1235,7 +1254,7 @@ WARNING Callgrind records the count of instructions, not the actual
 
 # basic callgrind  [3_1]
 
-  >> valgrind --tool=callgrind [--simulate-cache=yes]  main # optional cache sim
+  >> valgrind --tool=callgrind --simulate-cache=yes main   # optional cache sim
   >> callgrind_annotate --auto=yes <callgrind.out.pid>
 
 
