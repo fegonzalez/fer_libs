@@ -1,0 +1,25 @@
+svn status -uq | cut -d" " -f15-
+
+
+[ Example
+
+>>svn status -uq
+M           126318   uimx/pintaMenu.c
+M           126318   uimx/menuPrincipal.c
+M           126318   lvf/listacmp.c
+M           126318   lvf/paneLVF.c
+M           126318   iv.h
+M           126318   niveles/opNiveles.c
+M           126318   niveles/niveles.c
+
+
+>>svn status -uq | cut -d" " -f15-
+uimx/pintaMenu.c
+uimx/menuPrincipal.c
+lvf/listacmp.c
+lvf/paneLVF.c
+iv.h
+niveles/opNiveles.c
+niveles/niveles.c
+
+-- end example ]
