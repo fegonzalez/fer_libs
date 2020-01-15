@@ -1,0 +1,59 @@
+Tools for graphics analysis
+
+# 1. xrestop:    "top" to get info of processes running in a GPU.
+# 2. nvidia-smi: get status (mem, heat, ...) of a nVidia GPU.
+# 3. glxgears: auxiliary tool to test graphics on a computer/GPU.
+
+# 4. use example:
+ 
+
+################################################################################
+# 1. xrestop:
+################################################################################
+
+>> man xrestop
+
+NAME
+       xrestop - monitor server resources used by X11 clients
+
+DESCRIPTION
+       Xrestop  uses the X-Resource extension to provide ’top’-like statistics
+       of each connected X11  client’s  server-side  resource  usage.   It  is
+       intended  as  a  developer  tool  to aid more efficient server resource
+       usage and debug server-side resource leakage.
+
+>>xrestop -h
+xrestop usage:
+  -display,     -d        specify X Display to monitor.
+  --delay-time, -t <int>  specify time in seconds between sampling.
+  --batch,      -b        run in batch mode.
+  --max-samples,-m <int>  Maximum overall readings to take.
+
+
+# Hint To check memory load: check "Pxms" & "Pcm mem" values.
+
+
+
+################################################################################
+# 2. nvidia-smi:
+################################################################################
+
+(https://developer.download.nvidia.com/compute/DCGM/docs/nvidia-smi-367.38.pdf)
+
+NAME
+nvidia-smi - NVIDIA System Management Interface program
+
+DESCRIPTION
+ nvidia-smi (also NVSMI) provides monitoring and management capabilities
+for each of NVIDIA's  architecture families.
+
+
+################################################################################
+# 4. use example:
+################################################################################
+
+# problem: check memory usage of a program X
+
+Use xrestop to check "Pxms" & "Pcm mem" values of X.
+
+Use nvidia-smi to check the memory usage on the GPU where X is running.
