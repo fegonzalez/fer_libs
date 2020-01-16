@@ -1,0 +1,9 @@
+
+http://blog.janjonas.net/2011-02-26/windows-search-strings-files-recursively
+
+[ Ejemplo.-  
+
+D:\ findstr /s /p /n “peticiones” *
+
+Fin ejemplo ]
+
