@@ -168,6 +168,8 @@ r             replace one char
 
 ### blocks management
 
+# copy-paste
+
 (go to the beginning of the block)
 V            select block init 
 
@@ -176,6 +178,42 @@ y            (copy) yank
 
 (go to the destination position)
 p or P       put command (paste)
+
+
+# comment   (https://blog.elcodiguero.com/linux-unix/comentar-bloque-de-codigo-con-vim.html)
+
+(go to the beginning of the block)
+CTRL-V            select block init  (enter VISUAL BLOCK)
+
+(go to the end of the block)
+cursor up/down 
+
+(select the comment type)
+I   and write the comment (e.g. // )
+
+(comment the lines)
+ESC
+   
+
+# uncomment
+
+<< Para borrar los caracteres (descomentar) se sigue un proceso similar,
+pero en vez de escribir, una vez seleccionadas las líneas hay que
+apretar d para borrar el o los caracteres que se quieran quitar de
+cada línea. >>
+
+(go to the beginning of the COMMENTED block)
+CTRL-V            select block init  (enter VISUAL BLOCK)
+
+(go to the end of the block)
+cursor up/down 
+
+(select the comment type)
+d    and write the comment to remove  (e.g. // )
+
+(uncomment the lines)
+ESC
+   
 
 
 
