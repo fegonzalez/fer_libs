@@ -1,0 +1,40 @@
+
+1) mset new conditional break point
+
+   break <where> <condition>
+
+2) Add condition to an existant bp
+
+   condition <bp number> <condition>
+
+
+
+[ Example integer values -
+
+  break 3548 if (i==52 && nConf==5)
+
+  break file.cc:3548 if (i==52 && nConf==5)
+
+  break  ClasssDummy::fnDoDommy  if(a>4)
+
+--end example ]
+
+
+
+[ Example string values -
+
+a) Using expressions (since GDB 7.5)
+
+$_memeq(buff1, buff2, len)
+$_strex(str, regex)
+$_streq(str1, str2)
+$_strlen(str)
+
+  break file.cc:3548 if $_streq(x, "hello")
+
+
+b) Using standard C code
+
+  break file.cc:3548 if strcmp(x, "hello") == 0
+
+--end example ]
