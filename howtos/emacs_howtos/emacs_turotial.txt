@@ -1,0 +1,40 @@
+# https://www.youtube.com/watch?v=mMcc0IF1hV0
+
+1. M-X customize
+
+(VIDEO 2)
+
+1.1 Frames		    Support for Emacs frames and window systems.
+
+Frames
+mouse
+window seps
+...
+
+1.2 M-X customize-themes
+
+@warning Any customization (M-X customize) overwrittes the themes.
+
+2. Installing Packages and Extensions
+
+(VIDEO 2)
+
+M-X list-packages
+
+M-x customize-group
+    Package Archives // repo list where emacsa look for packages
+        INS melpa: https://melpa.org/packages/
+
+@warning Directory "~/.emacs.d/elpa" is created
+
+@warning: Status column == available => download & install required
+
+
+
+2.1 Actions on a package:
+
+Upgrade: shift-U (Mark package for Upgrade)
+         x       (Execute the upgrade action)
+
+Install package: I (select)
+                 x (execute the action)
