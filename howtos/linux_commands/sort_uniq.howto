@@ -1,0 +1,5 @@
+
+# uniq - report or omit repeated lines
+
+  (whatever) | sort  | uniq
+  
