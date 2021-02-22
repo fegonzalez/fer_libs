@@ -1,0 +1,38 @@
+(https://web.stanford.edu/class/cs107/resources/gdb_coredump1.pdf)
+
+
+Jumping over misbehaving code
+One handy use for breakpoint commands is simply skirting bugs. For example, suppose
+you
+have introduced some code that causes your application to crash, but you'd like gdb to get
+past the errant code and reach another breakpoint you've set. Set a breakpoint right before
+the misbehaving code, and use breakpoint commands to jump over it. Here's an example:
+- someMethod
+{
+....
+[anObject free];
+...
+[anObject doOneMoreThing]; // Line #192: Oops, I didn't mean to
+do this!
+....
+return self;
+}
+
+[ Example
+
+(gdb) break 192    # Break on the line that sends message to freed object
+(gdb) commands     # Start the set of breakpoint commands
+                   # Type commands for when breakpoint 1 is hit, one per line.
+                   # End with a line saying just "end".
+		   
+silent             # Turn off the somewhat noisy breakpoint announcement
+jump 193           # Jump to the next line
+continue           # Continue executing the program
+end                # End the set of commands
+
+--end-example ]
+
+Without any intervention on your part, gdb will now skip over the line that sends a
+message to the freed object, allowing you to debug other things. The jump command
+specifies where to continue execution. At other times, it may be more appropriate to use
+the return command to force a return from the current method or function.
