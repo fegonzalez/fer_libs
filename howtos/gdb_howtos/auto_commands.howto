@@ -36,3 +36,8 @@ Without any intervention on your part, gdb will now skip over the line that send
 message to the freed object, allowing you to debug other things. The jump command
 specifies where to continue execution. At other times, it may be more appropriate to use
 the return command to force a return from the current method or function.
+
+
+WARNING Uso de "set pagination off" antes de poner breakpoints para
+        que no pare al llenar la pantalla ?
+

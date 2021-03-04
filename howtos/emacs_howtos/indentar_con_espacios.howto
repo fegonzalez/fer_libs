@@ -1,0 +1,38 @@
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; defun section BEGIN
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; identation (3 white spaces and NO tabs)
+(defun my-c-mode-common-hook ()
+  (local-set-key "\C-h" 'backward-delete-char)
+  ;; this will make sure spaces are used instead of tabs
+  (setq tab-width 3 indent-tabs-mode nil)
+  (setq indent-tabs-mode 'nil)
+  (setq c-basic-offset 3)
+  (c-set-offset 'substatement-open 0)
+  (c-set-offset 'statement-case-open 0)
+  (c-set-offset 'case-label 0)
+  (c-set-offset 'brace-list-open 0)
+)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; add-hook section
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ANSI colors for shell mode
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; identation (3 white spaces and NO tabs)
+(add-hook 'c-mode-hook 'my-c-mode-common-hook)
+(add-hook 'c++-mode-hook 'my-c-mode-common-hook)
+(add-hook 'perl-mode-hook 'my-c-mode-common-hook)
+(add-hook 'cperl-mode-hook 'my-c-mode-common-hook)
+(add-hook 'emacs-lisp-mode-hook 'my-c-mode-common-hook)
+(add-hook 'nroff-mode-hook 'my-c-mode-common-hook)
+(add-hook 'tcl-mode-hook 'my-c-mode-common-hook)
+(add-hook 'makefile-mode-hook 'my-c-mode-common-hook)
